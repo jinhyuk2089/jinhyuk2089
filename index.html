@@ -3,23 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>서정대학교 박진혁 교수 소개</title>
+  <title>서정대학교 박진혁 교수 검증형 블로그</title>
   <style>
-    :root { --bg:#f5f7fb; --card:#fff; --text:#1f2937; --muted:#6b7280; --primary:#1d4ed8; --danger:#b91c1c; }
-    *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;background:var(--bg);color:var(--text)}
+    :root { --bg:#f5f7fb; --card:#fff; --text:#1f2937; --muted:#6b7280; --primary:#1d4ed8; --danger:#b91c1c; --ok:#166534; --warn:#92400e; }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;background:var(--bg);color:var(--text)}
     .wrap{max-width:1100px;margin:0 auto;padding:24px}
     header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
     .card{background:var(--card);border-radius:14px;padding:18px;box-shadow:0 2px 8px rgba(0,0,0,.06);margin-top:16px}
     h1,h2{margin:.2em 0}.muted{color:var(--muted)}
     .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
     .item{border:1px solid #e5e7eb;border-radius:10px;padding:12px;position:relative}
-    .admin-only{display:none}
+    .admin-only,.edit-panel{display:none}
     body.admin-mode .admin-only{display:inline-flex}
     body.admin-mode .edit-panel{display:block}
-    .edit-panel{display:none;border-top:1px dashed #cbd5e1;padding-top:12px;margin-top:12px}
+    .badge{display:inline-block;padding:2px 8px;border-radius:999px;font-size:.8rem;font-weight:700}
+    .v-ok{background:#dcfce7;color:var(--ok)} .v-warn{background:#ffedd5;color:var(--warn)}
     button{border:none;border-radius:10px;padding:8px 12px;cursor:pointer;background:var(--primary);color:#fff}
     button.secondary{background:#475569} button.danger{background:var(--danger)}
-    input,textarea{width:100%;padding:8px;border:1px solid #cbd5e1;border-radius:8px}
+    input,textarea,select{width:100%;padding:8px;border:1px solid #cbd5e1;border-radius:8px}
     label{font-size:.9rem;font-weight:600} .row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
     a{color:var(--primary)}
   </style>
@@ -28,20 +30,24 @@
   <div class="wrap">
     <header>
       <div>
-        <h1>서정대학교 박진혁 교수 소개 페이지</h1>
-        <div class="muted">공개된 기사 기반 요약 · 관리자 모드 지원</div>
+        <h1>서정대학교 박진혁 교수 검증형 홈페이지 블로그</h1>
+        <div class="muted">웹 검색 기반 출처 검증 + 관리자 모드(로컬 CMS) 지원</div>
       </div>
-      <div>
-        <button id="adminToggle">관리자 모드 켜기</button>
-      </div>
+      <button id="adminToggle">관리자 모드 켜기</button>
     </header>
 
     <section class="card" id="profile"></section>
+
+    <section class="card">
+      <h2>검증 결과(출처 신뢰도)</h2>
+      <div id="verification" class="grid"></div>
+    </section>
+
     <section class="card">
       <h2>주요 활동/수상 이력</h2>
       <div id="timeline" class="grid"></div>
       <div class="edit-panel">
-        <h3>이력 추가</h3>
+        <h3>게시물 추가</h3>
         <div class="row">
           <div><label>연도/일자</label><input id="newDate" placeholder="예: 2026-04"/></div>
           <div><label>분류</label><input id="newCategory" placeholder="예: 수상"/></div>
@@ -52,42 +58,33 @@
         <button id="addItem">추가</button>
       </div>
     </section>
-
-    <section class="card">
-      <h2>운영 기획안</h2>
-      <ul id="plan"></ul>
-    </section>
   </div>
 
 <script>
-const storageKey = 'pjh_prof_page_v1';
+const storageKey = 'pjh_verified_blog_v2';
 const baseData = {
   profile: {
     name: '박진혁',
     school: '서정대학교',
-    dept: '스마트모빌리티과(기사 시점별 자동차학과/자동차과 표기 병행)',
-    summary: '교통안전·스마트모빌리티·AI 디지털 리터러시·지역사회 공헌 분야 활동이 다수 보도됨.'
+    dept: '스마트모빌리티과(과거 기사에 자동차과/자동차학과 표기 병행)',
+    summary: '언론·기관 기사에서 교통안전, 스마트모빌리티, AI 교육, 지역사회 활동이 반복적으로 확인됩니다.'
   },
-  timeline: [
-    {date:'2021-01',category:'수상',title:'대한민국지식경영대상(인재육성 부문)',desc:'서정대학교 자동차학과 교수로 선정 보도.',source:'https://www.ajunews.com/view/20210118113108251'},
-    {date:'2023-11',category:'교육',title:'AI·디지털 리터러시 역량강화 교육 실시',desc:'사회복지 기관장 대상 AI 실습 교육 진행.',source:'https://www.seojeong.ac.kr/main/sju/press-coverage.do?articleNo=12827&mode=view'},
-    {date:'2025-01',category:'수상',title:'경기도지사 표창',desc:'교통안전 발전 공로 관련 보도.',source:'https://www.kyeonggi.com/article/20250114580075'},
-    {date:'2026-04',category:'수상',title:'법무부장관 표창',desc:'법치주의·인권증진 기여 관련 기사 보도.',source:'https://news.nate.com/view/20260427n14499'}
+  verification: [
+    {status:'확인됨', title:'서정대학교 공식 보도에서 박진혁 교수 활동 확인', detail:'서정대 공식 보도 페이지에 AI·디지털 리터러시 교육 활동 기사 존재', source:'https://www.seojeong.ac.kr/main/sju/press-coverage.do?articleNo=12827&mode=view'},
+    {status:'확인됨', title:'지역 언론에서 수상·공적 보도 확인', detail:'경기도지사 표창(2025-01 보도), 발명문화상 관련 기사 등 다수 교차 확인', source:'https://www.kyeonggi.com/article/20250114580075'},
+    {status:'주의', title:'동명이인 가능성 주의', detail:'다른 대학 소속 동일 이름(박진혁 교수) 기사/자료가 검색되므로 소속(서정대학교) 기준으로 분리 필요', source:'https://resdept.sogang.ac.kr/kr/intro/news.jsp?article_no=109482&board_no=26&board_wrapper=%2Fkr%2Fintro%2Fnews.jsp&mode=view&pager.offset=530'}
   ],
-  plan:[
-    '정보 출처 표기 원칙: 기사 URL 반드시 병기, 수정 시 변경 이력 기록.',
-    '콘텐츠 구조: 프로필/활동이력/보도자료 링크 3단 구성 유지.',
-    '운영 정책: 월 1회 최신 기사 점검, 사실 확인 후 게시.',
-    '관리자 기능: 이력 추가·수정·삭제, 로컬저장소 기반 임시 CMS.'
+  timeline: [
+    {date:'2018-11',category:'보도',title:'자동차 결함조사 이슈 관련 인터뷰 보도',desc:'MBC 보도에서 서정대학교 자동차과 박진혁 교수로 언급.',source:'https://imnews.imbc.com/newszoomin/groupnews/4939734_29116.html'},
+    {date:'2021-10',category:'수상',title:'대한민국 발명문화상 수상 보도',desc:'서정대 박진혁 교수(자동차과 학과장) 관련 보도.',source:'https://www.kgnews.co.kr/news/article.html?no=670925'},
+    {date:'2023-11',category:'교육',title:'AI·디지털 리터러시 역량강화 교육',desc:'사회복지 기관장 대상 실습형 AI 교육 진행.',source:'https://www.seojeong.ac.kr/main/sju/press-coverage.do?articleNo=12827&mode=view'},
+    {date:'2025-01',category:'수상',title:'경기도지사 표창',desc:'교통안전 발전 공로 보도.',source:'https://www.kyeonggi.com/article/20250114580075'},
+    {date:'2026-04',category:'대외활동',title:'FAMS 2026 서포터즈 단장 임명 기사',desc:'서정대학교 스마트모빌리티과 박진혁 교수 프로필 포함 보도.',source:'https://v.daum.net/v/20260403190745548'}
   ]
 };
 
-function loadData(){
-  const raw = localStorage.getItem(storageKey);
-  return raw ? JSON.parse(raw) : baseData;
-}
+function loadData(){ const raw = localStorage.getItem(storageKey); return raw ? JSON.parse(raw) : baseData; }
 function saveData(data){ localStorage.setItem(storageKey, JSON.stringify(data)); }
-
 let data = loadData();
 
 function renderProfile(){
@@ -97,33 +94,31 @@ function renderProfile(){
     <p><strong>성명:</strong> ${p.name}</p>
     <p><strong>소속:</strong> ${p.school}</p>
     <p><strong>학과:</strong> ${p.dept}</p>
-    <p><strong>요약:</strong> ${p.summary}</p>
+    <p><strong>검증 요약:</strong> ${p.summary}</p>
     <div class="edit-panel">
-      <h3>프로필 수정</h3>
-      <label>요약</label>
+      <h3>프로필 요약 수정</h3>
       <textarea id="profileSummary" rows="3">${p.summary}</textarea>
       <button id="saveProfile">저장</button>
     </div>`;
-
   const btn = document.getElementById('saveProfile');
-  if(btn){
-    btn.onclick = () => {
-      data.profile.summary = document.getElementById('profileSummary').value;
-      saveData(data); renderProfile();
-    };
-  }
+  if(btn) btn.onclick = ()=>{ data.profile.summary = document.getElementById('profileSummary').value; saveData(data); renderProfile(); };
+}
+
+function renderVerification(){
+  const box = document.getElementById('verification'); box.innerHTML='';
+  data.verification.forEach(v=>{
+    const div=document.createElement('div'); div.className='item';
+    const cls=v.status==='확인됨'?'v-ok':'v-warn';
+    div.innerHTML=`<span class="badge ${cls}">${v.status}</span><h3>${v.title}</h3><p>${v.detail}</p><a href="${v.source}" target="_blank" rel="noopener">근거 보기</a>`;
+    box.appendChild(div);
+  });
 }
 
 function renderTimeline(){
-  const el = document.getElementById('timeline');
-  el.innerHTML = '';
+  const el = document.getElementById('timeline'); el.innerHTML = '';
   data.timeline.forEach((item, idx)=>{
-    const div = document.createElement('div');
-    div.className='item';
-    div.innerHTML = `
-      <div class="muted">${item.date} · ${item.category}</div>
-      <h3>${item.title}</h3>
-      <p>${item.desc}</p>
+    const div = document.createElement('div'); div.className='item';
+    div.innerHTML = `<div class="muted">${item.date} · ${item.category}</div><h3>${item.title}</h3><p>${item.desc}</p>
       <a href="${item.source}" target="_blank" rel="noopener">출처 보기</a><br>
       <button class="admin-only secondary" data-edit="${idx}">수정</button>
       <button class="admin-only danger" data-del="${idx}">삭제</button>
@@ -134,46 +129,21 @@ function renderTimeline(){
       </div>`;
     el.appendChild(div);
   });
-
-  document.querySelectorAll('[data-del]').forEach(b=>b.onclick=e=>{
-    data.timeline.splice(Number(e.target.dataset.del),1); saveData(data); renderTimeline();
-  });
-  document.querySelectorAll('[data-edit]').forEach(b=>b.onclick=e=>{
-    document.getElementById(`editor-${e.target.dataset.edit}`).style.display='block';
-  });
-  document.querySelectorAll('[data-save]').forEach(b=>b.onclick=e=>{
-    const i=Number(e.target.dataset.save);
-    data.timeline[i].title=document.getElementById(`title-${i}`).value;
-    data.timeline[i].desc=document.getElementById(`desc-${i}`).value;
-    saveData(data); renderTimeline();
-  });
-}
-
-function renderPlan(){
-  const ul=document.getElementById('plan'); ul.innerHTML='';
-  data.plan.forEach(p=>{ const li=document.createElement('li'); li.textContent=p; ul.appendChild(li); });
+  document.querySelectorAll('[data-del]').forEach(b=>b.onclick=e=>{ data.timeline.splice(Number(e.target.dataset.del),1); saveData(data); renderTimeline(); });
+  document.querySelectorAll('[data-edit]').forEach(b=>b.onclick=e=>{ document.getElementById(`editor-${e.target.dataset.edit}`).style.display='block'; });
+  document.querySelectorAll('[data-save]').forEach(b=>b.onclick=e=>{ const i=Number(e.target.dataset.save); data.timeline[i].title=document.getElementById(`title-${i}`).value; data.timeline[i].desc=document.getElementById(`desc-${i}`).value; saveData(data); renderTimeline(); });
 }
 
 document.getElementById('addItem').onclick=()=>{
-  const item={
-    date:document.getElementById('newDate').value,
-    category:document.getElementById('newCategory').value,
-    title:document.getElementById('newTitle').value,
-    desc:document.getElementById('newDesc').value,
-    source:document.getElementById('newSource').value
-  };
+  const item={ date:newDate.value, category:newCategory.value, title:newTitle.value, desc:newDesc.value, source:newSource.value };
   if(!item.title || !item.source) return alert('제목/출처 URL은 필수입니다.');
   data.timeline.unshift(item); saveData(data); renderTimeline();
 };
 
 let admin=false;
-document.getElementById('adminToggle').onclick=()=>{
-  admin=!admin;
-  document.body.classList.toggle('admin-mode',admin);
-  document.getElementById('adminToggle').textContent=admin?'관리자 모드 끄기':'관리자 모드 켜기';
-};
+document.getElementById('adminToggle').onclick=()=>{ admin=!admin; document.body.classList.toggle('admin-mode',admin); adminToggle.textContent=admin?'관리자 모드 끄기':'관리자 모드 켜기'; };
 
-renderProfile(); renderTimeline(); renderPlan();
+renderProfile(); renderVerification(); renderTimeline();
 </script>
 </body>
 </html>
