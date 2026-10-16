@@ -75,3 +75,11 @@ python -m unittest tests/test_naver_news_writer.py
 ```
 
 네이버 API와 기사 페이지를 로컬 서버로 흉내 내서 수집, 중복 제거, 404·제목 불일치 제외, 이슈 묶기, 표시, 10건 기준, 인증 오류 처리를 확인합니다.
+
+## 참여 도구를 HTML 파일 하나로 만들기
+
+```bash
+python tools/build_standalone.py
+```
+
+`campaign/dongducheon-1day1post-standalone.html`이 만들어집니다. 브라우저로 바로 열 수 있고, 파일로 주고받을 수 있습니다. 이 파일에서는 AI 글쓰기와 링크 보드가 연결되지 않아 템플릿과 각자 브라우저에 저장하는 기록으로 동작합니다. 이미지, 영상, 내보내기는 브라우저 다운로드로 저장됩니다. 참여 도구를 고친 뒤에는 이 명령을 다시 실행하세요.

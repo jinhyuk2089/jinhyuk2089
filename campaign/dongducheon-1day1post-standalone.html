@@ -1,0 +1,1742 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style></head><body>
+<title>동두천 1일 1포스팅</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Sans+KR:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: 소요산 능선처럼 위에서 아래로 — 오늘의 과제 → 도구 탭 → 기록. 단일 컬럼 작업대, 넓은 화면에서는 2열 카드 */
+:root{
+  --bg:#F3F6F4; --surface:#FFFFFF; --sunk:#E7EDEA; --line:#CFDAD5;
+  --ink:#14211D; --muted:#56665F;
+  --pine:#1E5A47; --pine-soft:#DCEBE4;
+  --maple:#B8452A; --maple-soft:#F6E2DA;
+  --ok:#2D7A4F; --warn:#A86A00; --bad:#B3261E;
+  --ok-soft:#DFF0E5; --warn-soft:#F7EBD2; --bad-soft:#F7DEDC;
+  --heat0:#E3EAE6; --heat1:#A9CDBC; --heat2:#5E9F84; --heat3:#1E5A47;
+  --f-display:"Gowun Batang","Nanum Myeongjo",serif;
+  --f-body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --r:10px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0E1513; --surface:#16201D; --sunk:#1C2925; --line:#2C3C37;
+  --ink:#E4ECE8; --muted:#9AADA5;
+  --pine:#6CC3A0; --pine-soft:#1E3A30;
+  --maple:#F08566; --maple-soft:#3A2119;
+  --ok:#6FCF97; --warn:#E8B44C; --bad:#F2867E;
+  --ok-soft:#183126; --warn-soft:#34290F; --bad-soft:#3A1A18;
+  --heat0:#1F2B27; --heat1:#2C5A48; --heat2:#3F8B6C; --heat3:#6CC3A0;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0E1513; --surface:#16201D; --sunk:#1C2925; --line:#2C3C37;
+  --ink:#E4ECE8; --muted:#9AADA5;
+  --pine:#6CC3A0; --pine-soft:#1E3A30;
+  --maple:#F08566; --maple-soft:#3A2119;
+  --ok:#6FCF97; --warn:#E8B44C; --bad:#F2867E;
+  --ok-soft:#183126; --warn-soft:#34290F; --bad-soft:#3A1A18;
+  --heat0:#1F2B27; --heat1:#2C5A48; --heat2:#3F8B6C; --heat3:#6CC3A0;
+  color-scheme:dark}
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.65;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 48px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.wrap{max-width:1040px;margin:0 auto}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.3}
+h1{font-size:clamp(28px,5vw,44px);font-weight:700}
+h2{font-size:22px;font-weight:700}
+h3{font-size:17px;font-weight:700}
+p{margin:0}
+a{color:var(--pine)}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.eyebrow{font-size:12px;letter-spacing:.08em;color:var(--muted);font-weight:600}
+.muted{color:var(--muted)}
+.small{font-size:13px}
+
+/* Masthead */
+header.mast{padding-block:28px 18px;display:grid;gap:14px;border-bottom:1px solid var(--line)}
+.mast-top{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+.mast-sub{max-width:62ch;color:var(--muted)}
+.mast-sub b{color:var(--ink);font-weight:600}
+.stamp{display:flex;gap:18px;flex-wrap:wrap}
+.stamp div{display:grid}
+.stamp .n{font-family:var(--f-mono);font-size:26px;font-weight:500;color:var(--pine);line-height:1.1}
+.stamp .n.maple{color:var(--maple)}
+.stamp .l{font-size:12px;color:var(--muted)}
+
+/* Tabs */
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:10px;
+  display:flex;gap:6px;overflow-x:auto;border-bottom:1px solid var(--line);scrollbar-width:thin}
+nav.tabs button{flex:0 0 auto;border:1px solid transparent;background:none;color:var(--muted);font:inherit;font-weight:600;
+  padding:7px 13px;border-radius:999px;cursor:pointer;white-space:nowrap}
+nav.tabs button:hover{color:var(--ink);background:var(--sunk)}
+nav.tabs button[aria-selected="true"]{background:var(--pine);color:var(--bg)}
+button:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,a:focus-visible{outline:2px solid var(--maple);outline-offset:2px}
+
+section.panel{padding-block:22px;display:grid;gap:18px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:16px;align-items:start}
+.grid2>*{min-width:0}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;display:grid;gap:12px;min-width:0}
+.card.flat{background:transparent;border-style:dashed}
+.head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+
+/* Today theme */
+.theme{background:var(--pine);color:var(--bg);border-radius:var(--r);padding:22px;display:grid;gap:10px}
+.theme .eyebrow{color:inherit;opacity:.8}
+.theme h2{font-size:clamp(22px,3.4vw,30px)}
+.theme .topic{font-family:var(--f-display);font-size:19px;border-top:1px solid color-mix(in srgb,var(--bg) 35%,transparent);padding-top:10px}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{font-size:12px;padding:2px 9px;border-radius:999px;background:var(--pine-soft);color:var(--pine);font-weight:600}
+.theme .chip{background:color-mix(in srgb,var(--bg) 18%,transparent);color:var(--bg)}
+.week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+.week div{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:8px 6px;font-size:12px;display:grid;gap:2px;min-width:0}
+.week div b{font-family:var(--f-display);font-size:15px}
+.week div.on{border-color:var(--maple);box-shadow:inset 0 0 0 1px var(--maple)}
+.week span{overflow-wrap:anywhere;color:var(--muted)}
+@media (max-width:560px){.week{grid-template-columns:repeat(4,minmax(0,1fr))}}
+
+/* Forms */
+label{display:grid;gap:4px;font-size:13px;font-weight:600;color:var(--muted)}
+input,textarea,select{font:inherit;font-size:15px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:9px 11px;width:100%;min-width:0}
+textarea{resize:vertical;line-height:1.6}
+textarea.draft{font-family:var(--f-body);min-height:340px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:end}
+.row>label{flex:1 1 180px}
+.btn{font:inherit;font-weight:600;border-radius:8px;padding:9px 15px;cursor:pointer;border:1px solid var(--pine);background:var(--pine);color:var(--bg)}
+.btn:hover{filter:brightness(1.08)}
+.btn.ghost{background:transparent;color:var(--pine)}
+.btn.maple{background:var(--maple);border-color:var(--maple)}
+.btn.sm{padding:5px 10px;font-size:13px}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+
+/* Status pills */
+.pill{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700;padding:3px 10px;border-radius:999px}
+.pill.ok{background:var(--ok-soft);color:var(--ok)}
+.pill.warn{background:var(--warn-soft);color:var(--warn)}
+.pill.bad{background:var(--bad-soft);color:var(--bad)}
+.pill.info{background:var(--pine-soft);color:var(--pine)}
+
+/* Checks list */
+ul.checks{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+ul.checks li{display:grid;grid-template-columns:22px 1fr;gap:8px;align-items:start;font-size:14px}
+ul.checks .mk{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:700;margin-top:2px}
+.mk.ok{background:var(--ok-soft);color:var(--ok)} .mk.warn{background:var(--warn-soft);color:var(--warn)} .mk.bad{background:var(--bad-soft);color:var(--bad)}
+.verdict{border-radius:8px;padding:12px 14px;font-weight:600}
+.verdict.ok{background:var(--ok-soft);color:var(--ok)} .verdict.warn{background:var(--warn-soft);color:var(--warn)} .verdict.bad{background:var(--bad-soft);color:var(--bad)}
+
+/* Rules */
+.rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px}
+.rules ol{margin:0;padding-left:20px;display:grid;gap:6px}
+.rule-do{border-top:4px solid var(--ok)}
+.rule-no{border-top:4px solid var(--bad)}
+.steps{counter-reset:s;list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.steps li{counter-increment:s;display:grid;grid-template-columns:34px 1fr;gap:10px;align-items:start}
+.steps li::before{content:counter(s);font-family:var(--f-mono);font-weight:500;width:30px;height:30px;border-radius:50%;
+  display:grid;place-items:center;background:var(--pine-soft);color:var(--pine)}
+
+/* Board */
+.feed{display:grid;gap:10px}
+.post{display:grid;grid-template-columns:40px 1fr;gap:12px;padding:14px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+.post img{width:40px;height:40px;border-radius:50%}
+.post .t{font-weight:600;overflow-wrap:anywhere}
+.post .meta{font-size:12px;color:var(--muted);display:flex;gap:8px;flex-wrap:wrap}
+.post .acts{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:6px}
+.post .note{display:flex;gap:6px;margin-top:6px}
+.post .note input{font-size:13px;padding:6px 9px}
+.empty{padding:22px;border:1px dashed var(--line);border-radius:var(--r);color:var(--muted);text-align:center;display:grid;gap:6px}
+
+/* Heatmap */
+.heat-wrap{overflow-x:auto}
+.heat{display:grid;grid-auto-flow:column;grid-template-rows:repeat(7,14px);gap:3px;width:max-content}
+.heat i{width:14px;height:14px;border-radius:3px;background:var(--heat0);display:block}
+.heat i.l1{background:var(--heat1)} .heat i.l2{background:var(--heat2)} .heat i.l3{background:var(--heat3)}
+.heat i.today{outline:2px solid var(--maple);outline-offset:-1px}
+table.log{width:100%;border-collapse:collapse;font-size:14px}
+table.log th,table.log td{text-align:left;padding:8px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+table.log th{font-size:12px;color:var(--muted);font-weight:600}
+table.log td.d{font-family:var(--f-mono);white-space:nowrap;font-variant-numeric:tabular-nums}
+.tbl{overflow-x:auto}
+
+pre.share{white-space:pre-wrap;background:var(--sunk);border-radius:8px;padding:14px;margin:0;font-family:var(--f-body);font-size:14px;overflow-wrap:anywhere}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);
+  padding:9px 16px;border-radius:999px;font-size:14px;font-weight:600;z-index:20;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast.show{opacity:1}
+.note-box{background:var(--maple-soft);color:var(--ink);border-radius:8px;padding:12px 14px;font-size:14px}
+.note-box b{color:var(--maple)}
+.kwlist{display:flex;flex-wrap:wrap;gap:8px}
+.kwchip{font:inherit;font-size:14px;font-weight:600;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:999px;padding:7px 14px;cursor:pointer}
+.kwchip:hover{border-color:var(--maple);color:var(--maple)}
+details summary{cursor:pointer;font-weight:600;color:var(--pine)}
+.out{display:grid;gap:16px}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.gallery figure{margin:0;display:grid;gap:6px;min-width:0}
+.gallery img{width:100%;border-radius:8px;border:1px solid var(--line);display:block}
+.gallery figcaption{display:flex;justify-content:space-between;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
+.score{font-size:24px;color:var(--pine);font-weight:500}
+.bar{height:8px;background:var(--sunk);border-radius:999px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--ok);transition:width .3s}
+.bar i.warn{background:var(--warn)} .bar i.bad{background:var(--bad)}
+video{width:100%;max-width:300px;border-radius:8px;background:#000}
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}
+footer{border-top:1px solid var(--line);padding-block:18px;color:var(--muted);font-size:13px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+<header class="mast">
+  <div class="mast-top">
+    <div style="display:grid;gap:6px">
+      <span class="eyebrow">동두천 사회복지사 상호성장 캠페인 · 기획 박진혁 교수</span>
+      <h1>동두천 1일 1포스팅</h1>
+    </div>
+    <div class="stamp" aria-label="나의 현황">
+      <div><span class="n mono" id="st-streak">0</span><span class="l">연속 발행일</span></div>
+      <div><span class="n mono" id="st-month">0</span><span class="l">이번 달 글</span></div>
+      <div><span class="n mono maple" id="st-today">미발행</span><span class="l" id="st-date">오늘</span></div>
+    </div>
+  </div>
+  <p class="mast-sub">하루 한 편, 각자의 전문분야로 <b>동두천 복지정보</b>를 씁니다. 키워드를 누르면 AI가 제목·부제목·본문·해시태그·카드뉴스·숏폼 영상까지 만들고, 사람이 확인해 발행합니다. 서로의 글을 <b>실제로 읽고</b> 구체적인 의견을 나눕니다. 순위를 만드는 품앗이가 아니라 전문성을 키우는 동료 학습입니다.</p>
+</header>
+
+<nav class="tabs" role="tablist" aria-label="캠페인 메뉴">
+  <button role="tab" data-tab="today" id="tab-today" aria-selected="true">오늘</button>
+  <button role="tab" data-tab="write" id="tab-write" aria-selected="false">AI 자동 글쓰기</button>
+  <button role="tab" data-tab="news" id="tab-news" aria-selected="false">뉴스 종합</button>
+  <button role="tab" data-tab="board" id="tab-board" aria-selected="false">링크 보드</button>
+  <button role="tab" data-tab="comment" id="tab-comment" aria-selected="false">댓글 점검</button>
+  <button role="tab" data-tab="me" id="tab-me" aria-selected="false">나의 기록</button>
+  <button role="tab" data-tab="month" id="tab-month" aria-selected="false">월간 공유</button>
+  <button role="tab" data-tab="rules" id="tab-rules" aria-selected="false">운영규칙</button>
+  <button role="tab" data-tab="guide" id="tab-guide" aria-selected="false">강의 핵심</button>
+  <button role="tab" data-tab="kit" id="tab-kit" aria-selected="false">단톡방 키트</button>
+</nav>
+
+<!-- 오늘 -->
+<section class="panel" data-panel="today">
+  <div class="theme" id="theme-card">
+    <span class="eyebrow" id="theme-day">오늘의 테마</span>
+    <h2 id="theme-name">테마</h2>
+    <div class="chips" id="theme-fields"></div>
+    <p class="topic" id="theme-topic">추천 주제</p>
+    <div class="btns">
+      <button class="btn sm" style="background:var(--bg);color:var(--pine);border-color:var(--bg)" id="btn-next-topic">다른 주제 보기</button>
+      <button class="btn sm ghost" style="color:var(--bg);border-color:var(--bg)" id="btn-use-topic">이 주제로 글쓰기</button>
+    </div>
+  </div>
+
+  <div>
+    <h3 style="margin-bottom:8px">요일별 전문분야 순환표</h3>
+    <div class="week" id="week"></div>
+    <p class="small muted" style="margin-top:6px">박진혁 교수의 전문분야 24개를 7개 요일 테마로 묶었습니다. 자기 분야가 있으면 그 분야를 우선하고, 막힐 때 요일 테마를 쓰세요.</p>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <div class="head"><h3>오늘 발행 기록</h3><span class="pill info" id="today-pill">아직 기록 없음</span></div>
+      <div class="row">
+        <label for="log-title">글 제목<input id="log-title" placeholder="예: 동두천 어르신 보행안전 수칙 7가지"></label>
+      </div>
+      <div class="row">
+        <label for="log-url">글 링크<input id="log-url" inputmode="url" placeholder="https://blog.naver.com/..."></label>
+        <label for="log-field" style="flex:0 1 180px">분야<select id="log-field"></select></label>
+      </div>
+      <div class="btns">
+        <button class="btn" id="btn-log">발행 기록하기</button>
+        <button class="btn ghost" id="btn-log-share">단톡방 공유문 복사</button>
+      </div>
+      <p class="small muted" id="log-hint">기록은 이 브라우저에 저장됩니다. 링크 보드 권한이 있으면 보드에도 함께 올라갑니다.</p>
+    </div>
+
+    <div class="card">
+      <h3>오늘의 루틴</h3>
+      <ul class="checks" id="routine"></ul>
+      <p class="small muted">체크 상태는 날짜별로 이 브라우저에 저장됩니다.</p>
+    </div>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <div class="head"><h3>직장 병행 30분 운영 (18장)</h3><span class="pill info" id="work-today"></span></div>
+      <ul class="checks" id="work-week"></ul>
+    </div>
+    <div class="card">
+      <div class="head"><h3>첫 달 목표</h3><span class="small muted">이번 달 기록 기준</span></div>
+      <ul class="checks" id="first-month"></ul>
+    </div>
+  </div>
+</section>
+
+<!-- AI 자동 글쓰기 -->
+<section class="panel" data-panel="write" hidden>
+  <div class="card">
+    <div class="head"><h3>1. 키워드 고르기</h3><span class="small muted">키워드를 누르면 바로 글이 만들어집니다</span></div>
+    <div class="chips" id="kw-groups" role="group" aria-label="분야"></div>
+    <div class="kwlist" id="kw-list"></div>
+    <details class="builder">
+      <summary>키워드 공식으로 직접 만들기 (대상자 + 문제 + 지역 + 시점 + 행동)</summary>
+      <div class="row" style="margin-top:10px">
+        <label for="b-region" style="flex:0 1 120px">지역<input id="b-region" value="동두천"></label>
+        <label for="b-target" style="flex:0 1 150px">대상자<select id="b-target"><option>노인</option><option>어르신</option><option>영유아 부모</option><option>청소년</option><option>청년</option><option>중장년</option><option>장애인</option><option>보호자</option><option>주민</option></select></label>
+        <label for="b-problem">문제<input id="b-problem" placeholder="예: 가족돌봄, 우울, 재취업"></label>
+        <label for="b-time" style="flex:0 1 130px">시점<select id="b-time"><option value="">(없음)</option><option>2026년</option><option>이번 달</option><option>올겨울</option><option>신학기</option><option>연말</option></select></label>
+        <label for="b-action" style="flex:0 1 140px">행동<select id="b-action"><option>신청방법</option><option>준비서류</option><option>이용방법</option><option>지원대상</option><option>체크리스트</option><option>후기</option></select></label>
+        <button class="btn" id="btn-build">조합해서 글쓰기</button>
+      </div>
+    </details>
+    <div class="row">
+      <label for="kw">핵심 키워드<input id="kw" placeholder="예: 동두천 노인 복지관 프로그램"></label>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h3>2. 자료 확인 (선택)</h3>
+      <p class="small muted">네이버 뉴스·검색 상단 글은 이 페이지가 직접 가져올 수 없습니다. 아래 링크로 열어 상단 기사 3~5개의 제목과 첫 문장을 복사해 붙여 넣으면, AI가 쟁점과 현장 시사점을 종합합니다.</p>
+      <div class="btns" id="research-links"></div>
+      <label for="news">상단 뉴스·자료 붙여넣기<textarea id="news" rows="5" placeholder="예:&#10;[○○일보] 기사 제목 / 첫 문장 / 링크&#10;[보건복지부 보도자료] 제목 / 핵심 내용"></textarea></label>
+    </div>
+    <div class="card">
+      <h3>3. 나의 실제 경험과 설정</h3>
+      <label for="exp">현장 경험 메모 (비워 두면 AI가 경험을 지어내지 않고 자리만 남깁니다)<textarea id="exp" rows="4" placeholder="예: 복지관에서 어르신 30명 대상 디지털 교육을 해 보니, 키오스크 주문을 가장 어려워하셨다."></textarea></label>
+      <div class="row">
+        <label for="len" style="flex:0 1 140px">작성 분량<select id="len"><option value="1500">1,500자</option><option value="2000" selected>2,000자</option><option value="3000">3,000자</option></select></label>
+        <label for="ptype" style="flex:0 1 160px">글 유형<select id="ptype"><option value="info">정보 해설형</option><option value="check">체크리스트형</option><option value="review">실제 경험 후기형</option><option value="qa">Q&amp;A형</option></select></label>
+        <label for="reader" style="flex:0 1 160px">주요 독자<select id="reader"><option>동두천 주민</option><option>어르신과 가족</option><option>보호자·돌봄가족</option><option>사회복지사·실무자</option><option>청소년·청년</option><option>중장년</option></select></label>
+        <label for="sponsor" style="flex:0 1 140px">협찬·제휴<select id="sponsor"><option value="">없음</option><option value="협찬">협찬</option><option value="제휴">제휴</option><option value="원고료">원고료</option></select></label>
+      </div>
+      <div class="btns">
+        <button class="btn maple" id="btn-run">자동 생성</button>
+        <button class="btn ghost" id="btn-stop" hidden>중지</button>
+      </div>
+      <p class="small muted" id="run-status">AI 연결을 확인하는 중입니다. 연결되지 않으면 템플릿으로 생성합니다.</p>
+    </div>
+  </div>
+
+  <div id="out" class="out" hidden>
+    <div class="card">
+      <div class="head"><h3>제목과 부제목</h3><span class="pill info" id="gen-mode">템플릿</span></div>
+      <ul class="checks" id="o-titles"></ul>
+      <label for="o-sub">부제목<input id="o-sub"></label>
+      <p class="small muted" id="o-meta"></p>
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        <div class="head"><h3>본문</h3><span class="small muted mono" id="w-count">0자</span></div>
+        <textarea id="w-draft" class="draft" aria-label="본문"></textarea>
+        <div class="btns">
+          <button class="btn" id="btn-copy-naver">네이버 블로그용 전체 복사</button>
+          <button class="btn ghost" id="btn-copy-draft">본문만 복사</button>
+          <button class="btn ghost" id="btn-ex-blog">HTML로 내보내기</button>
+        </div>
+        <div id="o-news-box" hidden>
+          <h3 style="margin-bottom:6px">뉴스 종합 정리</h3>
+          <p class="small" id="o-news"></p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="head"><h3>품질 점검</h3><span class="score mono" id="q-score">0</span></div>
+        <div class="bar"><i id="q-bar"></i></div>
+        <p class="small muted">네이버가 공개한 C-Rank(주제 전문성·신뢰)와 D.I.A.+(경험·정보성·독창성) 원칙, AI 검색이 인용하기 쉬운 구조(요약·질문과 답·출처)를 기준으로 봅니다. 상위노출을 보장하지는 않습니다.</p>
+        <ul class="checks" id="pre-check"></ul>
+        <div>
+          <div class="head"><h3>해시태그</h3><button class="btn sm ghost" id="btn-copy-tags">복사</button></div>
+          <div class="chips" id="o-tags" style="margin-top:6px"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="head"><h3>이미지: 대표 썸네일과 카드뉴스 5장</h3><span class="small muted" id="img-note"></span></div>
+      <div class="gallery" id="gallery"></div>
+      <details>
+        <summary class="small">외부 이미지 AI용 프롬프트 (사진형 이미지가 필요할 때)</summary>
+        <ul class="checks" id="o-prompts" style="margin-top:8px"></ul>
+      </details>
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        <div class="head"><h3>영상: 세로형 숏폼 (약 20초)</h3></div>
+        <p class="small muted">썸네일과 카드뉴스로 9:16 영상을 이 브라우저에서 직접 만듭니다. 만드는 데 영상 길이만큼 시간이 걸립니다.</p>
+        <div class="btns"><button class="btn" id="btn-video">영상 만들기</button><button class="btn ghost" id="btn-video-save" hidden>영상 저장</button></div>
+        <video id="o-video" controls playsinline hidden></video>
+        <p class="small muted" id="video-status"></p>
+      </div>
+      <div class="card">
+        <div class="head"><h3>릴스 대본과 인스타그램 캡션</h3><button class="btn sm ghost" id="btn-copy-insta">캡션 복사</button></div>
+        <div class="tbl"><table class="log"><thead><tr><th>구간</th><th>화면</th><th>자막</th></tr></thead><tbody id="o-reels"></tbody></table></div>
+        <pre class="share" id="o-insta"></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 뉴스 종합 -->
+<section class="panel" data-panel="news" hidden>
+  <div class="note-box"><b>자료 10개 이상을 검증해 종합 기사·블로그 글을 씁니다.</b> 이 페이지는 보안 정책상 네이버를 직접 읽지 못합니다. 자동 수집은 저장소의 <span class="mono">tools/naver_news_writer.py</span>(네이버 검색 API로 수집하고 링크를 열어 검증)를 실행해 나온 sources.json을 불러오고, 그 밖의 링크와 텍스트는 아래에서 직접 더하세요.</div>
+
+  <div class="grid2">
+    <div class="card">
+      <h3>1. 키워드와 분야</h3>
+      <div class="row">
+        <label for="nk-field" style="flex:0 1 150px">분야<select id="nk-field"></select></label>
+        <label for="nk-word">키워드<input id="nk-word" placeholder="예: 노인맞춤돌봄서비스"></label>
+        <button class="btn" id="btn-nk-add">추가</button>
+      </div>
+      <div class="chips" id="nk-list"></div>
+      <div class="btns" id="nk-links"></div>
+      <p class="small muted">네이버 뉴스 홈의 언론사 픽·랭킹·섹션 상단 기사도 같은 방법으로 열어 링크를 더하세요.</p>
+    </div>
+    <div class="card">
+      <h3>2. 자료 불러오기</h3>
+      <label for="nj-file">프로그램 결과 파일 (sources.json)<input id="nj-file" type="file" accept=".json,application/json"></label>
+      <label for="nj-bulk">링크 여러 개 붙여넣기 (한 줄에 하나: URL 또는 '제목 | URL | 언론사 | 날짜')<textarea id="nj-bulk" rows="4" placeholder="https://n.news.naver.com/article/...&#10;복지 예산 확대 | https://... | ○○일보 | 2026-10-15"></textarea></label>
+      <div class="btns"><button class="btn" id="btn-nj-bulk">붙여넣은 자료 추가</button><span class="small muted" id="nj-msg"></span></div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h3>링크 하나 추가</h3>
+      <div class="row">
+        <label for="ns-url">링크<input id="ns-url" inputmode="url" placeholder="https://"></label>
+      </div>
+      <div class="row">
+        <label for="ns-title">제목<input id="ns-title"></label>
+        <label for="ns-press" style="flex:0 1 150px">언론사·기관<input id="ns-press"></label>
+        <label for="ns-date" style="flex:0 1 150px">날짜<input id="ns-date" type="date"></label>
+      </div>
+      <div class="row">
+        <label for="ns-field" style="flex:0 1 150px">분야<select id="ns-field"></select></label>
+        <label for="ns-sum">핵심 내용 (원문을 읽고 내 말로 1~2문장)<input id="ns-sum"></label>
+      </div>
+      <div class="btns"><button class="btn" id="btn-ns-add">자료 추가</button></div>
+    </div>
+    <div class="card">
+      <h3>3. 별도 텍스트 (현장 경험·내부 자료·인터뷰)</h3>
+      <div class="row">
+        <label for="nt-field" style="flex:0 1 150px">분야<select id="nt-field"></select></label>
+        <label for="nt-kind" style="flex:0 1 150px">종류<select id="nt-kind"><option>현장 경험</option><option>내부 자료</option><option>인터뷰</option><option>통계 메모</option><option>기타</option></select></label>
+      </div>
+      <label for="nt-text">내용<textarea id="nt-text" rows="3" placeholder="예: 10월 들어 복지관 돌봄 신청 상담이 주 5건에서 12건으로 늘었다 (복지관 상담일지)"></textarea></label>
+      <div class="btns"><button class="btn" id="btn-nt-add">텍스트 추가</button></div>
+      <div class="feed" id="nt-list"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="head"><h3>4. 자료 검증</h3><span class="score mono" id="nv-count">0 / 10</span></div>
+    <div class="bar"><i id="nv-bar"></i></div>
+    <div class="chips" id="nv-dist"></div>
+    <p class="small muted">자료마다 원문을 열어 세 가지를 확인하면 검증 완료가 됩니다. 프로그램이 링크를 열어 확인한 자료는 "프로그램 검증"으로 표시됩니다.</p>
+    <div class="feed" id="nv-list"><div class="empty">아직 자료가 없습니다. 프로그램 결과를 불러오거나 링크를 추가하세요.</div></div>
+  </div>
+
+  <div class="card">
+    <h3>5. 종합 글 쓰기</h3>
+    <div class="row">
+      <label for="nw-mode" style="flex:0 1 200px">글 종류<select id="nw-mode"><option value="both">기획기사 + 블로그 글</option><option value="article">기획기사</option><option value="blog">블로그 글</option></select></label>
+      <label for="nw-len" style="flex:0 1 150px">분량<select id="nw-len"><option value="2000">2,000자</option><option value="3000" selected>3,000자</option><option value="4000">4,000자</option></select></label>
+      <label style="flex:0 1 auto;display:flex;gap:8px;align-items:center;color:var(--ink)"><input type="checkbox" id="nw-force" style="width:18px;height:18px">10개 미만이어도 쓰기</label>
+    </div>
+    <div class="btns">
+      <button class="btn maple" id="btn-nw-run">종합 글 쓰기</button>
+      <button class="btn ghost" id="btn-nw-table">자료 정리표 복사</button>
+      <button class="btn ghost" id="btn-nw-studio">블로그 스튜디오로 보내기 (이미지·영상)</button>
+    </div>
+    <p class="small muted" id="nw-status"></p>
+    <textarea id="nw-out" class="draft" aria-label="종합 글" placeholder="검증된 자료로 쓴 기사·블로그 글이 여기에 나옵니다. 문장 끝 [번호]는 자료 번호입니다."></textarea>
+    <div class="btns"><button class="btn" id="btn-nw-copy">글 복사</button><button class="btn ghost" id="btn-ex-news">HTML로 내보내기</button><button class="btn ghost" id="btn-ex-csv">자료 정리표 CSV</button></div>
+  </div>
+</section>
+
+<!-- 링크 보드 -->
+<section class="panel" data-panel="board" hidden>
+  <div class="note-box" id="board-status"><b>링크 보드를 연결하는 중입니다.</b> 연결되지 않으면 오픈 단톡방에 링크를 공유하세요. 이 페이지의 다른 기능은 그대로 쓸 수 있습니다.</div>
+
+  <div class="grid2">
+    <div class="card" id="profile-card">
+      <h3>내 참여 정보</h3>
+      <div class="row">
+        <label for="p-field">대표 분야<select id="p-field"></select></label>
+        <label for="p-blog">내 블로그 주소<input id="p-blog" inputmode="url" placeholder="https://blog.naver.com/아이디"></label>
+      </div>
+      <div class="btns"><button class="btn" id="btn-profile">참여 정보 저장</button></div>
+      <p class="small muted">이름은 claude.ai 계정 이름으로 표시됩니다. 운영규칙 서약을 해야 보드에 글을 올릴 수 있습니다.</p>
+    </div>
+    <div class="card">
+      <div class="head"><h3>내 글에 온 피드백</h3><span class="small muted" id="fb-count"></span></div>
+      <div class="feed" id="my-feedback"><div class="empty">동료가 남긴 내용·표현 피드백이 여기에 모입니다.</div></div>
+    </div>
+  </div>
+
+  <div class="head">
+    <h3>동료의 글</h3>
+    <div class="btns" role="group" aria-label="기간">
+      <button class="btn sm" data-range="1" id="rg-1">오늘</button>
+      <button class="btn sm ghost" data-range="7" id="rg-7">최근 7일</button>
+      <button class="btn sm ghost" data-range="30" id="rg-30">최근 30일</button>
+    </div>
+  </div>
+  <p class="small muted">"읽었어요"는 실제로 끝까지 읽은 글에만 누르세요. 읽음 수는 공개 순위에 쓰지 않고 글쓴이 본인에게만 보입니다.</p>
+  <div class="feed" id="feed"><div class="empty">아직 올라온 글이 없습니다. 오늘 탭에서 첫 글을 기록해 보세요.</div></div>
+
+  <div>
+    <h3 style="margin-bottom:8px">참여자와 블로그</h3>
+    <p class="small muted" style="margin-bottom:8px">서로이웃은 글을 읽어 보고 관심 분야가 맞을 때 추가하세요.</p>
+    <div class="feed" id="members"><div class="empty">참여 정보를 저장한 동료가 여기에 표시됩니다.</div></div>
+  </div>
+</section>
+
+<!-- 댓글 점검 -->
+<section class="panel" data-panel="comment" hidden>
+  <div class="grid2">
+    <div class="card">
+      <h3>댓글 품질 점검기</h3>
+      <p class="small muted">블로그에 댓글을 달기 전에 여기서 먼저 써 보세요. 이 도구는 댓글을 대신 달지 않습니다. 점검을 통과하면 직접 블로그에 붙여 넣으세요.</p>
+      <label for="c-title">읽은 글의 제목이나 기억에 남는 문장<input id="c-title" placeholder="예: 어르신 보행안전 수칙 7가지"></label>
+      <label for="c-text">댓글 초안<textarea id="c-text" rows="6" placeholder="예: 3번 '횡단보도 신호 한 번 기다리기'가 인상적이었습니다. 저희 기관 어르신들께도 안내하고 싶은데, 야간 보행용 반사 소품은 어디서 지원받을 수 있을까요?"></textarea></label>
+      <div class="btns">
+        <button class="btn" id="btn-check">점검하기</button>
+        <button class="btn ghost" id="btn-c-done">블로그에 작성 완료로 기록</button>
+      </div>
+    </div>
+    <div class="card">
+      <h3>점검 결과</h3>
+      <div class="verdict ok" id="c-verdict" hidden></div>
+      <ul class="checks" id="c-result"><li><span class="mk ok">·</span><span class="muted">댓글 초안을 쓰고 점검하기를 누르세요. 상투적 표현, 반복, 글 내용과의 연결, 질문·의견 포함 여부를 봅니다.</span></li></ul>
+      <div>
+        <h3 style="margin-bottom:6px">좋은 댓글의 3요소</h3>
+        <ol class="small" style="margin:0;padding-left:20px;display:grid;gap:4px">
+          <li><b>짚기</b> 글에서 구체적으로 좋았던 부분을 인용합니다.</li>
+          <li><b>잇기</b> 내 현장 경험이나 생각을 한 문장 덧붙입니다.</li>
+          <li><b>묻기</b> 궁금한 점이나 다음 글 제안을 남깁니다.</li>
+        </ol>
+      </div>
+      <p class="small muted" id="c-history">최근 작성 기록 0개 (반복 점검에 사용, 이 브라우저에만 저장)</p>
+    </div>
+  </div>
+</section>
+
+<!-- 나의 기록 -->
+<section class="panel" data-panel="me" hidden>
+  <div class="card">
+    <div class="head"><h3>최근 16주 발행 달력</h3><span class="small muted" id="heat-sum"></span></div>
+    <div class="heat-wrap"><div class="heat" id="heat" aria-label="발행 달력"></div></div>
+    <div class="small muted" style="display:flex;gap:6px;align-items:center">적음 <i style="width:12px;height:12px;border-radius:3px;background:var(--heat0);display:inline-block"></i><i style="width:12px;height:12px;border-radius:3px;background:var(--heat1);display:inline-block"></i><i style="width:12px;height:12px;border-radius:3px;background:var(--heat2);display:inline-block"></i><i style="width:12px;height:12px;border-radius:3px;background:var(--heat3);display:inline-block"></i> 많음</div>
+  </div>
+  <div class="card">
+    <div class="head"><h3>발행 목록</h3><span class="small muted" id="log-count"></span></div>
+    <div class="tbl"><table class="log"><thead><tr><th>날짜</th><th>분야</th><th>제목</th><th></th></tr></thead><tbody id="log-body"></tbody></table></div>
+  </div>
+  <div class="card" id="export-card">
+    <div class="head"><h3>내보내기</h3><span class="small muted" id="ex-note"></span></div>
+    <p class="small muted">만든 글과 기록을 파일로 저장합니다. HTML은 네이버 블로그 에디터에 붙여 넣을 때 소제목과 목록 서식이 살아 있고, CSV는 엑셀에서 바로 열립니다.</p>
+    <div class="tbl"><table class="log ex"><tbody id="ex-rows"></tbody></table></div>
+    <label for="ex-restore">백업 파일(.json)로 복원<input id="ex-restore" type="file" accept=".json,application/json"></label>
+    <p class="small muted" id="ex-msg"></p>
+  </div>
+  <div class="card flat">
+    <h3>백업과 복원</h3>
+    <p class="small muted">기록은 이 브라우저에만 저장됩니다. 기기를 바꾸거나 브라우저 데이터를 지우기 전에 백업 문자열을 복사해 메모장 등에 보관하세요.</p>
+    <div class="btns"><button class="btn ghost" id="btn-backup">백업 문자열 복사</button></div>
+    <label for="restore">복원할 백업 문자열<textarea id="restore" rows="3" placeholder="여기에 붙여 넣고 복원을 누르세요"></textarea></label>
+    <div class="btns"><button class="btn ghost" id="btn-restore">복원</button><span class="small muted" id="restore-msg"></span></div>
+  </div>
+</section>
+
+<!-- 월간 공유 -->
+<section class="panel" data-panel="month" hidden>
+  <div class="grid2">
+    <div class="card">
+      <div class="head"><h3 id="m-title">이번 달 회고</h3><span class="pill info" id="m-stat"></span></div>
+      <label for="m-best">가장 반응이 좋았던 글과 이유<textarea id="m-best" rows="3"></textarea></label>
+      <label for="m-know">이번 달 얻은 노하우 (제목, 키워드, 사진, 시간관리 등)<textarea id="m-know" rows="3"></textarea></label>
+      <label for="m-next">다음 달 목표<textarea id="m-next" rows="2"></textarea></label>
+      <h3 style="margin-top:4px">성과 측정 (19장) · 조회수 말고 이것을 봅니다</h3>
+      <div class="metrics" id="metrics"></div>
+      <p class="small mono" id="m-roi"></p>
+      <div class="btns">
+        <button class="btn" id="btn-month-save">회고 저장</button>
+        <button class="btn ghost" id="btn-month-copy">단톡방 공유문 복사</button>
+      </div>
+      <p class="small muted" id="m-hint">저장한 회고는 링크 보드 권한이 있으면 동료와 공유됩니다.</p>
+    </div>
+    <div class="card">
+      <h3>동료들의 이번 달 노하우</h3>
+      <div class="feed" id="m-feed"><div class="empty">동료가 회고를 저장하면 여기에 모입니다. 월 1회 성과 공유 모임 자료로 쓰세요.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 운영규칙 -->
+<section class="panel" data-panel="rules" hidden>
+  <div class="grid2">
+    <div class="card">
+      <h3>16장. 운영방법</h3>
+      <ol class="steps">
+        <li><span>동두천 사회복지사 <b>오픈 단톡방</b> 개설</span></li>
+        <li><span>각자 <b>전문분야 글</b> 작성</span></li>
+        <li><span>작성한 글의 <b>링크 공유</b></span></li>
+        <li><span>회원들이 <b>실제로 글을 읽고</b> 의견 작성</span></li>
+        <li><span><b>서로이웃</b> 추가</span></li>
+        <li><span><b>월 1회</b> 성과와 노하우 공유</span></li>
+      </ol>
+    </div>
+    <div class="card">
+      <h3>목표</h3>
+      <ul class="checks">
+        <li><span class="mk ok">✓</span><span>동두천 복지정보 확산</span></li>
+        <li><span class="mk ok">✓</span><span>사회복지사 개인 전문성 강화</span></li>
+        <li><span class="mk ok">✓</span><span>서로의 콘텐츠 제작 지원</span></li>
+        <li><span class="mk ok">✓</span><span>전국 사회복지사 네트워크로 확장</span></li>
+      </ul>
+    </div>
+  </div>
+  <h2>17장. 상호성장 운영규칙</h2>
+  <div class="rules">
+    <div class="card rule-do">
+      <h3>권장</h3>
+      <ol>
+        <li>실제로 읽은 글에 자발적으로 공감</li>
+        <li>글의 내용에 맞는 구체적인 댓글</li>
+        <li>필요한 경우 서로이웃 추가</li>
+        <li>유용한 글을 필요한 사람에게 공유</li>
+        <li>글의 내용과 표현에 대한 피드백</li>
+      </ol>
+    </div>
+    <div class="card rule-no">
+      <h3>금지</h3>
+      <ol>
+        <li>같은 댓글 반복</li>
+        <li>자동화된 대량 댓글</li>
+        <li>공감·댓글 교환을 통한 순위조작</li>
+        <li>인위적인 체류시간 만들기</li>
+        <li>광고 클릭 대행</li>
+        <li>광고 클릭 교환</li>
+        <li>실제 경험 없는 후기 작성</li>
+      </ol>
+    </div>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <h3>네이버 블로그 운영 원칙 (6장)</h3>
+      <ul class="checks">
+        <li><span class="mk warn">!</span><span>상위 노출은 보장되지 않는다.</span></li>
+        <li><span class="mk bad">×</span><span>키워드를 과도하게 반복하지 않는다.</span></li>
+        <li><span class="mk bad">×</span><span>뉴스와 다른 글을 그대로 복사하지 않는다.</span></li>
+        <li><span class="mk bad">×</span><span>기계적으로 대량 생산한 글을 피한다.</span></li>
+        <li><span class="mk ok">✓</span><span>실제 경험과 유용한 정보를 중심으로 작성한다.</span></li>
+        <li><span class="mk ok">✓</span><span>검색순위보다 독자의 검색 의도와 글의 품질을 우선한다.</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>협찬·제휴 표시 (5장)</h3>
+      <p class="small">협찬, 제휴, 원고료가 있으면 글 앞부분에 반드시 표시합니다. 경제적 대가를 숨긴 추천·보증은 표시광고법 위반이 될 수 있습니다. AI 자동 글쓰기에서 협찬·제휴를 고르면 표시 문구가 본문 첫 줄에 들어가고, 품질 점검에서 확인합니다.</p>
+    </div>
+  </div>
+  <div class="card">
+    <h3>이 도구의 자동화 범위</h3>
+    <p class="small">자동화는 <b>글을 잘 쓰는 데에만</b> 씁니다. 주제 추천, 초안 틀, 제목 후보, 발행 기록, 공유문 생성, 댓글 품질 점검이 여기에 해당합니다. 공감·댓글·방문·클릭을 자동으로 만들어 내는 기능은 넣지 않았습니다. 이런 행위는 블로그 플랫폼 운영정책 위반으로 저품질 처리나 이용 제한을 받을 수 있고, 캠페인 금지 규칙에도 해당합니다.</p>
+  </div>
+  <div class="card">
+    <div class="head"><h3>참여 서약</h3><span class="pill warn" id="pledge-pill">서약 전</span></div>
+    <label style="display:flex;gap:10px;align-items:flex-start;font-size:15px;color:var(--ink);font-weight:500">
+      <input type="checkbox" id="pledge" style="width:20px;height:20px;margin-top:3px;flex:0 0 auto">
+      <span>위 권장 사항을 지키고 금지 사항 7가지를 하지 않겠습니다. 읽지 않은 글에 공감·댓글을 남기지 않겠습니다.</span>
+    </label>
+  </div>
+</section>
+
+<!-- 강의 핵심 -->
+<section class="panel" data-panel="guide" hidden>
+  <div class="theme">
+    <span class="eyebrow">강의 · AI를 활용한 사회복지사 네이버 블로그 홍보와 수익화</span>
+    <h2>AI는 초안을 만들고, 사회복지사는 신뢰를 만듭니다</h2>
+    <p class="topic">현장 경험 → 유용한 정보 → 신뢰 → 관계 → 수익</p>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <h3>도구 역할 분담 (9장)</h3>
+      <div class="tbl"><table class="log"><thead><tr><th>도구</th><th>활용</th></tr></thead><tbody>
+        <tr><td><b>ChatGPT</b></td><td>아이디어, 질문, 목차, 자료 요약</td></tr>
+        <tr><td><b>Claude</b></td><td>긴 글 초안, 자연스러운 문체, 현장형 글쓰기 (이 도구의 AI 자동 글쓰기)</td></tr>
+        <tr><td><b>DAF</b></td><td>키워드, 블로그 초안, 사진 글, 체험단 원고, 티스토리 글</td></tr>
+        <tr><td><b>사람</b></td><td>사실 확인, 경험 보완, 최종 발행</td></tr>
+      </tbody></table></div>
+      <p class="small muted">DAF의 "이웃과 소통하기" 같은 자동 댓글·이웃 기능은 17장 금지 규칙(자동화된 대량 댓글)과 겹칩니다. 캠페인에서는 쓰지 않습니다.</p>
+    </div>
+    <div class="card">
+      <h3>콘텐츠 제작 과정 (11장)</h3>
+      <ol class="steps">
+        <li><span><b>주제 선정</b> 키워드 공식: 대상자 + 문제 + 지역 + 시점 + 행동</span></li>
+        <li><span><b>자료 확인</b> KOSIS, 보도자료, 지자체, 데이터랩, 네이버 뉴스</span></li>
+        <li><span><b>AI 초안</b> 구조는 ChatGPT, 본문은 Claude</span></li>
+        <li><span><b>플랫폼별 제작</b> 썸네일, 카드뉴스, 숏폼, 인스타 캡션</span></li>
+        <li><span><b>사람 검수</b> 출처·숫자, 과장, 제목과 본문 일치, 협찬 표시</span></li>
+        <li><span><b>발행</b> 단톡방 링크 공유와 동료 피드백</span></li>
+      </ol>
+    </div>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <h3>블로그 수익화 단계 (13장)</h3>
+      <ol style="margin:0;padding-left:20px;display:grid;gap:4px">
+        <li>네이버 애드포스트</li><li>체험단·협찬 후기 (반드시 표시)</li><li>제휴마케팅</li><li>사회복지 강의와 교육자료</li>
+        <li>블로그 글·이미지·영상 제작대행</li><li>티스토리·워드프레스 애드센스</li><li>인스타그램·유튜브 체험단과 제휴</li>
+      </ol>
+      <p class="small muted">수익은 보장되는 결과가 아니라 콘텐츠와 신뢰가 쌓인 뒤 시도하는 확장 단계입니다.</p>
+    </div>
+    <div class="card">
+      <h3>사회복지사 공동 서비스 (14장)</h3>
+      <div class="chips">
+        <span class="chip">포스팅 기획·작성대행</span><span class="chip">키워드·자료 조사</span><span class="chip">카드뉴스·이미지</span>
+        <span class="chip">짧은 동영상</span><span class="chip">기관 홍보 콘텐츠</span><span class="chip">월간 블로그 분석</span>
+        <span class="chip">교육자료 제작</span><span class="chip">강의·컨설팅</span>
+      </div>
+      <p class="small muted">공감·댓글·광고 클릭을 인위적으로 늘리는 대행은 운영하지 않습니다.</p>
+      <h3>확장 경로 (15장)</h3>
+      <p class="small">네이버 전문글 → 인스타그램 요약·릴스 → 링크 페이지 → DM 문의 → 체험단·제휴·교육. Turnflow는 네이버가 아니라 인스타그램 확장 도구로 씁니다.</p>
+    </div>
+  </div>
+  <div class="card">
+    <h3>최종 메시지 (20장)</h3>
+    <p style="font-family:var(--f-display);font-size:19px">사회복지사의 경험이 콘텐츠가 되고, 콘텐츠가 신뢰가 되며, 신뢰가 지속 가능한 전문성과 수익으로 연결됩니다.</p>
+  </div>
+</section>
+
+<!-- 단톡방 키트 -->
+<section class="panel" data-panel="kit" hidden>
+  <div class="card">
+    <label for="k-name">공유문에 쓸 내 이름 (이 브라우저에만 저장)<input id="k-name" placeholder="예: 박진혁"></label>
+  </div>
+  <div class="grid2" id="kit"></div>
+</section>
+
+<footer>
+  동두천 1일 1포스팅 상호성장 캠페인 · 기획 박진혁 교수 · 캠페인 운영방법(16장)과 운영규칙(17장)을 바탕으로 만든 참여 도구입니다.
+</footer>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- 데이터: 박진혁 교수 전문분야 기반 요일 테마 ---------- */
+var FIELDS = ["사회복지","복지정책","법무보호복지","후견사회복지","교통안전","모빌리티","교통약자편의","보조공학",
+  "AI융합","전자책","발명·창의","인권","상담","돌봄","분쟁조정·중재","성폭력 예방","지역사회","문화예술복지",
+  "평생교육","진로지도","성공학","민주평화통일교육","ESG","기타"];
+
+var THEMES = [ // index = Date.getDay(), 0 = 일요일
+ {day:"일", name:"주간 회고 · 평화통일 · ESG", fields:["민주평화통일교육","ESG"], topics:[
+  "이번 주 내가 쓴 글에서 배운 점 3가지",
+  "지역에서 실천하는 평화·통일 교육 아이디어",
+  "사회복지기관이 시작할 수 있는 ESG 실천 5가지",
+  "주간 글쓰기 회고: 잘된 글과 아쉬운 글 비교",
+  "탄소중립 생활 실천을 복지 프로그램에 녹이는 방법",
+  "다음 주 포스팅 계획과 독자 질문 정리"]},
+ {day:"월", name:"복지정책 · 제도 해설", fields:["사회복지","복지정책","법무보호복지","후견사회복지"], topics:[
+  "올해 바뀐 복지제도 중 동두천 주민이 꼭 알아야 할 것",
+  "기초생활보장 신청 절차 단계별 정리",
+  "성년후견제도, 언제 어떻게 활용하나",
+  "보호대상자의 사회복귀를 돕는 지원 제도 안내",
+  "복지 사각지대 발굴: 이웃이 할 수 있는 연계 방법",
+  "긴급복지지원 제도 활용 체크리스트"]},
+ {day:"화", name:"교통안전 · 교통약자 · 보조공학", fields:["교통안전","모빌리티","교통약자편의","보조공학"], topics:[
+  "어르신 보행 안전을 위한 생활 수칙",
+  "교통약자 이동지원 서비스 이용 방법",
+  "휠체어·보행보조기 고를 때 확인할 점",
+  "어린이 보호구역에서 운전자가 지켜야 할 것",
+  "보조기기 지원 제도 알아보기",
+  "개인형 이동장치(전동킥보드) 안전 수칙"]},
+ {day:"수", name:"AI융합 · 디지털 복지", fields:["AI융합","전자책","발명·창의"], topics:[
+  "사회복지사가 생성형 AI로 문서 업무를 줄이는 방법",
+  "어르신 디지털 문해교육 수업 설계 팁",
+  "AI 활용 시 개인정보 보호 체크리스트",
+  "전자책으로 내 전문성을 정리하는 첫걸음",
+  "복지 현장의 불편을 발명 아이디어로 바꾸는 법",
+  "AI로 기관 홍보문을 쓸 때 사실 확인하는 방법"]},
+ {day:"목", name:"인권 · 상담 · 돌봄", fields:["인권","상담","돌봄","분쟁조정·중재","성폭력 예방"], topics:[
+  "돌봄 현장에서 지켜야 할 인권 감수성 체크",
+  "이웃 갈등, 분쟁조정으로 푸는 방법",
+  "상담 첫 만남에서 신뢰를 쌓는 질문법",
+  "성폭력 예방교육 핵심 메시지 정리",
+  "가족 돌봄자의 소진 예방 가이드",
+  "사회복지사의 감정노동 관리법"]},
+ {day:"금", name:"지역사회 · 동두천 현장", fields:["지역사회","문화예술복지"], topics:[
+  "우리 동네 복지 자원 지도 만들기",
+  "동두천 지역 행사 현장 기록",
+  "주민 참여형 문화예술 복지 프로그램 사례",
+  "지역 기관 협력이 잘 된 사례와 비결",
+  "동두천 주민이 알면 좋은 생활 복지 정보",
+  "현장에서 만난 사람 이야기 (당사자 동의 후)"]},
+ {day:"토", name:"평생교육 · 진로 · 성공학", fields:["평생교육","진로지도","성공학"], topics:[
+  "중장년 재취업을 위한 평생교육 활용법",
+  "청소년 진로 탐색을 돕는 대화법",
+  "자격증 공부를 습관으로 만드는 방법",
+  "1일 1포스팅을 지속하는 나만의 루틴",
+  "강의 한 편을 블로그 글로 바꾸는 방법",
+  "목표 설정과 회고로 성장하는 법"]}
+];
+
+var ROUTINE = [
+  "오늘의 주제 정하기 (10분)",
+  "공식 출처 1개 이상 확인하기",
+  "글 발행하고 링크 기록하기",
+  "단톡방에 링크 공유하기",
+  "동료 글 2편 끝까지 읽기",
+  "읽은 글에 구체적인 댓글 남기기"
+];
+
+var GENERIC = ["잘 보고 갑니다","좋은 글 감사","좋은 정보 감사","공감 누르고","공감하고 갑니다",
+  "서이추","맞팔","소통해요","잘 읽었습니다","유익한 정보","다녀갑니다","방문하고 갑니다","좋은 하루 되세요","행복한 하루","응원합니다","최고예요"];
+var BANNED = ["공감 교환","댓글 교환","공감교환","댓글교환","품앗이","클릭 부탁","광고 클릭","클릭해 주","맞공감","체류시간"];
+
+/* ---------- 유틸 ---------- */
+function $(id){return document.getElementById(id)}
+function pad(n){return (n<10?"0":"")+n}
+function ymd(d){return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate())}
+function ym(d){return d.getFullYear()+"-"+pad(d.getMonth()+1)}
+function addDays(d,n){var x=new Date(d.getFullYear(),d.getMonth(),d.getDate());x.setDate(x.getDate()+n);return x}
+function parseYmd(s){var p=s.split("-");return new Date(+p[0],+p[1]-1,+p[2])}
+function fmtShort(s){var d=parseYmd(s);return (d.getMonth()+1)+"/"+d.getDate()+"("+THEMES[d.getDay()].day+")"}
+var TODAY = new Date(); var TODAY_S = ymd(TODAY);
+function safeUrl(u){u=(u||"").trim(); return /^https?:\/\/[^\s]+$/i.test(u)?u:""}
+function el(tag,attrs,kids){var e=document.createElement(tag);if(attrs)for(var k in attrs){if(k==="text")e.textContent=attrs[k];else if(k==="cls")e.className=attrs[k];else e.setAttribute(k,attrs[k])}
+  (kids||[]).forEach(function(c){if(c!=null)e.appendChild(typeof c==="string"?document.createTextNode(c):c)});return e}
+function clear(n){while(n.firstChild)n.removeChild(n.firstChild)}
+var toastT; function toast(msg){var t=$("toast");t.textContent=msg;t.classList.add("show");clearTimeout(toastT);toastT=setTimeout(function(){t.classList.remove("show")},1800)}
+function copy(text,label){
+  var done=function(){toast((label||"내용")+"을 복사했습니다")};
+  try{navigator.clipboard.writeText(text).then(done,function(){fallback()})}catch(e){fallback()}
+  function fallback(){var ta=el("textarea");ta.value=text;ta.style.position="fixed";ta.style.opacity="0";document.body.appendChild(ta);ta.select();
+    var ok=false;try{ok=document.execCommand("copy")}catch(e){} document.body.removeChild(ta); toast(ok?(label||"내용")+"을 복사했습니다":"복사가 막혀 있습니다. 직접 선택해 복사하세요")}
+}
+
+/* ---------- 로컬 저장 (이 브라우저 전용) ---------- */
+var KEY="ddc1d1p.v1";
+var S={posts:[],routine:{},comments:[],pledge:false,name:"",field:"",retro:{},topicShift:0,goals:{}};
+try{var raw=localStorage.getItem(KEY);if(raw){var o=JSON.parse(raw);for(var k in o)S[k]=o[k]}}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
+
+/* ---------- 공유 보드 (db) 상태 ---------- */
+var DB=null, USER=null, MYID=null, CANWRITE=false, MEMBERS={}, myDocReady=false, writeChain=Promise.resolve();
+function myDoc(){return MEMBERS[MYID]||null}
+
+/* ---------- 탭 ---------- */
+var tabs=[].slice.call(document.querySelectorAll("nav.tabs button"));
+function showTab(name){
+  tabs.forEach(function(b){b.setAttribute("aria-selected",b.dataset.tab===name?"true":"false")});
+  [].forEach.call(document.querySelectorAll("section.panel"),function(p){p.hidden=p.dataset.panel!==name});
+  try{localStorage.setItem(KEY+".tab",name)}catch(e){}
+}
+tabs.forEach(function(b){b.addEventListener("click",function(){showTab(b.dataset.tab)})});
+(function(){var h=(location.hash||"").replace("#","");var t=null;try{t=localStorage.getItem(KEY+".tab")}catch(e){}
+  var pick=tabs.some(function(b){return b.dataset.tab===h})?h:(t&&tabs.some(function(b){return b.dataset.tab===t})?t:"today");showTab(pick)})();
+
+/* ---------- 분야 선택 상자 ---------- */
+["log-field","p-field"].forEach(function(id){var s=$(id);FIELDS.forEach(function(f){s.appendChild(el("option",{text:f,value:f}))})});
+function defaultField(){return S.field||THEMES[TODAY.getDay()].fields[0]}
+$("log-field").value=defaultField();$("p-field").value=S.field||"사회복지";
+
+/* ---------- 오늘의 테마 ---------- */
+function dayIndex(d){return Math.floor(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())/864e5)}
+function topicFor(d,shift){var th=THEMES[d.getDay()];var i=(Math.floor(dayIndex(d)/7)+(shift||0))%th.topics.length;return th.topics[(i+th.topics.length)%th.topics.length]}
+function renderTheme(){
+  var th=THEMES[TODAY.getDay()];
+  $("theme-day").textContent=(TODAY.getMonth()+1)+"월 "+TODAY.getDate()+"일 "+th.day+"요일 · 오늘의 테마";
+  $("theme-name").textContent=th.name;
+  var f=$("theme-fields");clear(f);th.fields.forEach(function(x){f.appendChild(el("span",{cls:"chip",text:x}))});
+  $("theme-topic").textContent="추천 주제 · "+topicFor(TODAY,S.topicShift||0);
+  var w=$("week");clear(w);
+  for(var i=1;i<=7;i++){var di=i%7;var t=THEMES[di];
+    w.appendChild(el("div",{cls:di===TODAY.getDay()?"on":""},[el("b",{text:t.day}),el("span",{text:t.name})]))}
+}
+$("btn-next-topic").addEventListener("click",function(){S.topicShift=(S.topicShift||0)+1;save();renderTheme()});
+$("btn-use-topic").addEventListener("click",function(){
+  $("kw").value=topicFor(TODAY,S.topicShift||0);showTab("write");runStudio()});
+
+/* ---------- 루틴 ---------- */
+function renderRoutine(){
+  var ul=$("routine");clear(ul);var done=S.routine[TODAY_S]||[];
+  ROUTINE.forEach(function(r,i){
+    var id="rt-"+i;var cb=el("input",{type:"checkbox",id:id});cb.checked=done.indexOf(i)>=0;cb.style.width="18px";cb.style.height="18px";cb.style.marginTop="4px";
+    cb.addEventListener("change",function(){var a=(S.routine[TODAY_S]||[]).filter(function(x){return x!==i});if(cb.checked)a.push(i);S.routine[TODAY_S]=a;
+      var keep={};keep[TODAY_S]=a;S.routine=keep;save()});
+    ul.appendChild(el("li",null,[cb,el("label",{"for":id,text:r,style:"font-size:14px;color:var(--ink);font-weight:500;display:block"})]))});
+}
+
+/* ---------- 발행 기록 ---------- */
+function allPostDates(){var m={};S.posts.forEach(function(p){m[p.date]=(m[p.date]||0)+1});
+  var md=myDoc();if(md&&md.posts)md.posts.forEach(function(p){if(!S.posts.some(function(q){return q.date===p.date&&q.url===p.url}))m[p.date]=(m[p.date]||0)+1});return m}
+function streak(){var m=allPostDates();var d=m[TODAY_S]?TODAY:addDays(TODAY,-1);var n=0;while(m[ymd(d)]){n++;d=addDays(d,-1)}return n}
+function renderStats(){
+  var m=allPostDates();var mon=ym(TODAY);var cnt=0;for(var k in m)if(k.indexOf(mon)===0)cnt+=m[k];
+  $("st-streak").textContent=streak();$("st-month").textContent=cnt;
+  $("st-today").textContent=m[TODAY_S]?"발행 완료":"미발행";$("st-date").textContent=fmtShort(TODAY_S)+" 오늘";
+  var pill=$("today-pill");if(m[TODAY_S]){pill.className="pill ok";pill.textContent="오늘 "+m[TODAY_S]+"편 발행"}else{pill.className="pill warn";pill.textContent="아직 기록 없음"}
+}
+function shareLine(p){var nm=S.name||"이름";return "[동두천 1일1포스팅] "+fmtShort(p.date)+" "+nm+" | "+p.field+"\n"+p.title+"\n"+p.url}
+
+$("btn-log").addEventListener("click",function(){
+  var title=$("log-title").value.trim(), url=safeUrl($("log-url").value), field=$("log-field").value;
+  if(!title){toast("글 제목을 입력하세요");$("log-title").focus();return}
+  if(!url){toast("링크는 https:// 로 시작해야 합니다");$("log-url").focus();return}
+  var p={date:TODAY_S,title:title.slice(0,120),url:url.slice(0,500),field:field,at:Date.now()};
+  if(S.posts.some(function(q){return q.url===p.url})){toast("이미 기록한 링크입니다");return}
+  S.posts.unshift(p);save();
+  var r=S.routine[TODAY_S]||[];if(r.indexOf(2)<0){r.push(2);S.routine[TODAY_S]=r;save()}
+  renderRoutine();renderStats();renderLog();renderHeat();
+  pushMyPost(p);
+  $("log-title").value="";$("log-url").value="";
+  toast("오늘 발행을 기록했습니다");
+});
+$("btn-log-share").addEventListener("click",function(){
+  var title=$("log-title").value.trim(),url=safeUrl($("log-url").value);
+  var p=(title&&url)?{date:TODAY_S,title:title,url:url,field:$("log-field").value}:S.posts.filter(function(q){return q.date===TODAY_S})[0];
+  if(!p){toast("제목과 링크를 입력하거나 먼저 발행을 기록하세요");return}
+  copy(shareLine(p),"단톡방 공유문");
+});
+
+function renderLog(){
+  var tb=$("log-body");clear(tb);var md=myDoc();var list=S.posts.slice();
+  if(md&&md.posts)md.posts.forEach(function(p){if(!list.some(function(q){return q.url===p.url}))list.push(p)});
+  list.sort(function(a,b){return a.date<b.date?1:a.date>b.date?-1:(b.at||0)-(a.at||0)});
+  $("log-count").textContent="총 "+list.length+"편";
+  if(!list.length){tb.appendChild(el("tr",null,[el("td",{colspan:"4",cls:"muted",text:"아직 기록이 없습니다. 오늘 탭에서 첫 글을 기록하세요."})]));return}
+  list.slice(0,200).forEach(function(p){
+    var u=safeUrl(p.url);var a=u?el("a",{href:u,target:"_blank",rel:"noopener noreferrer",text:p.title}):el("span",{text:p.title});
+    var del=el("button",{cls:"btn sm ghost",text:"삭제"});
+    del.addEventListener("click",function(){
+      if(del.dataset.armed!=="1"){del.dataset.armed="1";del.textContent="한 번 더 누르면 삭제";setTimeout(function(){del.dataset.armed="";del.textContent="삭제"},3000);return}
+      S.posts=S.posts.filter(function(q){return q.url!==p.url});save();removeMyPost(p.url);renderLog();renderStats();renderHeat()});
+    tb.appendChild(el("tr",null,[el("td",{cls:"d",text:p.date}),el("td",{text:p.field||""}),el("td",null,[a]),el("td",null,[del])]))});
+}
+function renderHeat(){
+  var h=$("heat");clear(h);var m=allPostDates();
+  var start=addDays(TODAY,-TODAY.getDay()-15*7); // 16주, 일요일 시작
+  var total=0,days=0;
+  for(var d=new Date(start);d<=TODAY;d=addDays(d,1)){var s=ymd(d),c=m[s]||0;total+=c;if(c)days++;
+    var i=el("i",{title:s+" · "+c+"편",cls:(c>=3?"l3":c===2?"l2":c===1?"l1":"")+(s===TODAY_S?" today":"")});h.appendChild(i)}
+  $("heat-sum").textContent="최근 16주 "+days+"일 발행 · "+total+"편";
+}
+
+/* ---------- AI 자동 글쓰기 스튜디오 ---------- */
+var KW_GROUPS=[
+ ["오늘의 테마",null],
+ ["영유아",["동두천 영유아 발달검사 지원","부모교육 프로그램 신청방법","아이돌봄서비스 이용방법","영유아 발달지연 조기 개입","육아종합지원센터 프로그램","어린이집 입소대기 신청방법"]],
+ ["청소년",["청소년 상담 신청방법","학교 밖 청소년 지원정보","청소년 진로체험 프로그램","청소년 우울 신호 대처법","청소년 방과후아카데미 신청"]],
+ ["중장년",["중장년 가족돌봄 지원정보","중장년 재취업 교육 신청","중장년 정신건강 상담","가족돌봄휴가 제도 활용","신중년 일자리 지원사업"]],
+ ["노인",["동두천 노인 복지관 프로그램","노인맞춤돌봄서비스 신청방법","어르신 고독사 예방","장기요양등급 신청 준비서류","노인일자리 신청 시기"]],
+ ["장애인",["장애인 활동지원 준비서류","장애인 자립생활 지원","장애인 이동지원 이용방법","보조기기 지원 신청방법","발달장애인 주간활동서비스"]],
+ ["지역복지",["동두천 복지사업 안내","동두천 행정복지센터 복지상담","동두천 긴급복지 지원","동두천 자원봉사 참여방법","동두천 지역사회 프로그램"]]
+];
+var kwGroup=0, SAMPLE=null, DL=null, runCtl=null, GEN=null, videoBlob=null;
+function groupWords(i){return i===0?THEMES[TODAY.getDay()].topics:KW_GROUPS[i][1]}
+function renderKwGroups(){
+  var g=$("kw-groups");clear(g);
+  KW_GROUPS.forEach(function(x,i){var b=el("button",{cls:"btn sm"+(i===kwGroup?"":" ghost"),text:x[0]});
+    b.addEventListener("click",function(){kwGroup=i;renderKwGroups()});g.appendChild(b)});
+  var l=$("kw-list");clear(l);
+  groupWords(kwGroup).forEach(function(w){var b=el("button",{cls:"kwchip",text:w});
+    b.addEventListener("click",function(){$("kw").value=w;runStudio()});l.appendChild(b)});
+}
+$("btn-build").addEventListener("click",function(){
+  var parts=[$("b-region").value.trim(),$("b-target").value,$("b-problem").value.trim(),$("b-time").value,$("b-action").value].filter(Boolean);
+  if(!$("b-problem").value.trim()){toast("문제(예: 가족돌봄)를 입력하세요");$("b-problem").focus();return}
+  $("kw").value=parts.join(" ");runStudio();
+});
+function renderResearch(){
+  var k=encodeURIComponent($("kw").value.trim()||topicFor(TODAY,S.topicShift||0));
+  var links=[["네이버 뉴스 (최신순)","https://search.naver.com/search.naver?where=news&sort=1&query="+k],
+    ["네이버 뉴스 (관련도)","https://search.naver.com/search.naver?where=news&sort=0&query="+k],
+    ["네이버 블로그 상단글","https://search.naver.com/search.naver?where=blog&query="+k],
+    ["네이버 데이터랩","https://datalab.naver.com/keyword/trendSearch.naver"],
+    ["KOSIS 국가통계포털","https://kosis.kr/search/search.do?query="+k],
+    ["보건복지부 보도자료","https://www.mohw.go.kr/board.es?mid=a10503000000&bid=0027"]];
+  var box=$("research-links");clear(box);
+  links.forEach(function(x){box.appendChild(el("a",{cls:"btn sm ghost",href:x[1],target:"_blank",rel:"noopener noreferrer",text:x[0]}))});
+}
+$("kw").addEventListener("input",renderResearch);
+
+function kwTokens(k){return (k||"").split(/\s+/).filter(function(w){return w.length>=2})}
+function hashtagsFrom(k,extra){var t=["동두천","동두천복지","사회복지","사회복지사"].concat(kwTokens(k)).concat([k.replace(/\s/g,"")]).concat(extra||[]);
+  var u=[];t.forEach(function(x){x=String(x).replace(/^#/,"").replace(/[\s·,]/g,"");if(x&&x.length<=20&&u.indexOf(x)<0)u.push(x)});return u.slice(0,12)}
+function templateGen(o){
+  var k=o.kw, t1=kwTokens(k)[0]||k;
+  var titles=["["+(k.indexOf("동두천")>=0?"정보":"동두천")+"] "+k+" 한눈에 정리",
+    k+", "+o.reader+"이 꼭 확인할 "+(o.type==="check"?"체크리스트":"5가지"),
+    k+" | 현장 사회복지사가 알려 드립니다"];
+  var sub="대상, 방법, 준비할 것, 자주 묻는 질문까지 "+TODAY.getFullYear()+"년 기준으로 정리했습니다";
+  var L=[];
+  if(o.sponsor)L.push("※ 이 글은 "+o.sponsor+"을(를) 받아 작성했습니다.","");
+  L.push("■ 한눈에 보는 요약","이 글은 "+o.reader+"에게 '"+k+"'의 대상, 이용 방법, 준비할 것을 알려 드립니다. [핵심 결론 1~2문장으로 고쳐 쓰기]","");
+  L.push("■ 왜 지금 "+t1+"을(를) 알아야 할까요","- 배경: [통계·정책 근거, 출처와 발표일 함께]","- 동두천 지역에서 필요한 이유: ","");
+  if(o.news){L.push("■ 최근 뉴스로 본 흐름");o.news.split(/\n+/).map(function(s){return s.trim()}).filter(Boolean).slice(0,6).forEach(function(s){L.push("- "+s)});
+    L.push("- 현장에서 본 의미: ","");}
+  L.push("■ 공식 정보 정리","- 지원 대상: ","- 지원 내용: ","- 신청 방법: ","- 문의처: [공식 홈페이지에서 확인 후 기재]","");
+  L.push("■ 현장에서 겪은 어려움");
+  L.push(o.exp?o.exp:"[현장 사례: 동의 받은 실제 경험으로 작성]");L.push("");
+  L.push("■ 이렇게 해결할 수 있습니다","1) ","2) ","3) ","");
+  L.push("■ 신청 전 체크리스트","☐ 대상 조건 확인","☐ 준비서류 확인","☐ 신청 기간 확인","☐ 문의처 연락","☐ 대체 서비스 확인","");
+  L.push("■ 자주 묻는 질문","Q. "+k+"은(는) 누가 받을 수 있나요?","A. ","Q. 신청은 어디에서 하나요?","A. ","Q. 비용이 드나요?","A. ","");
+  L.push("■ 출처","- [기관명, 자료명, 발표일, 링크]","");
+  L.push("■ 마무리","도움이 필요하시면 가까운 행정복지센터나 복지기관에 상담을 요청하세요. 궁금한 점을 댓글로 남겨 주시면 다음 글에서 다루겠습니다.");
+  return {titles:titles,subtitle:sub,body:L.join("\n"),newsDigest:"",hashtags:hashtagsFrom(k),
+    cards:[{head:k,text:"꼭 필요한 내용만 정리했습니다"},{head:"누가 받을 수 있나요",text:"지원 대상과 조건을 먼저 확인하세요"},{head:"어떻게 신청하나요",text:"신청 방법과 준비서류를 정리했습니다"},{head:"신청 전 체크",text:"기간, 서류, 문의처를 빠짐없이 확인하세요"},{head:"더 궁금하다면",text:"행정복지센터나 복지기관에 상담을 요청하세요"}],
+    reels:[{sec:"0-3초",visual:"썸네일 제목",caption:k+", 3분이면 정리됩니다"},{sec:"3-7초",visual:"카드 2",caption:"누가 받을 수 있을까요?"},{sec:"7-11초",visual:"카드 3",caption:"신청 방법은 이렇습니다"},{sec:"11-15초",visual:"카드 4",caption:"신청 전 꼭 체크하세요"},{sec:"15-20초",visual:"카드 5",caption:"자세한 내용은 블로그에서"}],
+    imagePrompts:["동두천 지역 복지관에서 상담하는 사회복지사와 어르신, 따뜻한 자연광, 실사 사진 느낌, 얼굴은 식별되지 않게","'"+k+"' 주제의 깔끔한 인포그래픽 배경, 초록과 흰색, 텍스트 없음","행정복지센터 안내 창구, 밝은 실내, 사람 뒷모습, 텍스트 없음"],
+    instagram:k+" 정리했습니다.\n\n대상, 신청 방법, 준비서류, 체크리스트까지 블로그에 자세히 담았습니다. 프로필 링크에서 확인하세요.\n\n"+hashtagsFrom(k).slice(0,8).map(function(x){return "#"+x}).join(" "),
+    metaDescription:k+"의 대상, 신청 방법, 준비서류와 체크리스트를 현장 사회복지사가 정리했습니다."};
+}
+function studioOpts(){return {kw:$("kw").value.trim(),news:$("news").value.trim().slice(0,6000),exp:$("exp").value.trim().slice(0,2000),
+  len:+$("len").value,type:$("ptype").value,typeName:$("ptype").options[$("ptype").selectedIndex].text,reader:$("reader").value,sponsor:$("sponsor").value}}
+function aiPrompt(o){
+  return ["너는 동두천 지역 사회복지 분야 네이버 블로그 전문 편집자다. 아래 조건으로 블로그 글 한 편과 홍보 자료를 만들어라.",
+  "핵심 키워드: "+o.kw,"주요 독자: "+o.reader,"글 유형: "+o.typeName,"본문 분량: 공백 제외 약 "+o.len+"자",
+  o.sponsor?("협찬·제휴: "+o.sponsor+" 있음. 본문 맨 앞 줄에 '※ 이 글은 "+o.sponsor+"을(를) 받아 작성했습니다.'를 넣는다."):"협찬·제휴: 없음",
+  "작성자의 실제 경험 메모: "+(o.exp||"(없음)"),
+  "작성자가 붙여 넣은 상단 뉴스·자료: "+(o.news||"(없음)"),
+  "",
+  "본문 구조: ■ 한눈에 보는 요약(키워드 포함 결론 2문장) → ■ 배경과 공식 정보 → ■ 최근 뉴스로 본 흐름(뉴스 자료가 있을 때만) → ■ 현장에서 겪은 어려움 → ■ 해결 방법과 이용 절차 → ■ 체크리스트(☐ 5개) → ■ 자주 묻는 질문(Q./A. 3쌍, 사람들이 실제로 검색할 질문형) → ■ 출처 → ■ 마무리.",
+  "반드시 지킬 것:",
+  "1) 수치, 금액, 날짜, 전화번호, 법령 조항, 기관 세부정보는 지어내지 말고 그 자리에 [확인 필요]라고 쓴다. 뉴스 자료에 있는 사실은 쓸 수 있다.",
+  "2) 경험은 경험 메모에 있는 내용만 쓴다. 메모가 없으면 그 자리에 [현장 사례: 동의 받은 실제 경험으로 작성]이라고 쓴다. 가상의 인물, 가상의 후기는 쓰지 않는다. 후기형인데 메모가 없으면 정보형으로 쓴다.",
+  "3) 뉴스는 복사하지 말고 공통 쟁점과 현장 시사점으로 재구성한다. 붙여 넣은 자료가 없으면 뉴스를 언급하지 않는다.",
+  "4) 핵심 키워드는 제목에 1회, 본문에 3~6회만 자연스럽게 쓴다. 같은 단어를 억지로 반복하지 않는다.",
+  "5) '무조건', '100%', '최고', '보장' 같은 과장 표현을 쓰지 않는다. 존댓말, 짧은 문장. 마크다운 기호(#, **)는 쓰지 않는다.",
+  "",
+  "답은 아래 JSON 하나로만 한다:",
+  '{"titles":["제목 3개, 각 32자 이내, 핵심 키워드를 앞쪽에"],"subtitle":"부제목 40자 이내","body":"본문 전체, 줄바꿈은 \\n","newsDigest":"뉴스 자료가 있을 때만 상단 기사들의 공통 쟁점, 차이, 현장 시사점을 전문가 관점에서 3~5문장. 없으면 빈 문자열","hashtags":["해시태그 10개, # 없이"],"cards":[{"head":"16자 이내","text":"50자 이내"}],"reels":[{"sec":"0-3초","visual":"화면","caption":"자막 20자 이내"}],"imagePrompts":["외부 이미지 AI용 프롬프트 3개, 텍스트 없는 이미지, 얼굴 식별 불가"],"instagram":"인스타그램 캡션 300자 이내, 해시태그 포함","metaDescription":"검색 설명문 80자 이내"}',
+  "cards는 정확히 5개, reels는 5개 구간(합계 약 20초)."].join("\n");
+}
+function setupStudioAI(sample){
+  SAMPLE=sample;
+  $("run-status").textContent=sample?"AI가 연결되었습니다. 키워드를 누르면 AI가 본문까지 작성합니다. 처음 한 번 사용 허락을 묻습니다.":"AI가 연결되지 않은 화면입니다. 키워드를 누르면 템플릿으로 생성합니다. 이미지와 영상은 그대로 만들어집니다.";
+}
+function runStudio(){
+  var o=studioOpts();
+  if(!o.kw){toast("키워드를 고르거나 입력하세요");$("kw").focus();return}
+  renderResearch();
+  GEN=templateGen(o);GEN.mode="템플릿";renderGen(o);
+  var r=S.routine[TODAY_S]||[];if(r.indexOf(0)<0){r.push(0);S.routine[TODAY_S]=r;save();renderRoutine()}
+  $("out").hidden=false;$("out").scrollIntoView({behavior:"smooth",block:"start"});
+  if(!SAMPLE){toast("템플릿으로 생성했습니다");return}
+  if(runCtl)runCtl.abort();
+  runCtl=new AbortController();var ctl=runCtl;
+  $("btn-run").disabled=true;$("btn-stop").hidden=false;$("gen-mode").className="pill warn";$("gen-mode").textContent="AI 작성 중";
+  $("run-status").textContent="AI가 '"+o.kw+"' 글을 쓰는 중입니다. 30초~1분 걸립니다. 템플릿 결과를 먼저 보여 드립니다.";
+  var got=0;
+  SAMPLE.json(aiPrompt(o),{signal:ctl.signal,cache:false,onText:function(u){got=u.text.length;$("run-status").textContent="AI가 작성 중입니다… "+got.toLocaleString()+"자 받음"}}).then(function(v){
+    if(ctl!==runCtl)return;
+    if(!v||typeof v.body!=="string"||!Array.isArray(v.titles))throw {code:"invalid_json"};
+    var T=templateGen(o);
+    GEN={titles:v.titles.map(String).slice(0,3),subtitle:String(v.subtitle||T.subtitle),body:v.body,newsDigest:String(v.newsDigest||""),
+      hashtags:(Array.isArray(v.hashtags)&&v.hashtags.length?v.hashtags:T.hashtags).map(function(x){return String(x).replace(/^#/,"").replace(/\s/g,"")}).filter(Boolean).slice(0,12),
+      cards:(Array.isArray(v.cards)&&v.cards.length>=3?v.cards:T.cards).slice(0,5).map(function(c){return {head:String(c.head||"").slice(0,24),text:String(c.text||"").slice(0,80)}}),
+      reels:Array.isArray(v.reels)&&v.reels.length?v.reels.slice(0,6):T.reels,
+      imagePrompts:Array.isArray(v.imagePrompts)&&v.imagePrompts.length?v.imagePrompts.map(String).slice(0,4):T.imagePrompts,
+      instagram:String(v.instagram||T.instagram),metaDescription:String(v.metaDescription||T.metaDescription),mode:"AI 작성"};
+    renderGen(o);$("run-status").textContent="AI 작성을 마쳤습니다. [확인 필요] 표시를 공식 출처로 채우고, 사람이 최종 확인한 뒤 발행하세요.";toast("AI가 글을 완성했습니다");
+  }).catch(function(e){
+    if(ctl!==runCtl)return;
+    var c=e&&e.code;
+    $("gen-mode").className="pill info";$("gen-mode").textContent="템플릿";
+    if(c==="not_granted"){SAMPLE=null;$("run-status").textContent="AI 사용이 허용되지 않아 템플릿으로 만들었습니다."}
+    else if(c==="rate_limited")$("run-status").textContent="AI 요청이 많습니다. 잠시 뒤 자동 생성을 다시 누르세요. 지금은 템플릿 결과입니다.";
+    else if(c==="aborted"||(e&&e.name==="AbortError"))$("run-status").textContent="AI 작성을 중지했습니다. 템플릿 결과를 쓰고 있습니다.";
+    else $("run-status").textContent="AI 답을 받지 못해 템플릿으로 만들었습니다. 자동 생성을 다시 누르면 다시 요청합니다.";
+  }).then(function(){if(ctl===runCtl){$("btn-run").disabled=false;$("btn-stop").hidden=true;runCtl=null}});
+}
+$("btn-run").addEventListener("click",runStudio);
+$("btn-stop").addEventListener("click",function(){if(runCtl)runCtl.abort()});
+
+function renderGen(o){
+  var g=GEN;
+  $("gen-mode").className="pill "+(g.mode==="AI 작성"?"ok":"info");$("gen-mode").textContent=g.mode;
+  var ul=$("o-titles");clear(ul);
+  g.titles.forEach(function(t,i){var b=el("button",{cls:"btn sm ghost",text:"복사"});b.addEventListener("click",function(){copy(t,"제목")});
+    var pick=el("input",{type:"radio",name:"tpick",id:"tp"+i,"aria-label":"이 제목 사용"});pick.checked=i===0;pick.style.width="18px";pick.addEventListener("change",function(){renderPreCheck();drawAll()});
+    ul.appendChild(el("li",{style:"grid-template-columns:22px 1fr auto;align-items:center"},[pick,el("label",{"for":"tp"+i,text:t+"  ("+t.length+"자)",style:"color:var(--ink);font-weight:500;font-size:15px;display:block"}),b]))});
+  $("o-sub").value=g.subtitle;
+  $("o-meta").textContent="검색 설명문: "+g.metaDescription;
+  $("w-draft").value=g.body;
+  var nb=$("o-news-box");nb.hidden=!g.newsDigest;$("o-news").textContent=g.newsDigest;
+  var tg=$("o-tags");clear(tg);g.hashtags.forEach(function(h){tg.appendChild(el("span",{cls:"chip",text:"#"+h}))});
+  var pr=$("o-prompts");clear(pr);g.imagePrompts.forEach(function(p){var b=el("button",{cls:"btn sm ghost",text:"복사"});b.addEventListener("click",function(){copy(p,"프롬프트")});
+    pr.appendChild(el("li",{style:"grid-template-columns:1fr auto;align-items:center"},[el("span",{text:p}),b]))});
+  var rb=$("o-reels");clear(rb);g.reels.forEach(function(r){rb.appendChild(el("tr",null,[el("td",{cls:"d",text:String(r.sec||"")}),el("td",{text:String(r.visual||"")}),el("td",{text:String(r.caption||"")})]))});
+  $("o-insta").textContent=g.instagram;
+  updateCount();drawAll();
+  videoBlob=null;$("o-video").hidden=true;$("btn-video-save").hidden=true;$("video-status").textContent="";
+}
+function pickedTitle(){var i=0;[0,1,2].forEach(function(n){var r=$("tp"+n);if(r&&r.checked)i=n});return GEN?GEN.titles[i]||GEN.titles[0]:""}
+$("o-sub").addEventListener("input",function(){if(GEN){GEN.subtitle=$("o-sub").value;drawAll()}});
+$("btn-copy-naver").addEventListener("click",function(){if(!GEN)return;
+  copy(pickedTitle()+"\n\n"+$("o-sub").value+"\n\n"+$("w-draft").value+"\n\n"+GEN.hashtags.map(function(h){return "#"+h}).join(" "),"블로그 전체")});
+$("btn-copy-draft").addEventListener("click",function(){copy($("w-draft").value,"본문")});
+$("btn-ex-blog").addEventListener("click",function(){var p=blogParts();if(!p){toast("먼저 글을 만드세요");return}exportText("blog-"+slug()+"-"+stamp()+".html","text/html",toHtml(p.title,p.body))});
+$("btn-copy-tags").addEventListener("click",function(){if(GEN)copy(GEN.hashtags.map(function(h){return "#"+h}).join(" "),"해시태그")});
+$("btn-copy-insta").addEventListener("click",function(){copy($("o-insta").textContent,"인스타그램 캡션")});
+
+function updateCount(){var t=$("w-draft").value;var n=t.replace(/\s/g,"").length;$("w-count").textContent="공백 제외 "+n.toLocaleString()+"자 · 읽는 데 약 "+Math.max(1,Math.round(n/500))+"분";renderPreCheck()}
+$("w-draft").addEventListener("input",updateCount);
+
+function countOf(hay,needle){if(!needle)return 0;var n=0,i=0;while((i=hay.indexOf(needle,i))>=0){n++;i+=needle.length}return n}
+function renderPreCheck(){
+  var ul=$("pre-check");clear(ul);if(!GEN)return;
+  var t=$("w-draft").value,title=pickedTitle(),kw=$("kw").value.trim(),target=+$("len").value,sp=$("sponsor").value;
+  var n=t.replace(/\s/g,"").length, kc=countOf(t,kw), per1k=n?kc/(n/1000):0;
+  var heads=(t.match(/^■/gm)||[]).length, qs=(t.match(/^Q[0-9]*\./gm)||[]).length, boxes=(t.match(/☐/g)||[]).length;
+  var items=[
+    [10,title.indexOf(kwTokens(kw)[0]||kw)>=0&&title.length<=35?"ok":"warn","제목: 핵심 키워드 포함, 35자 이내 (지금 "+title.length+"자)"],
+    [10,t.slice(0,250).indexOf(kwTokens(kw)[0]||kw)>=0?"ok":"warn","첫 문단 요약에 키워드가 있는지 (AI 검색은 앞부분 요약을 많이 인용합니다)"],
+    [10,n>=target*0.9?"ok":n>=target*0.6?"warn":"bad","분량: 공백 제외 "+n.toLocaleString()+"자 / 목표 "+target.toLocaleString()+"자"],
+    [10,kc===0?"warn":per1k>5?"bad":"ok","키워드 반복: '"+kw+"' "+kc+"회"+(per1k>5?" (과도한 반복은 저품질 신호입니다)":"")],
+    [10,heads>=5?"ok":heads>=3?"warn":"bad","소제목 "+heads+"개 (주제 구조가 분명해야 C-Rank 주제 집중도에 유리)"],
+    [10,/저는|제가|저희|현장에서|직접/.test(t)&&!/\[현장 사례/.test(t)?"ok":"warn","실제 경험 문장 (D.I.A.+ 경험 정보). 지어낸 경험은 쓰지 마세요"],
+    [10,qs>=3?"ok":qs>=1?"warn":"bad","질문과 답 "+qs+"쌍 (사람과 AI가 궁금해하는 질문형 구조)"],
+    [10,/출처/.test(t)&&/(https?:\/\/|통계청|KOSIS|보건복지부|보도자료|시청|공단)/.test(t)?"ok":"warn","출처 표기 (공식 기관, 발표일 포함)"],
+    [5,boxes>=3?"ok":"warn","체크리스트 "+boxes+"개"],
+    [10,/\[확인 필요\]|\[.*?(고쳐 쓰기|확인 후 기재|기관명, 자료명)/.test(t)?"bad":"ok","[확인 필요] 등 채울 자리가 남아 있지 않은지"],
+    [5,/무조건|100%|최고의|완벽|보장/.test(t)?"warn":"ok","과장 표현 없음 ('무조건', '100%', '보장' 등)"]
+  ];
+  if(sp)items.push([0,/협찬|제휴|원고료|제공받/.test(t.slice(0,300))?"ok":"bad",sp+" 표시가 글 앞부분에 있는지 (법적 의무)"]);
+  var score=0,max=0;
+  items.forEach(function(it){max+=it[0];if(it[1]==="ok")score+=it[0];else if(it[1]==="warn")score+=it[0]*0.4;
+    ul.appendChild(el("li",null,[el("span",{cls:"mk "+it[1],text:{ok:"✓",warn:"!",bad:"×"}[it[1]]}),el("span",{text:it[2]})]))});
+  var s=Math.round(score/max*100);$("q-score").textContent=s+"점";var bar=$("q-bar");bar.style.width=s+"%";bar.className=s>=80?"ok":s>=55?"warn":"bad";
+}
+
+/* 이미지 생성 (canvas) */
+var PAL={pine:"#1E5A47",paper:"#F3F6F4",maple:"#B8452A",ink:"#14211D",mist:"#DCEBE4"};
+function wrapText(ctx,text,maxW){
+  var out=[],line="";String(text).split(/(\s+)/).forEach(function(tok){
+    if(!tok)return;var test=line+tok;
+    if(ctx.measureText(test).width<=maxW){line=test;return}
+    if(line.trim())out.push(line.trim());line="";
+    if(ctx.measureText(tok).width>maxW){var cur="";tok.split("").forEach(function(ch){if(ctx.measureText(cur+ch).width>maxW){out.push(cur);cur=ch}else cur+=ch});line=cur}else line=tok.trim()?tok:"";
+  });if(line.trim())out.push(line.trim());return out}
+function drawLines(ctx,lines,x,y,lh,max){lines.slice(0,max).forEach(function(l,i){ctx.fillText(i===max-1&&lines.length>max?l.replace(/.$/,"…"):l,x,y+i*lh)});return Math.min(lines.length,max)}
+function drawThumb(c,w,h){
+  var x=c.getContext("2d");c.width=w;c.height=h;var u=w/1080;
+  x.fillStyle=PAL.pine;x.fillRect(0,0,w,h);
+  x.strokeStyle="rgba(255,255,255,.12)";x.lineWidth=2*u;for(var i=0;i<6;i++){x.beginPath();x.moveTo(0,h*0.72+i*28*u);x.bezierCurveTo(w*0.3,h*0.62+i*28*u,w*0.6,h*0.8+i*28*u,w,h*0.66+i*28*u);x.stroke()}
+  x.fillStyle=PAL.maple;x.fillRect(80*u,110*u,150*u,10*u);
+  x.fillStyle="rgba(255,255,255,.85)";x.font="600 "+38*u+"px 'IBM Plex Sans KR',sans-serif";x.textBaseline="top";
+  x.fillText(($("kw").value.trim()||"").slice(0,26),80*u,150*u);
+  x.fillStyle="#FFFFFF";x.font="700 "+86*u+"px 'Gowun Batang',serif";
+  var n=drawLines(x,wrapText(x,pickedTitle(),w-160*u),80*u,230*u,112*u,h>w?6:4);
+  x.fillStyle="rgba(255,255,255,.8)";x.font="400 "+38*u+"px 'IBM Plex Sans KR',sans-serif";
+  drawLines(x,wrapText(x,$("o-sub").value,w-160*u),80*u,250*u+n*112*u+30*u,54*u,3);
+  x.fillStyle="rgba(255,255,255,.75)";x.font="600 "+30*u+"px 'IBM Plex Sans KR',sans-serif";x.textBaseline="bottom";
+  x.fillText("동두천 1일 1포스팅"+(S.name?" · "+S.name:""),80*u,h-80*u);
+}
+function drawCard(c,card,i,total,w,h){
+  var x=c.getContext("2d");c.width=w;c.height=h;var u=w/1080;
+  x.fillStyle=i%2?PAL.paper:"#FFFFFF";x.fillRect(0,0,w,h);
+  x.fillStyle=PAL.pine;x.fillRect(0,0,w,18*u);
+  x.textBaseline="top";x.fillStyle=PAL.maple;x.font="500 "+40*u+"px 'IBM Plex Mono',monospace";x.fillText(pad(i+1)+" / "+pad(total),80*u,110*u);
+  x.fillStyle=PAL.ink;x.font="700 "+92*u+"px 'Gowun Batang',serif";
+  var n=drawLines(x,wrapText(x,card.head,w-160*u),80*u,h*0.30,118*u,3);
+  x.fillStyle=PAL.pine;x.fillRect(80*u,h*0.30+n*118*u+30*u,120*u,8*u);
+  x.fillStyle="#3B4A45";x.font="400 "+50*u+"px 'IBM Plex Sans KR',sans-serif";
+  drawLines(x,wrapText(x,card.text,w-160*u),80*u,h*0.30+n*118*u+80*u,74*u,5);
+  x.fillStyle="#56665F";x.font="600 "+30*u+"px 'IBM Plex Sans KR',sans-serif";x.textBaseline="bottom";
+  x.fillText(($("kw").value.trim()||"").slice(0,30),80*u,h-80*u);
+  x.textAlign="right";x.fillText("동두천 1일 1포스팅",w-80*u,h-80*u);x.textAlign="left";
+}
+var fontsReady=null;
+function ensureFonts(){if(!fontsReady){try{fontsReady=Promise.all(["700 40px 'Gowun Batang'","400 40px 'IBM Plex Sans KR'","600 40px 'IBM Plex Sans KR'","500 40px 'IBM Plex Mono'"].map(function(f){return document.fonts.load(f,"가나다abc")})).catch(function(){})}catch(e){fontsReady=Promise.resolve()}}return fontsReady}
+var drawT;
+function drawAll(){clearTimeout(drawT);drawT=setTimeout(function(){ensureFonts().then(function(){
+  if(!GEN)return;var g=$("gallery");clear(g);
+  var items=[["대표 썸네일 (1:1)",function(c){drawThumb(c,1080,1080)},"thumbnail.png"]];
+  GEN.cards.forEach(function(cd,i){items.push(["카드뉴스 "+(i+1)+" (4:5)",function(c){drawCard(c,cd,i,GEN.cards.length,1080,1350)},"card-"+(i+1)+".png"])});
+  items.forEach(function(it){var c=document.createElement("canvas");it[1](c);var img=el("img",{alt:it[0]});img.src=c.toDataURL("image/png");
+    var b=el("button",{cls:"btn sm ghost",text:"저장"});b.addEventListener("click",function(){saveCanvas(c,it[2])});
+    g.appendChild(el("figure",null,[img,el("figcaption",null,[el("span",{text:it[0]}),b])]))});
+  $("img-note").textContent=DL||STANDALONE?"저장을 누르면 파일로 받습니다":"이미지를 길게 누르거나 오른쪽 클릭해 저장하세요";
+})},60)}
+var STANDALONE=!(window.claude&&typeof window.claude.use==="function");
+function browserDownload(name,blob){name=name.replace(/[^\x20-\x7E]+/g,"").replace(/-{2,}/g,"-").replace(/^-|-(?=\.)/g,"")||"file";var a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();
+  setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},1500);toast("파일을 내려받았습니다")}
+function saveFile(name,blob){
+  if(!DL&&STANDALONE){browserDownload(name,blob);return}
+  if(!DL){toast("이 화면에서는 파일 저장이 막혀 있습니다. 이미지를 길게 누르거나 오른쪽 클릭해 저장하세요");return}
+  DL.save({filename:name,data:blob}).then(function(){},function(e){if(!(e&&e.code==="cancelled"))toast("저장하지 못했습니다")});
+}
+function saveCanvas(c,name){c.toBlob(function(b){if(b)saveFile(slug()+"-"+name,b)},"image/png")}
+function slug(){return ($("kw").value.trim()||"post").replace(/[^가-힣A-Za-z0-9]+/g,"-").slice(0,30)}
+
+/* 영상 생성 (canvas + MediaRecorder) */
+$("btn-video").addEventListener("click",function(){
+  if(!GEN){toast("먼저 글을 생성하세요");return}
+  if(typeof MediaRecorder==="undefined"){$("video-status").textContent="이 브라우저는 영상 녹화를 지원하지 않습니다. 최신 크롬이나 사파리에서 열어 주세요.";return}
+  var W=720,H=1280,c=document.createElement("canvas");c.width=W;c.height=H;var x=c.getContext("2d");
+  ensureFonts().then(function(){
+    var slides=[];var t=document.createElement("canvas");drawThumb(t,W,H);slides.push(t);
+    GEN.cards.forEach(function(cd,i){var k=document.createElement("canvas");drawCard(k,cd,i,GEN.cards.length,W,H);slides.push(k)});
+    var caps=GEN.reels.map(function(r){return String(r.caption||"")});
+    var types=["video/mp4;codecs=avc1","video/mp4","video/webm;codecs=vp9","video/webm;codecs=vp8","video/webm"];
+    var mime=types.filter(function(m){try{return MediaRecorder.isTypeSupported(m)}catch(e){return false}})[0]||"";
+    var rec;try{rec=new MediaRecorder(c.captureStream(30),mime?{mimeType:mime,videoBitsPerSecond:4000000}:{})}catch(e){$("video-status").textContent="영상 녹화를 시작하지 못했습니다.";return}
+    var chunks=[];rec.ondataavailable=function(e){if(e.data&&e.data.size)chunks.push(e.data)};
+    var per=3300,fade=450,total=slides.length*per,t0=null;
+    rec.onstop=function(){var type=(mime||"video/webm").split(";")[0];videoBlob=new Blob(chunks,{type:type});var v=$("o-video");v.src=URL.createObjectURL(videoBlob);v.hidden=false;
+      $("btn-video-save").hidden=false;$("btn-video").disabled=false;$("video-status").textContent="영상이 준비되었습니다 ("+(type.indexOf("mp4")>=0?"MP4":"WebM")+", "+Math.round(total/1000)+"초, "+Math.round(videoBlob.size/1024)+"KB). 인스타그램 릴스나 네이버 클립에 올리세요."};
+    $("btn-video").disabled=true;rec.start(250);
+    function frame(ts){if(t0===null)t0=ts;var e=ts-t0;var idx=Math.min(slides.length-1,Math.floor(e/per)),loc=e-idx*per;
+      x.globalAlpha=1;x.fillStyle="#000";x.fillRect(0,0,W,H);
+      var sc=1+0.04*(loc/per);x.save();x.translate(W/2,H/2);x.scale(sc,sc);x.drawImage(slides[idx],-W/2,-H/2);x.restore();
+      if(loc>per-fade&&idx<slides.length-1){x.globalAlpha=(loc-(per-fade))/fade;x.drawImage(slides[idx+1],0,0);x.globalAlpha=1}
+      var cap=caps[idx]||"";if(cap){x.font="700 34px 'IBM Plex Sans KR',sans-serif";var lines=wrapText(x,cap,W-120);var bh=lines.length*46+30;
+        x.fillStyle="rgba(20,33,29,.82)";x.fillRect(40,H-260-bh,W-80,bh);x.fillStyle="#FFFFFF";x.textBaseline="top";lines.forEach(function(l,i){x.fillText(l,60,H-260-bh+15+i*46)})}
+      x.fillStyle=PAL.maple;x.fillRect(0,H-8,W*(e/total),8);
+      $("video-status").textContent="영상을 만드는 중입니다… "+Math.min(100,Math.round(e/total*100))+"%";
+      if(e<total)requestAnimationFrame(frame);else setTimeout(function(){rec.stop()},200)}
+    requestAnimationFrame(frame);
+  });
+});
+$("btn-video-save").addEventListener("click",function(){if(videoBlob)saveFile(slug()+"-shorts."+(videoBlob.type.indexOf("mp4")>=0?"mp4":"webm"),videoBlob)});
+
+/* ---------- 18장 직장 병행 · 첫 달 목표 · 19장 성과 측정 ---------- */
+var WORK=[[1,"월","통계·뉴스·보도자료 찾기"],[2,"화","키워드와 제목 정하기"],[3,"수","ChatGPT·Claude로 초안 작성"],[4,"목","DAF·이 도구로 사진·이미지 제작"],[5,"금","검수 후 발행과 링크 공유"]];
+function renderWork(){
+  var ul=$("work-week");clear(ul);var d=TODAY.getDay();
+  WORK.forEach(function(w){var on=w[0]===d;ul.appendChild(el("li",null,[el("span",{cls:"mk "+(on?"bad":"ok"),text:w[1]}),el("span",{text:w[2],style:on?"font-weight:700":""})]))});
+  var cur=WORK.filter(function(w){return w[0]===d})[0];$("work-today").textContent=cur?"오늘: "+cur[2]:"주말: 동료 글 읽기와 회고";
+}
+function renderFirstMonth(){
+  var ul=$("first-month");clear(ul);S.goals=S.goals||{};var g=S.goals[MON]||{};
+  var cmon=S.comments.filter(function(c){return (c.date||"").indexOf(MON)===0}).length;
+  var items=[["auto",!!S.field,"전문분야 1개 선정"+(S.field?" ("+S.field+")":" · 링크 보드에서 대표 분야 저장")],
+    ["auto",monthCount()>=10,"글 10편 작성 ("+monthCount()+"/10)"],
+    ["stat",!!g.stat,"통계·정책 글 3편 작성"],["review",!!g.review,"실제 후기글 3편 작성"],
+    ["auto",cmon>0,"동료 피드백 참여 (이번 달 댓글 기록 "+cmon+"개)"]];
+  items.forEach(function(it,i){
+    if(it[0]==="auto"){ul.appendChild(el("li",null,[el("span",{cls:"mk "+(it[1]?"ok":"warn"),text:it[1]?"✓":"·"}),el("span",{text:it[2]})]));return}
+    var id="fm-"+it[0];var cb=el("input",{type:"checkbox",id:id});cb.checked=it[1];cb.style.width="18px";cb.style.height="18px";cb.style.marginTop="4px";
+    cb.addEventListener("change",function(){S.goals[MON]=S.goals[MON]||{};S.goals[MON][it[0]]=cb.checked;var keep={};keep[MON]=S.goals[MON];S.goals=keep;save()});
+    ul.appendChild(el("li",null,[cb,el("label",{"for":id,text:it[2],style:"font-size:14px;color:var(--ink);font-weight:500;display:block"})]))});
+}
+var METRICS=[["saves","저장·공유"],["qcomments","질문 댓글"],["inquiries","문의 건수"],["collab","기관 협업 제안"],["lecture","강의·교육 신청"],["orders","콘텐츠 제작 의뢰"],["revenue","월간 수익(원)"],["hours","투입 시간(시간)"]];
+function renderMetrics(){
+  var box=$("metrics");if(box.childNodes.length)return;var r=(S.retro[MON]||{}).metrics||{};
+  METRICS.forEach(function(m){var i=el("input",{id:"mt-"+m[0],type:"number",min:"0",inputmode:"numeric"});i.value=r[m[0]]!=null?r[m[0]]:"";
+    i.addEventListener("input",renderRoi);box.appendChild(el("label",{"for":"mt-"+m[0]},[m[1],i]))});
+  renderRoi();
+}
+function readMetrics(){var o={};METRICS.forEach(function(m){var v=parseFloat($("mt-"+m[0]).value);if(!isNaN(v)&&v>=0)o[m[0]]=v});return o}
+function renderRoi(){var m=readMetrics();$("m-roi").textContent=m.hours>0&&m.revenue!=null?"투입시간 대비 수익: 시간당 "+Math.round(m.revenue/m.hours).toLocaleString()+"원":"월간 수익과 투입 시간을 넣으면 시간당 수익을 계산합니다.";}
+
+/* ---------- 뉴스 종합 (자료 10개 이상 검증 → 종합 글) ---------- */
+var NEWS_FIELDS=["영유아","청소년","중장년","노인","장애인","지역복지"].concat(FIELDS.filter(function(f){return f!=="기타"})).concat(["기타"]);
+S.news=S.news&&typeof S.news==="object"?S.news:{};S.news.kws=S.news.kws||[];S.news.sources=S.news.sources||[];S.news.notes=S.news.notes||[];
+var N=S.news,MIN_VERIFIED=10,newsCtl=null;
+["nk-field","ns-field","nt-field"].forEach(function(id){var s=$(id);NEWS_FIELDS.forEach(function(f){s.appendChild(el("option",{text:f,value:f}))});s.value="노인"});
+function nUrlKey(u){return String(u||"").trim().replace(/^https?:\/\/(www\.|m\.)?/i,"").replace(/[#?].*$/,"").replace(/\/$/,"").toLowerCase()}
+function nDomain(u){var m=/^https?:\/\/([^\/?#]+)/i.exec(u||"");return m?m[1].replace(/^(www|m)\./,""):""}
+function nType(u){var d=nDomain(u);return /(\.go\.kr|\.or\.kr|\.re\.kr|\.ac\.kr|korea\.kr)$/.test(d)?"공공·기관":/blog|tistory|brunch/.test(d)?"블로그":"언론"}
+function nVerified(s){return s.progVerified||(s.chk&&s.chk.open&&s.chk.match&&s.chk.date)}
+function nAdd(src){
+  var u=safeUrl(src.url);if(!u)return "invalid";
+  if(N.sources.some(function(x){return nUrlKey(x.url)===nUrlKey(u)}))return "dup";
+  N.sources.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),url:u.slice(0,600),title:String(src.title||"").slice(0,200),press:String(src.press||nDomain(u)).slice(0,60),
+    date:String(src.date||"").slice(0,10),field:String(src.field||"기타").slice(0,30),summary:String(src.summary||"").slice(0,400),flags:Array.isArray(src.flags)?src.flags.slice(0,4).map(String):[],
+    score:+src.score||0,issue:+src.issue||0,issueSize:+src.issueSize||0,progVerified:!!src.progVerified,checks:Array.isArray(src.checks)?src.checks.slice(-3).map(String):[],chk:{open:false,match:false,date:false},origin:src.origin||"직접 추가"});
+  return "ok";
+}
+function nSave(){save();renderNews()}
+
+/* 키워드 */
+$("btn-nk-add").addEventListener("click",function(){var w=$("nk-word").value.trim();if(!w){toast("키워드를 입력하세요");return}
+  if(!N.kws.some(function(k){return k.w===w}))N.kws.push({f:$("nk-field").value,w:w.slice(0,40)});$("nk-word").value="";nSave()});
+function renderNkw(){
+  var l=$("nk-list");clear(l);
+  N.kws.forEach(function(k,i){var b=el("button",{cls:"kwchip",text:k.f+" · "+k.w+"  ×","aria-label":k.w+" 삭제"});b.addEventListener("click",function(){N.kws.splice(i,1);nSave()});l.appendChild(b)});
+  var box=$("nk-links");clear(box);
+  var base=[["네이버 뉴스 홈","https://news.naver.com/"],["많이 본 뉴스(랭킹)","https://news.naver.com/main/ranking/popularDay.naver"],["사회 섹션","https://news.naver.com/section/102"],["생활·문화 섹션","https://news.naver.com/section/103"]];
+  N.kws.forEach(function(k){var q=encodeURIComponent(k.w);base.push([k.w+" · 정확도순","https://search.naver.com/search.naver?where=news&sort=0&query="+q]);base.push([k.w+" · 최신순","https://search.naver.com/search.naver?where=news&sort=1&query="+q])});
+  base.forEach(function(x){box.appendChild(el("a",{cls:"btn sm ghost",href:x[1],target:"_blank",rel:"noopener noreferrer",text:x[0]}))});
+}
+
+/* 불러오기 */
+$("nj-file").addEventListener("change",function(){
+  var f=$("nj-file").files[0];if(!f)return;var rd=new FileReader();
+  rd.onload=function(){try{importJson(JSON.parse(rd.result))}catch(e){$("nj-msg").textContent="sources.json 형식이 아닙니다. 프로그램이 만든 파일을 고르세요."}$("nj-file").value=""};rd.readAsText(f);
+});
+function importJson(o){
+  if(!o||!Array.isArray(o.sources))throw 0;var add=0,dup=0;
+  (o.keywords||[]).forEach(function(k){if(k&&k.keyword&&!N.kws.some(function(x){return x.w===k.keyword}))N.kws.push({f:String(k.field||"기타"),w:String(k.keyword).slice(0,40)})});
+  o.sources.forEach(function(s){var r=nAdd({url:s.url,title:s.title,press:s.press,date:String(s.date||"").slice(0,10),field:(s.fields&&s.fields[0])||(s.keywords&&s.keywords[0])||"기타",
+    summary:s.summary,flags:s.flags,score:s.score,issue:s.issue_id,issueSize:s.issue_size,progVerified:true,checks:s.checks,origin:s.origin||"네이버 뉴스 검색"});if(r==="ok")add++;else if(r==="dup")dup++});
+  (o.notes||[]).forEach(function(t){if(t&&!N.notes.some(function(n){return n.text===t}))N.notes.push({f:"현장",kind:"현장 경험",text:String(t).slice(0,1500)})});
+  $("nj-msg").textContent="프로그램 검증 자료 "+add+"건을 불러왔습니다"+(dup?" (중복 "+dup+"건 제외)":"")+".";nSave();
+}
+$("btn-nj-bulk").addEventListener("click",function(){
+  var lines=$("nj-bulk").value.split(/\n+/),add=0,bad=0,dup=0,f=$("nk-field").value;
+  lines.forEach(function(line){line=line.trim();if(!line)return;var p=line.split("|").map(function(x){return x.trim()});
+    var ui=p.findIndex(function(x){return /^https?:\/\//i.test(x)});if(ui<0){bad++;return}
+    var r=nAdd({url:p[ui],title:ui>0?p[0]:"",press:p[ui+1]||"",date:/^\d{4}-\d{2}-\d{2}$/.test(p[ui+2]||"")?p[ui+2]:"",field:f});
+    if(r==="ok")add++;else if(r==="dup")dup++;else bad++});
+  $("nj-msg").textContent=add+"건 추가"+(dup?", 중복 "+dup+"건":"")+(bad?", 링크가 아닌 줄 "+bad+"개":"")+". 제목이 빈 자료는 원문을 열어 채워 주세요.";$("nj-bulk").value="";nSave();
+});
+$("btn-ns-add").addEventListener("click",function(){
+  var r=nAdd({url:$("ns-url").value,title:$("ns-title").value.trim(),press:$("ns-press").value.trim(),date:$("ns-date").value,field:$("ns-field").value,summary:$("ns-sum").value.trim()});
+  if(r==="invalid"){toast("링크는 https:// 로 시작해야 합니다");return}if(r==="dup"){toast("이미 추가한 링크입니다");return}
+  ["ns-url","ns-title","ns-press","ns-date","ns-sum"].forEach(function(id){$(id).value=""});toast("자료를 추가했습니다");nSave();
+});
+$("btn-nt-add").addEventListener("click",function(){var t=$("nt-text").value.trim();if(!t){toast("내용을 입력하세요");return}
+  N.notes.push({f:$("nt-field").value,kind:$("nt-kind").value,text:t.slice(0,1500)});$("nt-text").value="";nSave()});
+
+/* 자료 목록과 검증 */
+function renderNotes(){var l=$("nt-list");clear(l);
+  N.notes.forEach(function(n,i){var d=el("button",{cls:"btn sm ghost",text:"삭제"});d.addEventListener("click",function(){N.notes.splice(i,1);nSave()});
+    l.appendChild(el("div",{cls:"post",style:"grid-template-columns:1fr auto"},[el("div",{style:"min-width:0"},[el("div",{cls:"meta"},[el("span",{cls:"chip",text:n.f}),el("span",{text:n.kind})]),el("p",{cls:"small",text:n.text})]),d]))})}
+function renderSources(){
+  var list=$("nv-list");clear(list);
+  var srcs=N.sources.slice().sort(function(a,b){return (nVerified(b)?1:0)-(nVerified(a)?1:0)||b.score-a.score||(b.date>a.date?1:-1)});
+  var v=N.sources.filter(nVerified).length;
+  $("nv-count").textContent=v+" / "+MIN_VERIFIED;var bar=$("nv-bar");bar.style.width=Math.min(100,v/MIN_VERIFIED*100)+"%";bar.className=v>=MIN_VERIFIED?"ok":v>=5?"warn":"bad";
+  var dist={};N.sources.filter(nVerified).forEach(function(s){dist[s.field]=(dist[s.field]||0)+1;var t="유형:"+nType(s.url);dist[t]=(dist[t]||0)+1});
+  var dd=$("nv-dist");clear(dd);Object.keys(dist).forEach(function(k){dd.appendChild(el("span",{cls:"chip",text:k+" "+dist[k]}))});
+  if(!srcs.length){list.appendChild(el("div",{cls:"empty",text:"아직 자료가 없습니다. 프로그램 결과를 불러오거나 링크를 추가하세요."}));return}
+  var now=Date.now();
+  srcs.forEach(function(s){
+    var ok=nVerified(s);
+    var auto=[];
+    if(!s.title)auto.push(["warn","제목 없음"]);
+    if(s.date){var age=(now-new Date(s.date+"T00:00:00").getTime())/864e5;if(age>90)auto.push(["warn","90일 넘은 자료"])}
+    auto.push(["ok",nType(s.url)]);
+    var head=el("div",{cls:"meta"},[el("span",{cls:"pill "+(ok?"ok":"warn"),text:ok?(s.progVerified?"프로그램 검증":"검증 완료"):"검증 전"}),el("span",{cls:"chip",text:s.field}),el("span",{text:s.press}),el("span",{text:s.date||"날짜 미상"})]
+      .concat(s.flags.map(function(f){return el("span",{cls:"pill "+(f==="픽"?"bad":f==="이슈"?"warn":"info"),text:f})})).concat(auto.filter(function(a){return a[0]==="warn"}).map(function(a){return el("span",{cls:"small muted",text:"· "+a[1]})})));
+    var ti=el("input",{value:s.title,placeholder:"제목 (원문에서 확인)","aria-label":"제목"});ti.addEventListener("change",function(){s.title=ti.value.trim().slice(0,200);save()});
+    var su=el("input",{value:s.summary,placeholder:"핵심 내용 (내 말로 1~2문장)","aria-label":"핵심 내용"});su.addEventListener("change",function(){s.summary=su.value.trim().slice(0,400);save()});
+    var link=el("a",{href:s.url,target:"_blank",rel:"noopener noreferrer",cls:"btn sm",text:"원문 열기"});
+    var kids=[head,el("div",{cls:"row",style:"margin-top:6px"},[el("label",{style:"flex:1 1 260px"},["제목",ti]),el("label",{style:"flex:1 1 260px"},["핵심 내용",su])])];
+    var acts=[link];
+    if(!s.progVerified){[["open","원문을 열어 읽음"],["match","제목·내용 일치"],["date","날짜 확인"]].forEach(function(c){
+      var id="nc-"+s.id+"-"+c[0];var cb=el("input",{type:"checkbox",id:id});cb.checked=!!s.chk[c[0]];cb.style.width="17px";cb.style.height="17px";
+      cb.addEventListener("change",function(){s.chk[c[0]]=cb.checked;nSave()});
+      acts.push(el("label",{"for":id,style:"display:flex;gap:6px;align-items:center;font-weight:500;color:var(--ink)"},[cb,c[1]]))})}
+    else if(s.checks.length)acts.push(el("span",{cls:"small muted",text:s.checks.join(" · ")}));
+    var del=el("button",{cls:"btn sm ghost",text:"삭제"});del.addEventListener("click",function(){N.sources=N.sources.filter(function(x){return x.id!==s.id});nSave()});acts.push(del);
+    kids.push(el("div",{cls:"acts"},acts));
+    list.appendChild(el("div",{cls:"post",style:"grid-template-columns:1fr"},[el("div",{style:"min-width:0"},kids)]));
+  });
+}
+function verifiedNumbered(){var v=N.sources.filter(nVerified).slice().sort(function(a,b){return b.score-a.score||(b.date>a.date?1:-1)});v.forEach(function(s,i){s.n=i+1});return v}
+function sourceTable(v){return "자료 정리표 ("+v.length+"건, "+TODAY_S+" 기준)\n번호 | 제목 | 언론사·기관 | 날짜 | 분야 | 표시 | 링크\n"+
+  v.map(function(s){return "["+s.n+"] | "+(s.title||"(제목 확인 필요)")+" | "+s.press+" | "+(s.date||"-")+" | "+s.field+" | "+(s.flags.join(" ")||"-")+" | "+s.url}).join("\n")}
+$("btn-nw-table").addEventListener("click",function(){var v=verifiedNumbered();if(!v.length){toast("검증된 자료가 없습니다");return}copy(sourceTable(v),"자료 정리표")});
+
+function templateSynthesis(v,mode){
+  var kws=N.kws.map(function(k){return k.w}).join(", ")||"(키워드)";
+  var byField={};v.forEach(function(s){(byField[s.field]=byField[s.field]||[]).push(s)});
+  var issues={};v.forEach(function(s){if(s.issue&&s.issueSize>=2)(issues[s.issue]=issues[s.issue]||[]).push(s)});
+  var L=["제목: "+kws+", 검증 자료 "+v.length+"건으로 본 지금의 쟁점","부제: 분야별 흐름과 현장의 의미를 정리했습니다","",
+    "■ 리드","[무엇이 왜 지금 쟁점인지 3문장으로 고쳐 쓰기. 근거는 아래 자료 번호로 표시]",""];
+  var ik=Object.keys(issues);
+  if(ik.length){L.push("■ 여러 언론이 함께 다룬 이슈");ik.slice(0,5).forEach(function(k){var g=issues[k];L.push("- "+g[0].title+" (언론사 "+g[0].issueSize+"곳) "+g.map(function(s){return "["+s.n+"]"}).join(""))});L.push("")}
+  L.push("■ 분야별 정리");
+  Object.keys(byField).forEach(function(f){L.push("▶ "+f);byField[f].forEach(function(s){L.push("- "+(s.summary||s.title)+" ["+s.n+"]")})});L.push("");
+  if(N.notes.length){L.push("■ 현장에서 본 의미");N.notes.forEach(function(n){L.push("- ("+n.kind+", "+n.f+") "+n.text)});L.push("")}
+  L.push("■ 전문가 제언","- 정책: ","- 현장: ","- 주민: ","","■ 독자가 할 수 있는 일","☐ ","☐ ","☐ ","","■ 자주 묻는 질문","Q. ","A. ","Q. ","A. ","Q. ","A. ","");
+  L.push("■ 참고자료");v.forEach(function(s){L.push("["+s.n+"] "+(s.title||"(제목 확인 필요)")+", "+s.press+", "+(s.date||"날짜 미상")+", "+s.url)});
+  if(mode!=="article"){L.push("","#"+["동두천","사회복지"].concat(N.kws.map(function(k){return k.w.replace(/\s/g,"")})).slice(0,10).join(" #"))}
+  return L.join("\n");
+}
+function synthPrompt(v,mode,len){
+  var want={both:"기획기사 1편과, 같은 자료로 만든 네이버 블로그 글 1편",article:"기획기사 1편",blog:"네이버 블로그 글 1편"}[mode];
+  return ["너는 박진혁 교수의 논설국장·전문기자 문체로 사회복지·지역사회 분야 기사를 쓰는 편집자다.",
+  "아래 검증된 자료와 작성자 텍스트만 근거로 "+want+"을(를) 써라. 각 글은 공백 제외 약 "+len+"자.",
+  "키워드(분야): "+N.kws.map(function(k){return k.f+":"+k.w}).join(", "),
+  "","검증된 자료 "+v.length+"건:",
+  v.map(function(s){return "["+s.n+"] "+(s.title||"(제목 미상)")+" | "+s.press+" | "+(s.date||"날짜 미상")+" | 분야 "+s.field+(s.issueSize>=2?" | 언론사 "+s.issueSize+"곳이 다룬 이슈":"")+" | 요약: "+(s.summary||"(요약 없음)")+" | "+s.url}).join("\n"),
+  "","작성자 텍스트(현장 경험·내부 자료·인터뷰, 경험은 이 내용만 쓴다):",
+  N.notes.map(function(n){return "- ["+n.kind+"/"+n.f+"] "+n.text}).join("\n")||"(없음)",
+  "","규칙:",
+  "1) 사실을 쓸 때마다 문장 끝에 [번호]로 출처를 단다. 자료에 없는 수치, 날짜, 인용, 기관 정보는 만들지 않고 [확인 필요]로 쓴다.",
+  "2) 기사 문장을 베끼지 말고 여러 자료를 비교해 공통 쟁점, 차이, 현장 시사점으로 재구성한다. 여러 언론이 다룬 이슈를 먼저 다룬다.",
+  "3) 작성자 텍스트가 없으면 현장 경험을 지어내지 않는다.",
+  "4) 마크다운 기호(#, **)를 쓰지 않는다. 소제목은 ■, 목록은 -, 체크리스트는 ☐.",
+  "","기획기사 구조: 제목: / 부제: / ■ 리드(3문장) / ■ 핵심 쟁점 3가지 / ■ 분야별 정리 / ■ 현장에서 본 의미(작성자 텍스트가 있을 때) / ■ 전문가 제언(정책·현장·주민) / ■ 독자가 할 수 있는 일 / ■ 자주 묻는 질문(Q./A. 3쌍) / ■ 참고자료([번호] 제목, 언론사, 날짜, 링크)",
+  "블로그 글 구조(요청 시, 기사 뒤에 '==== 블로그 글 ====' 줄로 구분): 제목 3안 / 부제 / ■ 한눈에 보는 요약 / ■ 왜 지금 / ■ 핵심 정리 / ■ 현장 경험 / ■ 체크리스트 / ■ 자주 묻는 질문 / ■ 참고자료 / 해시태그 10개"].join("\n");
+}
+$("btn-nw-run").addEventListener("click",function(){
+  var v=verifiedNumbered(),mode=$("nw-mode").value,len=+$("nw-len").value;
+  if(!v.length){toast("검증된 자료가 없습니다");return}
+  if(v.length<MIN_VERIFIED&&!$("nw-force").checked){$("nw-status").textContent="검증 자료가 "+v.length+"건입니다. "+MIN_VERIFIED+"건 이상 검증하거나 '10개 미만이어도 쓰기'를 켜세요.";return}
+  $("nw-out").value=templateSynthesis(v,mode);
+  if(!SAMPLE){$("nw-status").textContent="AI가 연결되지 않은 화면이라 자료를 분야·이슈별로 묶은 정리본을 만들었습니다. 빈칸을 채워 완성하세요.";return}
+  if(newsCtl)newsCtl.abort();newsCtl=new AbortController();var ctl=newsCtl;var b=$("btn-nw-run");b.disabled=true;
+  $("nw-status").textContent="AI가 자료 "+v.length+"건을 종합해 쓰는 중입니다. 1~2분 걸립니다.";
+  SAMPLE(synthPrompt(v,mode,len),{signal:ctl.signal,cache:false,onText:function(u){$("nw-out").value=u.text}}).then(function(r){
+    $("nw-out").value=r.text;$("nw-status").textContent="완성했습니다. [확인 필요]와 [번호]를 원문과 대조한 뒤 발행하세요."+(r.truncated?" 분량 한도로 끝부분이 잘렸습니다. 분량을 줄여 다시 쓰세요.":"");
+  },function(e){var c=e&&e.code;
+    if(c==="not_granted"){SAMPLE=null;$("nw-status").textContent="AI 사용이 허용되지 않아 정리본만 만들었습니다."}
+    else if(c==="rate_limited")$("nw-status").textContent="AI 요청이 많습니다. 잠시 뒤 다시 누르세요. 지금은 정리본입니다.";
+    else $("nw-status").textContent="AI 답을 받지 못해 정리본을 보여 드립니다. 다시 누르면 다시 요청합니다.";
+    if(e&&e.text)$("nw-out").value=e.text;
+  }).then(function(){if(ctl===newsCtl){b.disabled=false;newsCtl=null}});
+});
+$("btn-nw-copy").addEventListener("click",function(){copy($("nw-out").value,"종합 글")});
+$("btn-ex-news").addEventListener("click",function(){var p=newsParts();if(!p){toast("먼저 종합 글을 쓰세요");return}exportText("news-"+stamp()+".html","text/html",toHtml("",p.body))});
+$("btn-ex-csv").addEventListener("click",exportSourcesCsv);
+$("btn-nw-studio").addEventListener("click",function(){
+  var v=verifiedNumbered();if(!v.length){toast("검증된 자료가 없습니다");return}
+  $("kw").value=(N.kws[0]&&N.kws[0].w)||v[0].title.slice(0,30);
+  $("news").value=v.slice(0,15).map(function(s){return "["+s.n+"] "+s.press+" | "+(s.title||"")+" | "+(s.summary||"")+" | "+s.url}).join("\n");
+  $("exp").value=N.notes.filter(function(n){return n.kind==="현장 경험"}).map(function(n){return n.text}).join("\n");
+  showTab("write");runStudio();
+});
+function renderNews(){renderNkw();renderNotes();renderSources()}
+
+/* ---------- 내보내기 ---------- */
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function stamp(){var d=new Date();return TODAY_S.replace(/-/g,"")+"-"+pad(d.getHours())+pad(d.getMinutes())}
+function toMarkdown(title,body){
+  var out=title?["# "+title,""]:[];
+  body.split("\n").forEach(function(l){
+    if(/^■\s*/.test(l))out.push("## "+l.replace(/^■\s*/,""));
+    else if(/^▶\s*/.test(l))out.push("### "+l.replace(/^▶\s*/,""));
+    else if(/^☐\s*/.test(l))out.push("- [ ] "+l.replace(/^☐\s*/,""));
+    else if(/^(제목|부제):\s*/.test(l)&&!title)out.push((/^제목/.test(l)?"# ":"_")+l.replace(/^(제목|부제):\s*/,"")+(/^부제/.test(l)?"_":""));
+    else out.push(l);
+  });
+  return out.join("\n").replace(/\n{3,}/g,"\n\n");
+}
+function toHtml(title,body){
+  var h=['<!doctype html><html lang="ko"><head><meta charset="utf-8"><title>'+esc(title||"글")+'</title>',
+    '<style>body{font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;line-height:1.8;max-width:760px;margin:40px auto;padding:0 16px;color:#14211D}h1{font-size:26px}h2{font-size:20px;border-left:4px solid #1E5A47;padding-left:10px;margin-top:32px}h3{font-size:17px}li{margin:4px 0}a{color:#1E5A47}.sub{color:#56665F}</style></head><body>'];
+  if(title)h.push("<h1>"+esc(title)+"</h1>");
+  var inList=false;function close(){if(inList){h.push("</ul>");inList=false}}
+  body.split("\n").forEach(function(l){
+    var t=l.trim();
+    if(!t){close();return}
+    var linked=esc(t).replace(/(https?:\/\/[^\s<]+)/g,'<a href="$1">$1</a>');
+    if(/^■/.test(t)){close();h.push("<h2>"+esc(t.replace(/^■\s*/,""))+"</h2>")}
+    else if(/^▶/.test(t)){close();h.push("<h3>"+esc(t.replace(/^▶\s*/,""))+"</h3>")}
+    else if(/^제목:/.test(t)&&!title){close();h.push("<h1>"+esc(t.replace(/^제목:\s*/,""))+"</h1>")}
+    else if(/^부제:/.test(t)){close();h.push('<p class="sub">'+esc(t.replace(/^부제:\s*/,""))+"</p>")}
+    else if(/^(-|☐|\d+\))\s*/.test(t)){if(!inList){h.push("<ul>");inList=true}h.push("<li>"+linked.replace(/^(-|\d+\))\s*/,"")+"</li>")}
+    else{close();h.push("<p>"+linked+"</p>")}
+  });
+  close();h.push("</body></html>");return h.join("\n");
+}
+function csv(rows){return "﻿"+rows.map(function(r){return r.map(function(v){v=v==null?"":String(v);return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v}).join(",")}).join("\r\n")}
+function exportText(name,mime,text){
+  if(!text||!text.trim()){toast("내보낼 내용이 없습니다");return}
+  if(DL){DL.save({filename:name,data:new Blob([text],{type:mime+";charset=utf-8"})}).then(function(){toast("파일로 저장했습니다")},function(e){if(!(e&&e.code==="cancelled"))toast("저장하지 못했습니다")});return}
+  if(STANDALONE){browserDownload(name,new Blob([text],{type:mime+";charset=utf-8"}));return}
+  copy(text,"파일 저장이 막힌 화면이라 내용");
+}
+function blogParts(){if(!GEN)return null;var tags=GEN.hashtags.map(function(h){return "#"+h}).join(" ");
+  return {title:pickedTitle(),body:($("o-sub").value?"부제: "+$("o-sub").value+"\n\n":"")+$("w-draft").value+"\n\n"+tags}}
+function newsParts(){var t=$("nw-out").value;return t.trim()?{title:"",body:t}:null}
+var EXPORTS=[
+  ["블로그 글 (AI 자동 글쓰기)",function(){return blogParts()},"blog"],
+  ["종합 기사·블로그 글 (뉴스 종합)",function(){return newsParts()},"news"]
+];
+function sourcesCsv(v){return csv([["번호","제목","언론사·기관","날짜","분야","표시","점수","검증","링크"]].concat(v.map(function(s){return [s.n,s.title,s.press,s.date,s.field,s.flags.join(" "),s.score||"",s.progVerified?"프로그램 검증":"직접 검증",s.url]})))}
+function exportSourcesCsv(){var v=verifiedNumbered();if(!v.length){toast("검증된 자료가 없습니다");return}exportText("sources-"+stamp()+".csv","text/csv",sourcesCsv(v))}
+function renderExport(){
+  var tb=$("ex-rows");clear(tb);
+  EXPORTS.forEach(function(x){
+    var cell=el("td",null,[]);
+    [["TXT","txt","text/plain"],["Markdown","md","text/markdown"],["HTML","html","text/html"]].forEach(function(f){
+      var b=el("button",{cls:"btn sm ghost",text:f[0]});b.addEventListener("click",function(){var p=x[1]();if(!p){toast("먼저 글을 만드세요");return}
+        var name=x[2]+"-"+(x[2]==="news"&&N.kws[0]?N.kws[0].w.replace(/[^가-힣A-Za-z0-9]+/g,"-").slice(0,30)+"-":x[2]==="news"?"":slug()+"-")+stamp()+"."+f[1];
+        exportText(name,f[2],f[1]==="txt"?(p.title?p.title+"\n\n":"")+p.body:f[1]==="md"?toMarkdown(p.title,p.body):toHtml(p.title,p.body))});
+      cell.appendChild(b);cell.appendChild(document.createTextNode(" "))});
+    tb.appendChild(el("tr",null,[el("td",{text:x[0]}),cell]))});
+  var rows=[
+    ["자료 정리표 (뉴스 종합)","CSV",exportSourcesCsv],
+    ["발행 기록","CSV",function(){var l=S.posts.slice().sort(function(a,b){return a.date<b.date?1:-1});if(!l.length){toast("발행 기록이 없습니다");return}
+      exportText("posts-"+stamp()+".csv","text/csv",csv([["날짜","분야","제목","링크"]].concat(l.map(function(p){return [p.date,p.field,p.title,p.url]}))))}],
+    ["월간 회고 ("+(TODAY.getMonth()+1)+"월)","Markdown",function(){var r=S.retro[MON]||{};var m=r.metrics||{};
+      var t=["# "+MON+" 동두천 1일 1포스팅 회고","","- 발행: "+monthCount()+"편, 연속 "+streak()+"일","","## 반응이 좋았던 글",r.best||"-","","## 노하우",r.know||"-","","## 다음 달 목표",r.next||"-","","## 성과 지표"].concat(METRICS.map(function(k){return "- "+k[1]+": "+(m[k[0]]!=null?m[k[0]].toLocaleString():"-")}));
+      exportText("retro-"+MON+".md","text/markdown",t.join("\n"))}],
+    ["전체 백업 (복원용)","JSON",function(){exportText("ddc-1day1post-backup-"+stamp()+".json","application/json",JSON.stringify({v:1,exported:new Date().toISOString(),posts:S.posts,comments:S.comments,retro:S.retro,name:S.name,field:S.field,pledge:S.pledge,goals:S.goals,news:S.news},null,1))}]
+  ];
+  rows.forEach(function(r){var b=el("button",{cls:"btn sm ghost",text:r[1]});b.addEventListener("click",r[2]);tb.appendChild(el("tr",null,[el("td",{text:r[0]}),el("td",null,[b])]))});
+  $("ex-note").textContent=DL?"저장 전 확인 창이 뜹니다":STANDALONE?"브라우저 다운로드로 저장합니다":"이 화면은 파일 저장이 막혀 있어 내용을 복사합니다";
+}
+function restoreFrom(o){
+  if(!o||!Array.isArray(o.posts))throw 0;
+  var have={};S.posts.forEach(function(p){have[p.url]=1});
+  var add=o.posts.filter(function(p){return p&&p.url&&!have[p.url]&&/^\d{4}-\d{2}-\d{2}$/.test(p.date)}).map(function(p){return {date:p.date,title:String(p.title||"").slice(0,120),url:safeUrl(p.url),field:String(p.field||""),at:p.at||0}}).filter(function(p){return p.url});
+  S.posts=S.posts.concat(add);
+  if(Array.isArray(o.comments))S.comments=S.comments.concat(o.comments.filter(function(c){return c&&typeof c.text==="string"})).slice(0,80);
+  if(o.retro&&typeof o.retro==="object")for(var k in o.retro)if(!S.retro[k])S.retro[k]=o.retro[k];
+  var nadd=0;if(o.news&&Array.isArray(o.news.sources))o.news.sources.forEach(function(x){if(nAdd(x)==="ok"){nadd++;var s=N.sources[N.sources.length-1];if(x.chk)s.chk={open:!!x.chk.open,match:!!x.chk.match,date:!!x.chk.date}}});
+  if(o.news&&Array.isArray(o.news.notes))o.news.notes.forEach(function(n){if(n&&n.text&&!N.notes.some(function(m){return m.text===n.text}))N.notes.push({f:String(n.f||"기타"),kind:String(n.kind||"기타"),text:String(n.text).slice(0,1500)})});
+  if(o.news&&Array.isArray(o.news.kws))o.news.kws.forEach(function(k){if(k&&k.w&&!N.kws.some(function(x){return x.w===k.w}))N.kws.push({f:String(k.f||"기타"),w:String(k.w).slice(0,40)})});
+  if(!S.name&&o.name)S.name=String(o.name).slice(0,20);
+  save();renderAll();return "글 "+add.length+"편, 뉴스 자료 "+nadd+"건을 복원했습니다.";
+}
+$("ex-restore").addEventListener("change",function(){var f=$("ex-restore").files[0];if(!f)return;var rd=new FileReader();
+  rd.onload=function(){try{$("ex-msg").textContent=restoreFrom(JSON.parse(rd.result))}catch(e){$("ex-msg").textContent="백업 파일 형식이 아닙니다. 전체 백업으로 받은 .json 파일을 고르세요."}$("ex-restore").value=""};rd.readAsText(f)});
+
+/* ---------- 댓글 점검 ---------- */
+function bigrams(s){s=s.replace(/\s+/g,"");var a={};for(var i=0;i<s.length-1;i++)a[s.substr(i,2)]=1;return a}
+function sim(a,b){var A=bigrams(a),B=bigrams(b),i=0,u=0,k;for(k in A){u++;if(B[k])i++}for(k in B)if(!A[k])u++;return u?i/u:0}
+function words(s){return (s.match(/[가-힣A-Za-z0-9]{2,}/g)||[])}
+function checkComment(){
+  var t=$("c-text").value.trim(), ref=$("c-title").value.trim();
+  var res=[],bad=0,warn=0;
+  function add(lv,msg){res.push([lv,msg]);if(lv==="bad")bad++;if(lv==="warn")warn++}
+  if(!t){toast("댓글 초안을 입력하세요");return null}
+  var n=t.replace(/\s/g,"").length;
+  if(n>=40)add("ok","분량 충분 ("+n+"자)");else if(n>=20)add("warn","조금 짧습니다 ("+n+"자). 글의 한 부분을 짚어 주세요");else add("bad","너무 짧습니다 ("+n+"자). 읽었다는 근거가 보이지 않습니다");
+  var g=GENERIC.filter(function(x){return t.replace(/\s/g,"").indexOf(x.replace(/\s/g,""))>=0});
+  var rest=t;GENERIC.forEach(function(x){rest=rest.split(x).join("")});
+  if(g.length&&rest.replace(/\s/g,"").length<25)add("bad","상투 표현만 있습니다: "+g.slice(0,3).join(", "));
+  else if(g.length)add("warn","상투 표현이 섞여 있습니다: "+g.slice(0,3).join(", ")+" (빼도 됩니다)");
+  else add("ok","상투 표현 없음");
+  var bn=BANNED.filter(function(x){return t.indexOf(x)>=0});
+  if(bn.length)add("bad","운영규칙 금지 표현: "+bn.join(", ")+" (공감·댓글·클릭 교환 요청 금지)");
+  if(ref){var rw=words(ref),hit=rw.filter(function(w){return t.indexOf(w)>=0});
+    if(hit.length)add("ok","글 내용과 연결됨: "+hit.slice(0,4).join(", "));else add("warn","읽은 글의 단어가 댓글에 없습니다. 인상 깊은 부분을 짚어 주세요")}
+  else if(/["'“‘「]|[0-9]+번/.test(t))add("ok","글의 특정 부분을 짚었습니다");
+  else add("warn","읽은 글의 제목이나 문장을 위 칸에 넣으면 내용 연결을 확인합니다");
+  if(/[?？]|궁금|여쭙|어떻게|제안/.test(t))add("ok","질문 또는 제안 포함");
+  else if(/저는|저희|현장|경험|기관/.test(t))add("ok","내 경험·의견 포함");
+  else add("warn","질문이나 내 경험을 한 문장 더하면 좋습니다");
+  var top=0,topT="";S.comments.forEach(function(c){var s=sim(t,c.text);if(s>top){top=s;topT=c.text}});
+  if(top>=0.6)add("bad","예전 댓글과 "+Math.round(top*100)+"% 비슷합니다. 같은 댓글 반복은 금지입니다");
+  else if(top>=0.4)add("warn","예전 댓글과 "+Math.round(top*100)+"% 비슷합니다. 표현을 바꿔 보세요");
+  else add("ok","반복 아님 (최근 기록 "+S.comments.length+"개와 비교)");
+  return {res:res,bad:bad,warn:warn,text:t,ref:ref};
+}
+function renderCheck(r){
+  var ul=$("c-result");clear(ul);
+  r.res.forEach(function(it){ul.appendChild(el("li",null,[el("span",{cls:"mk "+it[0],text:{ok:"✓",warn:"!",bad:"×"}[it[0]]}),el("span",{text:it[1]})]))});
+  var v=$("c-verdict");v.hidden=false;
+  if(r.bad){v.className="verdict bad";v.textContent="고쳐 쓰세요. 이대로 달면 운영규칙에 어긋나거나 성의 없는 댓글로 보입니다."}
+  else if(r.warn){v.className="verdict warn";v.textContent="달아도 됩니다. 노란 항목을 보완하면 더 좋은 댓글이 됩니다."}
+  else{v.className="verdict ok";v.textContent="좋은 댓글입니다. 블로그에 직접 붙여 넣으세요."}
+}
+$("btn-check").addEventListener("click",function(){var r=checkComment();if(r)renderCheck(r)});
+$("btn-c-done").addEventListener("click",function(){
+  var r=checkComment();if(!r)return;renderCheck(r);
+  if(r.bad){toast("빨간 항목을 먼저 고치세요");return}
+  S.comments.unshift({text:r.text.slice(0,600),ref:r.ref.slice(0,120),date:TODAY_S});S.comments=S.comments.slice(0,80);
+  var rt=S.routine[TODAY_S]||[];if(rt.indexOf(5)<0){rt.push(5);S.routine[TODAY_S]=rt}
+  save();renderRoutine();renderCHist();$("c-text").value="";toast("작성 기록을 남겼습니다");
+});
+function renderCHist(){var today=S.comments.filter(function(c){return c.date===TODAY_S}).length;
+  $("c-history").textContent="최근 작성 기록 "+S.comments.length+"개 · 오늘 "+today+"개 (반복 점검에 사용, 이 브라우저에만 저장)"}
+
+/* ---------- 서약 ---------- */
+function renderPledge(){var p=$("pledge-pill");$("pledge").checked=!!S.pledge;
+  if(S.pledge){p.className="pill ok";p.textContent="서약 완료"}else{p.className="pill warn";p.textContent="서약 전"}}
+$("pledge").addEventListener("change",function(){S.pledge=$("pledge").checked;save();renderPledge();
+  if(myDoc()||CANWRITE)writeMine(function(d){d.pledged=S.pledge});toast(S.pledge?"서약했습니다":"서약을 취소했습니다")});
+
+/* ---------- 월간 회고 ---------- */
+var MON=ym(TODAY);
+function monthCount(){var m=allPostDates(),c=0;for(var k in m)if(k.indexOf(MON)===0)c+=m[k];return c}
+function renderMonth(){
+  $("m-title").textContent=(TODAY.getMonth()+1)+"월 회고";$("m-stat").textContent="이번 달 "+monthCount()+"편 · 연속 "+streak()+"일";
+  var r=S.retro[MON]||{};["best","know","next"].forEach(function(k){var e=$("m-"+k);if(document.activeElement!==e)e.value=r[k]||""});
+}
+$("btn-month-save").addEventListener("click",function(){
+  var r={best:$("m-best").value.trim().slice(0,600),know:$("m-know").value.trim().slice(0,800),next:$("m-next").value.trim().slice(0,400),count:monthCount(),metrics:readMetrics(),at:Date.now()};
+  S.retro[MON]=r;save();
+  if(CANWRITE){writeMine(function(d){d.retro=d.retro||{};d.retro[MON]=r;var keys=Object.keys(d.retro).sort();while(keys.length>6)delete d.retro[keys.shift()]});toast("회고를 저장하고 공유했습니다")}
+  else toast("회고를 이 브라우저에 저장했습니다");
+});
+$("btn-month-copy").addEventListener("click",function(){
+  var nm=S.name||"이름";
+  var txt="[동두천 1일1포스팅] "+(TODAY.getMonth()+1)+"월 성과 공유 · "+nm+"\n"+
+    "· 이번 달 발행: "+monthCount()+"편 (연속 "+streak()+"일)\n"+
+    "· 반응 좋았던 글: "+($("m-best").value.trim()||"-")+"\n"+
+    "· 노하우: "+($("m-know").value.trim()||"-")+"\n"+
+    "· 다음 달 목표: "+($("m-next").value.trim()||"-")+
+    (function(){var m=readMetrics(),a=[];METRICS.forEach(function(x){if(m[x[0]]!=null)a.push(x[1]+" "+m[x[0]].toLocaleString())});return a.length?"\n· 성과 지표: "+a.join(", "):""})();
+  copy(txt,"월간 공유문");
+});
+
+/* ---------- 단톡방 키트 ---------- */
+function kitTexts(){
+  var nm=S.name||"○○○";var th=THEMES[TODAY.getDay()];
+  return [
+    ["오픈 단톡방 소개 (공지 고정용)",
+"동두천 1일 1포스팅 상호성장 캠페인방입니다.\n\n■ 운영방법\n1. 각자 전문분야 글을 하루 한 편 씁니다\n2. 발행한 글의 링크를 이 방에 공유합니다\n3. 동료 글을 실제로 읽고 구체적인 의견을 남깁니다\n4. 관심 분야가 맞으면 서로이웃을 추가합니다\n5. 매월 마지막 주에 성과와 노하우를 나눕니다\n\n■ 금지\n같은 댓글 반복, 자동화된 대량 댓글, 공감·댓글 교환을 통한 순위조작, 인위적인 체류시간 만들기, 광고 클릭 대행·교환, 실제 경험 없는 후기 작성\n\n■ 목표\n동두천 복지정보 확산 · 사회복지사 전문성 강화 · 서로의 콘텐츠 제작 지원 · 전국 사회복지사 네트워크로 확장"],
+    ["참여 초대 문구",
+"안녕하세요, "+nm+"입니다.\n동두천 사회복지사들이 하루 한 편씩 전문분야 블로그 글을 쓰고, 서로 읽고 피드백하는 '동두천 1일 1포스팅 상호성장 캠페인'을 함께하실 분을 찾습니다.\n주제 추천, 초안 틀, 댓글 점검까지 되는 참여 도구도 있습니다. 순위 품앗이가 아니라 전문성을 키우는 모임입니다.\n오픈 단톡방: (링크)\n참여 도구: (이 페이지 링크)"],
+    ["오늘의 리마인더 ("+th.day+"요일)",
+"[동두천 1일1포스팅] "+fmtShort(TODAY_S)+" 오늘의 테마: "+th.name+"\n추천 주제: "+topicFor(TODAY,S.topicShift||0)+"\n글을 발행하면 아래 형식으로 공유해 주세요.\n[동두천 1일1포스팅] 날짜 이름 | 분야\n제목\n링크"],
+    ["링크 공유 형식",
+"[동두천 1일1포스팅] "+fmtShort(TODAY_S)+" "+nm+" | 분야\n글 제목\nhttps://blog.naver.com/..."],
+    ["월간 성과 공유 모임 안내",
+"[동두천 1일1포스팅] "+(TODAY.getMonth()+1)+"월 성과 공유 안내\n· 일시: (날짜, 시간)\n· 방식: (온라인/오프라인 장소)\n· 준비: 이번 달 발행 편수, 반응 좋았던 글 1편과 이유, 노하우 1가지\n참여 도구의 '월간 공유' 탭에서 공유문을 복사해 오시면 됩니다."]
+  ];
+}
+function renderKit(){var g=$("kit");clear(g);
+  kitTexts().forEach(function(k){var b=el("button",{cls:"btn sm",text:"복사"});b.addEventListener("click",function(){copy(k[1],k[0])});
+    g.appendChild(el("div",{cls:"card"},[el("div",{cls:"head"},[el("h3",{text:k[0]}),b]),el("pre",{cls:"share",text:k[1]})]))})}
+$("k-name").value=S.name||"";
+$("k-name").addEventListener("input",function(){S.name=$("k-name").value.trim().slice(0,20);save();renderKit()});
+
+/* ---------- 백업 ---------- */
+$("btn-backup").addEventListener("click",function(){copy(JSON.stringify({v:1,posts:S.posts,comments:S.comments,retro:S.retro,name:S.name,field:S.field,pledge:S.pledge,goals:S.goals,news:S.news}),"백업 문자열")});
+$("btn-restore").addEventListener("click",function(){
+  var msg=$("restore-msg");
+  try{msg.textContent=restoreFrom(JSON.parse($("restore").value));$("restore").value=""}
+  catch(e){msg.textContent="백업 문자열 형식이 아닙니다. 백업 문자열 복사로 받은 내용을 그대로 붙여 넣으세요."}
+});
+
+/* ---------- 공유 보드 (db) ---------- */
+var RANGE=1;
+[1,7,30].forEach(function(n){$("rg-"+n).addEventListener("click",function(){RANGE=n;[1,7,30].forEach(function(m){$("rg-"+m).className="btn sm"+(m===n?"":" ghost")});renderBoard()})});
+
+function writeMine(mut){
+  if(!DB||!MYID)return Promise.resolve();
+  writeChain=writeChain.then(function(){
+    var cur=myDoc();var d=cur?JSON.parse(JSON.stringify(cur)):{posts:[],reads:{},retro:{},field:S.field||"",blog:"",pledged:!!S.pledge,since:TODAY_S};
+    mut(d);d.updated=Date.now();
+    return DB.doc("members/"+MYID).set(d).then(function(){MEMBERS[MYID]=d},function(e){
+      if(e&&e.code==="invalid_argument"){CANWRITE=false;boardStatus("readonly")}
+      else if(e&&e.code==="quota_exceeded")toast("보드 저장 공간이 가득 찼습니다. 운영자에게 알려 주세요");
+      else toast("보드에 저장하지 못했습니다. 잠시 후 다시 시도하세요")});
+  });
+  return writeChain;
+}
+function pushMyPost(p){
+  if(!CANWRITE){return}
+  if(!S.pledge){toast("운영규칙 서약 후에 보드에 올라갑니다");$("log-hint").textContent="이 글은 이 브라우저에만 기록되었습니다. 운영규칙 탭에서 서약하면 다음 글부터 보드에 올라갑니다.";return}
+  writeMine(function(d){d.posts=[p].concat((d.posts||[]).filter(function(q){return q.url!==p.url})).slice(0,90);d.pledged=true});
+}
+function removeMyPost(url){var md=myDoc();if(!CANWRITE||!md||!(md.posts||[]).some(function(q){return q.url===url}))return;
+  writeMine(function(d){d.posts=(d.posts||[]).filter(function(q){return q.url!==url})})}
+
+function boardStatus(kind){
+  var b=$("board-status");clear(b);
+  var msg={
+    off:["링크 보드를 쓸 수 없는 화면입니다."," 로그인하지 않았거나 이 화면에서 공유 저장소가 열리지 않았습니다. 오픈 단톡방에 링크를 공유하세요. 다른 기능은 모두 쓸 수 있습니다."],
+    readonly:["링크 보드를 읽기 전용으로 보고 있습니다."," 글을 올리려면 운영자(박진혁 교수)에게 이 페이지의 참여 권한을 요청하세요. 그동안은 단톡방 키트의 공유 형식으로 링크를 나눠 주세요."],
+    on:["링크 보드에 연결되었습니다."," 오늘 탭에서 발행을 기록하면 동료에게 보입니다."+(S.pledge?"":" 먼저 운영규칙 탭에서 서약하세요.")]
+  }[kind];
+  b.appendChild(el("b",{text:msg[0]}));b.appendChild(document.createTextNode(msg[1]));
+  var dis=kind!=="on";["p-field","p-blog","btn-profile"].forEach(function(id){$(id).disabled=dis});
+  $("m-hint").textContent=kind==="on"?"저장한 회고는 링크 보드 참여자와 공유됩니다.":"회고는 이 브라우저에 저장됩니다. 공유하려면 단톡방 공유문을 복사하세요.";
+  $("log-hint").textContent=kind==="on"?"기록은 이 브라우저와 링크 보드에 함께 저장됩니다.":"기록은 이 브라우저에 저장됩니다. 단톡방 공유문 복사로 링크를 나눠 주세요.";
+}
+$("btn-profile").addEventListener("click",function(){
+  var f=$("p-field").value,blog=safeUrl($("p-blog").value);
+  if($("p-blog").value.trim()&&!blog){toast("블로그 주소는 https:// 로 시작해야 합니다");return}
+  S.field=f;save();$("log-field").value=f;renderFirstMonth();
+  writeMine(function(d){d.field=f;d.blog=blog;d.pledged=!!S.pledge}).then(function(){toast("참여 정보를 저장했습니다")});
+});
+
+function avatar(prof){var i=el("img",{alt:""});i.src=prof&&prof.avatarUrl||"";return i}
+var renderSeq=0;
+function renderBoard(){
+  var seq=++renderSeq;
+  var ids=Object.keys(MEMBERS);
+  var since=ymd(addDays(TODAY,-(RANGE-1)));
+  var items=[];
+  ids.forEach(function(uid){var m=MEMBERS[uid];if(!m||!m.pledged||!Array.isArray(m.posts))return;
+    m.posts.forEach(function(p){if(p&&typeof p.date==="string"&&p.date>=since&&p.date<=TODAY_S&&safeUrl(p.url))items.push({uid:uid,p:p})})});
+  items.sort(function(a,b){return a.p.date<b.p.date?1:a.p.date>b.p.date?-1:(b.p.at||0)-(a.p.at||0)});
+  var profP=USER?USER.profiles(ids):Promise.resolve({});
+  profP.then(function(ps){
+    if(seq!==renderSeq)return;
+    var feed=$("feed");clear(feed);
+    if(!items.length){feed.appendChild(el("div",{cls:"empty"},[el("b",{text:RANGE===1?"오늘 올라온 글이 아직 없습니다.":"이 기간에 올라온 글이 없습니다."}),el("span",{text:"오늘 탭에서 발행을 기록하면 여기에 올라옵니다."})]))}
+    var mine=myDoc()||{reads:{}};var reads=mine.reads||{};
+    items.slice(0,150).forEach(function(it){
+      var prof=ps[it.uid]||{};var key=it.uid+"__"+it.p.date+"__"+hash(it.p.url);var isMe=it.uid===MYID;
+      var link=el("a",{href:safeUrl(it.p.url),target:"_blank",rel:"noopener noreferrer",cls:"t",text:String(it.p.title||"(제목 없음)")});
+      var meta=el("div",{cls:"meta"},[el("span",{text:(prof.name||"참여자")+(isMe?" (나)":"")}),el("span",{text:fmtShort(it.p.date)}),el("span",{cls:"chip",text:String(it.p.field||"")})]);
+      var body=el("div",{style:"min-width:0"},[link,meta]);
+      if(!isMe&&CANWRITE){
+        var r=reads[key];
+        var rb=el("button",{cls:"btn sm"+(r?"":" ghost"),text:r?"읽었어요 ✓":"끝까지 읽었어요"});
+        rb.addEventListener("click",function(){writeMine(function(d){d.reads=d.reads||{};if(d.reads[key])delete d.reads[key];else d.reads[key]={at:Date.now(),note:""};pruneReads(d)}).then(renderBoard)});
+        var ni=el("input",{placeholder:"내용·표현 피드백 한 줄 (글쓴이에게만 보임)",maxlength:"200","aria-label":"피드백"});ni.value=r&&r.note||"";
+        var nb=el("button",{cls:"btn sm ghost",text:"남기기"});
+        nb.addEventListener("click",function(){var v=ni.value.trim().slice(0,200);writeMine(function(d){d.reads=d.reads||{};d.reads[key]={at:Date.now(),note:v};pruneReads(d)}).then(function(){toast(v?"피드백을 남겼습니다":"읽음으로 표시했습니다");renderBoard()})});
+        body.appendChild(el("div",{cls:"acts"},[rb]));
+        body.appendChild(el("div",{cls:"note"},[ni,nb]));
+      }
+      feed.appendChild(el("div",{cls:"post"},[avatar(prof),body]));
+    });
+    renderFeedback(ps);renderMembers(ps);renderMonthFeed(ps);
+  });
+}
+function pruneReads(d){var ks=Object.keys(d.reads);if(ks.length<=400)return;ks.sort(function(a,b){return (d.reads[a].at||0)-(d.reads[b].at||0)});ks.slice(0,ks.length-400).forEach(function(k){delete d.reads[k]})}
+function hash(s){var h=0;s=String(s);for(var i=0;i<s.length;i++){h=(h*31+s.charCodeAt(i))|0}return (h>>>0).toString(36)}
+function renderFeedback(ps){
+  var box=$("my-feedback");clear(box);if(!MYID){box.appendChild(el("div",{cls:"empty",text:"링크 보드에 연결되면 동료의 피드백이 모입니다."}));return}
+  var mine=myDoc();var myKeys={};((mine&&mine.posts)||[]).forEach(function(p){myKeys[MYID+"__"+p.date+"__"+hash(p.url)]=p});
+  var list=[],readers=0;
+  Object.keys(MEMBERS).forEach(function(uid){if(uid===MYID)return;var r=(MEMBERS[uid]||{}).reads||{};var counted=false;
+    for(var k in r){if(myKeys[k]){if(!counted){readers++;counted=true}if(r[k]&&r[k].note)list.push({uid:uid,p:myKeys[k],note:String(r[k].note),at:r[k].at||0})}}});
+  list.sort(function(a,b){return b.at-a.at});
+  var total=0;Object.keys(MEMBERS).forEach(function(uid){if(uid===MYID)return;var r=(MEMBERS[uid]||{}).reads||{};for(var k in r)if(myKeys[k])total++});
+  $("fb-count").textContent="읽음 "+total+"회 · 피드백 "+list.length+"개";
+  if(!list.length){box.appendChild(el("div",{cls:"empty",text:"아직 피드백이 없습니다. 동료가 남긴 내용·표현 피드백이 여기에 모입니다."}));return}
+  list.slice(0,30).forEach(function(f){var prof=ps[f.uid]||{};
+    box.appendChild(el("div",{cls:"post"},[avatar(prof),el("div",{style:"min-width:0"},[el("div",{cls:"t",text:f.note}),el("div",{cls:"meta"},[el("span",{text:prof.name||"참여자"}),el("span",{text:"「"+String(f.p.title||"").slice(0,40)+"」"})])])]))});
+}
+function renderMembers(ps){
+  var box=$("members");clear(box);
+  var ids=Object.keys(MEMBERS).filter(function(uid){var m=MEMBERS[uid];return m&&m.pledged});
+  if(!ids.length){box.appendChild(el("div",{cls:"empty",text:"서약하고 참여 정보를 저장한 동료가 여기에 표시됩니다."}));return}
+  ids.sort(function(a,b){return ((MEMBERS[b].posts||[]).length)-((MEMBERS[a].posts||[]).length)});
+  ids.forEach(function(uid){var m=MEMBERS[uid],prof=ps[uid]||{};var blog=safeUrl(m.blog);
+    var last=(m.posts||[])[0];
+    var kids=[el("div",{cls:"t",text:(prof.name||"참여자")+(uid===MYID?" (나)":"")}),
+      el("div",{cls:"meta"},[el("span",{cls:"chip",text:String(m.field||"분야 미정")}),el("span",{text:"누적 "+(m.posts||[]).length+"편"}),el("span",{text:last?"최근 "+fmtShort(last.date):"아직 글 없음"})])];
+    if(blog)kids.push(el("div",{cls:"acts"},[el("a",{href:blog,target:"_blank",rel:"noopener noreferrer",cls:"btn sm ghost",text:"블로그 방문"})]));
+    box.appendChild(el("div",{cls:"post"},[avatar(prof),el("div",{style:"min-width:0"},kids)]))});
+}
+function renderMonthFeed(ps){
+  var box=$("m-feed");clear(box);var list=[];
+  Object.keys(MEMBERS).forEach(function(uid){var m=MEMBERS[uid];var r=m&&m.pledged&&m.retro&&m.retro[MON];if(r&&(r.best||r.know||r.next))list.push({uid:uid,r:r})});
+  if(!list.length){box.appendChild(el("div",{cls:"empty",text:CANWRITE||DB?"아직 이번 달 회고가 없습니다. 월말에 회고를 저장해 주세요.":"링크 보드에 연결되면 동료들의 회고가 모입니다."}));return}
+  list.forEach(function(x){var prof=ps[x.uid]||{};
+    var kids=[el("div",{cls:"t",text:(prof.name||"참여자")+" · "+(x.r.count||0)+"편"})];
+    var mm=x.r.metrics&&typeof x.r.metrics==="object"?METRICS.filter(function(k){return typeof x.r.metrics[k[0]]==="number"&&k[0]!=="revenue"}).map(function(k){return k[1]+" "+x.r.metrics[k[0]]}).join(", "):"";
+    [["반응 좋았던 글",x.r.best],["노하우",x.r.know],["다음 달",x.r.next],["성과",mm]].forEach(function(p){if(p[1])kids.push(el("p",{cls:"small"},[el("b",{text:p[0]+" "}),String(p[1])]))});
+    box.appendChild(el("div",{cls:"post"},[avatar(prof),el("div",{style:"min-width:0;display:grid;gap:4px"},kids)]))});
+}
+
+function renderAll(){renderTheme();renderRoutine();renderStats();renderLog();renderHeat();renderCHist();renderPledge();renderMonth();renderKit();renderKwGroups();renderResearch();renderWork();renderFirstMonth();renderMetrics();renderNews();renderExport()}
+renderAll();
+
+/* ---------- 런타임 기능 연결 ---------- */
+var C=window.claude;
+if(C&&typeof C.use==="function"){
+  C.use("sample").then(setupStudioAI,function(){setupStudioAI(null)});
+  C.use("downloads").then(function(d){DL=d;if(GEN)drawAll();renderExport()},function(){});
+  Promise.all([C.use("db"),C.use("user")]).then(function(r){
+    DB=r[0];USER=r[1];
+    if(!DB||!USER){boardStatus("off");return}
+    return USER.id().then(function(id){
+      MYID=id;
+      return USER.can("data.write").then(function(w){CANWRITE=!!id&&w!==false;return null});
+    }).then(function(){
+      boardStatus(CANWRITE?"on":"readonly");
+      DB.collection("members").onSnapshot(function(snap){
+        var next={};snap.docs.forEach(function(d){if(d.exists){var v=d.data();if(v&&typeof v==="object")next[d.id]=v}});
+        MEMBERS=next;myDocReady=true;
+        var md=myDoc();if(md){if(md.field&&!S.field){S.field=md.field;save()} if(document.activeElement!==$("p-blog"))$("p-blog").value=md.blog||""; if(md.field)$("p-field").value=md.field}
+        renderBoard();renderStats();renderLog();renderHeat();renderMonth();
+      },function(){boardStatus("off")});
+    });
+  },function(){boardStatus("off")});
+}else{boardStatus("off");setupStudioAI(null)}
+
+})();
+</script>
+
+</body></html>

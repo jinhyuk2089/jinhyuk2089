@@ -1159,9 +1159,13 @@ function drawAll(){clearTimeout(drawT);drawT=setTimeout(function(){ensureFonts()
   items.forEach(function(it){var c=document.createElement("canvas");it[1](c);var img=el("img",{alt:it[0]});img.src=c.toDataURL("image/png");
     var b=el("button",{cls:"btn sm ghost",text:"저장"});b.addEventListener("click",function(){saveCanvas(c,it[2])});
     g.appendChild(el("figure",null,[img,el("figcaption",null,[el("span",{text:it[0]}),b])]))});
-  $("img-note").textContent=DL?"저장을 누르면 파일로 받습니다":"이미지를 길게 누르거나 오른쪽 클릭해 저장하세요";
+  $("img-note").textContent=DL||STANDALONE?"저장을 누르면 파일로 받습니다":"이미지를 길게 누르거나 오른쪽 클릭해 저장하세요";
 })},60)}
+var STANDALONE=!(window.claude&&typeof window.claude.use==="function");
+function browserDownload(name,blob){name=name.replace(/[^\x20-\x7E]+/g,"").replace(/-{2,}/g,"-").replace(/^-|-(?=\.)/g,"")||"file";var a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();
+  setTimeout(function(){URL.revokeObjectURL(a.href);a.remove()},1500);toast("파일을 내려받았습니다")}
 function saveFile(name,blob){
+  if(!DL&&STANDALONE){browserDownload(name,blob);return}
   if(!DL){toast("이 화면에서는 파일 저장이 막혀 있습니다. 이미지를 길게 누르거나 오른쪽 클릭해 저장하세요");return}
   DL.save({filename:name,data:blob}).then(function(){},function(e){if(!(e&&e.code==="cancelled"))toast("저장하지 못했습니다")});
 }
@@ -1428,6 +1432,7 @@ function csv(rows){return "﻿"+rows.map(function(r){return r.map(function(v){v=
 function exportText(name,mime,text){
   if(!text||!text.trim()){toast("내보낼 내용이 없습니다");return}
   if(DL){DL.save({filename:name,data:new Blob([text],{type:mime+";charset=utf-8"})}).then(function(){toast("파일로 저장했습니다")},function(e){if(!(e&&e.code==="cancelled"))toast("저장하지 못했습니다")});return}
+  if(STANDALONE){browserDownload(name,new Blob([text],{type:mime+";charset=utf-8"}));return}
   copy(text,"파일 저장이 막힌 화면이라 내용");
 }
 function blogParts(){if(!GEN)return null;var tags=GEN.hashtags.map(function(h){return "#"+h}).join(" ");
@@ -1459,7 +1464,7 @@ function renderExport(){
     ["전체 백업 (복원용)","JSON",function(){exportText("ddc-1day1post-backup-"+stamp()+".json","application/json",JSON.stringify({v:1,exported:new Date().toISOString(),posts:S.posts,comments:S.comments,retro:S.retro,name:S.name,field:S.field,pledge:S.pledge,goals:S.goals,news:S.news},null,1))}]
   ];
   rows.forEach(function(r){var b=el("button",{cls:"btn sm ghost",text:r[1]});b.addEventListener("click",r[2]);tb.appendChild(el("tr",null,[el("td",{text:r[0]}),el("td",null,[b])]))});
-  $("ex-note").textContent=DL?"저장 전 확인 창이 뜹니다":"이 화면은 파일 저장이 막혀 있어 내용을 복사합니다";
+  $("ex-note").textContent=DL?"저장 전 확인 창이 뜹니다":STANDALONE?"브라우저 다운로드로 저장합니다":"이 화면은 파일 저장이 막혀 있어 내용을 복사합니다";
 }
 function restoreFrom(o){
   if(!o||!Array.isArray(o.posts))throw 0;
