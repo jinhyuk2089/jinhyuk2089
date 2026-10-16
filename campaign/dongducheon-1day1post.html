@@ -328,6 +328,7 @@ footer{border-top:1px solid var(--line);padding-block:18px;color:var(--muted);fo
         <div class="btns">
           <button class="btn" id="btn-copy-naver">네이버 블로그용 전체 복사</button>
           <button class="btn ghost" id="btn-copy-draft">본문만 복사</button>
+          <button class="btn ghost" id="btn-ex-blog">HTML로 내보내기</button>
         </div>
         <div id="o-news-box" hidden>
           <h3 style="margin-bottom:6px">뉴스 종합 정리</h3>
@@ -447,7 +448,7 @@ footer{border-top:1px solid var(--line);padding-block:18px;color:var(--muted);fo
     </div>
     <p class="small muted" id="nw-status"></p>
     <textarea id="nw-out" class="draft" aria-label="종합 글" placeholder="검증된 자료로 쓴 기사·블로그 글이 여기에 나옵니다. 문장 끝 [번호]는 자료 번호입니다."></textarea>
-    <div class="btns"><button class="btn" id="btn-nw-copy">글 복사</button></div>
+    <div class="btns"><button class="btn" id="btn-nw-copy">글 복사</button><button class="btn ghost" id="btn-ex-news">HTML로 내보내기</button><button class="btn ghost" id="btn-ex-csv">자료 정리표 CSV</button></div>
   </div>
 </section>
 
@@ -529,6 +530,13 @@ footer{border-top:1px solid var(--line);padding-block:18px;color:var(--muted);fo
   <div class="card">
     <div class="head"><h3>발행 목록</h3><span class="small muted" id="log-count"></span></div>
     <div class="tbl"><table class="log"><thead><tr><th>날짜</th><th>분야</th><th>제목</th><th></th></tr></thead><tbody id="log-body"></tbody></table></div>
+  </div>
+  <div class="card" id="export-card">
+    <div class="head"><h3>내보내기</h3><span class="small muted" id="ex-note"></span></div>
+    <p class="small muted">만든 글과 기록을 파일로 저장합니다. HTML은 네이버 블로그 에디터에 붙여 넣을 때 소제목과 목록 서식이 살아 있고, CSV는 엑셀에서 바로 열립니다.</p>
+    <div class="tbl"><table class="log ex"><tbody id="ex-rows"></tbody></table></div>
+    <label for="ex-restore">백업 파일(.json)로 복원<input id="ex-restore" type="file" accept=".json,application/json"></label>
+    <p class="small muted" id="ex-msg"></p>
   </div>
   <div class="card flat">
     <h3>백업과 복원</h3>
@@ -1070,6 +1078,7 @@ $("o-sub").addEventListener("input",function(){if(GEN){GEN.subtitle=$("o-sub").v
 $("btn-copy-naver").addEventListener("click",function(){if(!GEN)return;
   copy(pickedTitle()+"\n\n"+$("o-sub").value+"\n\n"+$("w-draft").value+"\n\n"+GEN.hashtags.map(function(h){return "#"+h}).join(" "),"블로그 전체")});
 $("btn-copy-draft").addEventListener("click",function(){copy($("w-draft").value,"본문")});
+$("btn-ex-blog").addEventListener("click",function(){var p=blogParts();if(!p){toast("먼저 글을 만드세요");return}exportText("blog-"+slug()+"-"+stamp()+".html","text/html",toHtml(p.title,p.body))});
 $("btn-copy-tags").addEventListener("click",function(){if(GEN)copy(GEN.hashtags.map(function(h){return "#"+h}).join(" "),"해시태그")});
 $("btn-copy-insta").addEventListener("click",function(){copy($("o-insta").textContent,"인스타그램 캡션")});
 
@@ -1372,6 +1381,8 @@ $("btn-nw-run").addEventListener("click",function(){
   }).then(function(){if(ctl===newsCtl){b.disabled=false;newsCtl=null}});
 });
 $("btn-nw-copy").addEventListener("click",function(){copy($("nw-out").value,"종합 글")});
+$("btn-ex-news").addEventListener("click",function(){var p=newsParts();if(!p){toast("먼저 종합 글을 쓰세요");return}exportText("news-"+stamp()+".html","text/html",toHtml("",p.body))});
+$("btn-ex-csv").addEventListener("click",exportSourcesCsv);
 $("btn-nw-studio").addEventListener("click",function(){
   var v=verifiedNumbered();if(!v.length){toast("검증된 자료가 없습니다");return}
   $("kw").value=(N.kws[0]&&N.kws[0].w)||v[0].title.slice(0,30);
@@ -1380,6 +1391,91 @@ $("btn-nw-studio").addEventListener("click",function(){
   showTab("write");runStudio();
 });
 function renderNews(){renderNkw();renderNotes();renderSources()}
+
+/* ---------- 내보내기 ---------- */
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function stamp(){var d=new Date();return TODAY_S.replace(/-/g,"")+"-"+pad(d.getHours())+pad(d.getMinutes())}
+function toMarkdown(title,body){
+  var out=title?["# "+title,""]:[];
+  body.split("\n").forEach(function(l){
+    if(/^■\s*/.test(l))out.push("## "+l.replace(/^■\s*/,""));
+    else if(/^▶\s*/.test(l))out.push("### "+l.replace(/^▶\s*/,""));
+    else if(/^☐\s*/.test(l))out.push("- [ ] "+l.replace(/^☐\s*/,""));
+    else if(/^(제목|부제):\s*/.test(l)&&!title)out.push((/^제목/.test(l)?"# ":"_")+l.replace(/^(제목|부제):\s*/,"")+(/^부제/.test(l)?"_":""));
+    else out.push(l);
+  });
+  return out.join("\n").replace(/\n{3,}/g,"\n\n");
+}
+function toHtml(title,body){
+  var h=['<!doctype html><html lang="ko"><head><meta charset="utf-8"><title>'+esc(title||"글")+'</title>',
+    '<style>body{font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;line-height:1.8;max-width:760px;margin:40px auto;padding:0 16px;color:#14211D}h1{font-size:26px}h2{font-size:20px;border-left:4px solid #1E5A47;padding-left:10px;margin-top:32px}h3{font-size:17px}li{margin:4px 0}a{color:#1E5A47}.sub{color:#56665F}</style></head><body>'];
+  if(title)h.push("<h1>"+esc(title)+"</h1>");
+  var inList=false;function close(){if(inList){h.push("</ul>");inList=false}}
+  body.split("\n").forEach(function(l){
+    var t=l.trim();
+    if(!t){close();return}
+    var linked=esc(t).replace(/(https?:\/\/[^\s<]+)/g,'<a href="$1">$1</a>');
+    if(/^■/.test(t)){close();h.push("<h2>"+esc(t.replace(/^■\s*/,""))+"</h2>")}
+    else if(/^▶/.test(t)){close();h.push("<h3>"+esc(t.replace(/^▶\s*/,""))+"</h3>")}
+    else if(/^제목:/.test(t)&&!title){close();h.push("<h1>"+esc(t.replace(/^제목:\s*/,""))+"</h1>")}
+    else if(/^부제:/.test(t)){close();h.push('<p class="sub">'+esc(t.replace(/^부제:\s*/,""))+"</p>")}
+    else if(/^(-|☐|\d+\))\s*/.test(t)){if(!inList){h.push("<ul>");inList=true}h.push("<li>"+linked.replace(/^(-|\d+\))\s*/,"")+"</li>")}
+    else{close();h.push("<p>"+linked+"</p>")}
+  });
+  close();h.push("</body></html>");return h.join("\n");
+}
+function csv(rows){return "﻿"+rows.map(function(r){return r.map(function(v){v=v==null?"":String(v);return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v}).join(",")}).join("\r\n")}
+function exportText(name,mime,text){
+  if(!text||!text.trim()){toast("내보낼 내용이 없습니다");return}
+  if(DL){DL.save({filename:name,data:new Blob([text],{type:mime+";charset=utf-8"})}).then(function(){toast("파일로 저장했습니다")},function(e){if(!(e&&e.code==="cancelled"))toast("저장하지 못했습니다")});return}
+  copy(text,"파일 저장이 막힌 화면이라 내용");
+}
+function blogParts(){if(!GEN)return null;var tags=GEN.hashtags.map(function(h){return "#"+h}).join(" ");
+  return {title:pickedTitle(),body:($("o-sub").value?"부제: "+$("o-sub").value+"\n\n":"")+$("w-draft").value+"\n\n"+tags}}
+function newsParts(){var t=$("nw-out").value;return t.trim()?{title:"",body:t}:null}
+var EXPORTS=[
+  ["블로그 글 (AI 자동 글쓰기)",function(){return blogParts()},"blog"],
+  ["종합 기사·블로그 글 (뉴스 종합)",function(){return newsParts()},"news"]
+];
+function sourcesCsv(v){return csv([["번호","제목","언론사·기관","날짜","분야","표시","점수","검증","링크"]].concat(v.map(function(s){return [s.n,s.title,s.press,s.date,s.field,s.flags.join(" "),s.score||"",s.progVerified?"프로그램 검증":"직접 검증",s.url]})))}
+function exportSourcesCsv(){var v=verifiedNumbered();if(!v.length){toast("검증된 자료가 없습니다");return}exportText("sources-"+stamp()+".csv","text/csv",sourcesCsv(v))}
+function renderExport(){
+  var tb=$("ex-rows");clear(tb);
+  EXPORTS.forEach(function(x){
+    var cell=el("td",null,[]);
+    [["TXT","txt","text/plain"],["Markdown","md","text/markdown"],["HTML","html","text/html"]].forEach(function(f){
+      var b=el("button",{cls:"btn sm ghost",text:f[0]});b.addEventListener("click",function(){var p=x[1]();if(!p){toast("먼저 글을 만드세요");return}
+        var name=x[2]+"-"+(x[2]==="news"&&N.kws[0]?N.kws[0].w.replace(/[^가-힣A-Za-z0-9]+/g,"-").slice(0,30)+"-":x[2]==="news"?"":slug()+"-")+stamp()+"."+f[1];
+        exportText(name,f[2],f[1]==="txt"?(p.title?p.title+"\n\n":"")+p.body:f[1]==="md"?toMarkdown(p.title,p.body):toHtml(p.title,p.body))});
+      cell.appendChild(b);cell.appendChild(document.createTextNode(" "))});
+    tb.appendChild(el("tr",null,[el("td",{text:x[0]}),cell]))});
+  var rows=[
+    ["자료 정리표 (뉴스 종합)","CSV",exportSourcesCsv],
+    ["발행 기록","CSV",function(){var l=S.posts.slice().sort(function(a,b){return a.date<b.date?1:-1});if(!l.length){toast("발행 기록이 없습니다");return}
+      exportText("posts-"+stamp()+".csv","text/csv",csv([["날짜","분야","제목","링크"]].concat(l.map(function(p){return [p.date,p.field,p.title,p.url]}))))}],
+    ["월간 회고 ("+(TODAY.getMonth()+1)+"월)","Markdown",function(){var r=S.retro[MON]||{};var m=r.metrics||{};
+      var t=["# "+MON+" 동두천 1일 1포스팅 회고","","- 발행: "+monthCount()+"편, 연속 "+streak()+"일","","## 반응이 좋았던 글",r.best||"-","","## 노하우",r.know||"-","","## 다음 달 목표",r.next||"-","","## 성과 지표"].concat(METRICS.map(function(k){return "- "+k[1]+": "+(m[k[0]]!=null?m[k[0]].toLocaleString():"-")}));
+      exportText("retro-"+MON+".md","text/markdown",t.join("\n"))}],
+    ["전체 백업 (복원용)","JSON",function(){exportText("ddc-1day1post-backup-"+stamp()+".json","application/json",JSON.stringify({v:1,exported:new Date().toISOString(),posts:S.posts,comments:S.comments,retro:S.retro,name:S.name,field:S.field,pledge:S.pledge,goals:S.goals,news:S.news},null,1))}]
+  ];
+  rows.forEach(function(r){var b=el("button",{cls:"btn sm ghost",text:r[1]});b.addEventListener("click",r[2]);tb.appendChild(el("tr",null,[el("td",{text:r[0]}),el("td",null,[b])]))});
+  $("ex-note").textContent=DL?"저장 전 확인 창이 뜹니다":"이 화면은 파일 저장이 막혀 있어 내용을 복사합니다";
+}
+function restoreFrom(o){
+  if(!o||!Array.isArray(o.posts))throw 0;
+  var have={};S.posts.forEach(function(p){have[p.url]=1});
+  var add=o.posts.filter(function(p){return p&&p.url&&!have[p.url]&&/^\d{4}-\d{2}-\d{2}$/.test(p.date)}).map(function(p){return {date:p.date,title:String(p.title||"").slice(0,120),url:safeUrl(p.url),field:String(p.field||""),at:p.at||0}}).filter(function(p){return p.url});
+  S.posts=S.posts.concat(add);
+  if(Array.isArray(o.comments))S.comments=S.comments.concat(o.comments.filter(function(c){return c&&typeof c.text==="string"})).slice(0,80);
+  if(o.retro&&typeof o.retro==="object")for(var k in o.retro)if(!S.retro[k])S.retro[k]=o.retro[k];
+  var nadd=0;if(o.news&&Array.isArray(o.news.sources))o.news.sources.forEach(function(x){if(nAdd(x)==="ok"){nadd++;var s=N.sources[N.sources.length-1];if(x.chk)s.chk={open:!!x.chk.open,match:!!x.chk.match,date:!!x.chk.date}}});
+  if(o.news&&Array.isArray(o.news.notes))o.news.notes.forEach(function(n){if(n&&n.text&&!N.notes.some(function(m){return m.text===n.text}))N.notes.push({f:String(n.f||"기타"),kind:String(n.kind||"기타"),text:String(n.text).slice(0,1500)})});
+  if(o.news&&Array.isArray(o.news.kws))o.news.kws.forEach(function(k){if(k&&k.w&&!N.kws.some(function(x){return x.w===k.w}))N.kws.push({f:String(k.f||"기타"),w:String(k.w).slice(0,40)})});
+  if(!S.name&&o.name)S.name=String(o.name).slice(0,20);
+  save();renderAll();return "글 "+add.length+"편, 뉴스 자료 "+nadd+"건을 복원했습니다.";
+}
+$("ex-restore").addEventListener("change",function(){var f=$("ex-restore").files[0];if(!f)return;var rd=new FileReader();
+  rd.onload=function(){try{$("ex-msg").textContent=restoreFrom(JSON.parse(rd.result))}catch(e){$("ex-msg").textContent="백업 파일 형식이 아닙니다. 전체 백업으로 받은 .json 파일을 고르세요."}$("ex-restore").value=""};rd.readAsText(f)});
 
 /* ---------- 댓글 점검 ---------- */
 function bigrams(s){s=s.replace(/\s+/g,"");var a={};for(var i=0;i<s.length-1;i++)a[s.substr(i,2)]=1;return a}
@@ -1484,17 +1580,11 @@ $("k-name").value=S.name||"";
 $("k-name").addEventListener("input",function(){S.name=$("k-name").value.trim().slice(0,20);save();renderKit()});
 
 /* ---------- 백업 ---------- */
-$("btn-backup").addEventListener("click",function(){copy(JSON.stringify({v:1,posts:S.posts,comments:S.comments,retro:S.retro,name:S.name,field:S.field,pledge:S.pledge,news:S.news}),"백업 문자열")});
+$("btn-backup").addEventListener("click",function(){copy(JSON.stringify({v:1,posts:S.posts,comments:S.comments,retro:S.retro,name:S.name,field:S.field,pledge:S.pledge,goals:S.goals,news:S.news}),"백업 문자열")});
 $("btn-restore").addEventListener("click",function(){
   var msg=$("restore-msg");
-  try{var o=JSON.parse($("restore").value);if(!o||!Array.isArray(o.posts))throw 0;
-    var have={};S.posts.forEach(function(p){have[p.url]=1});
-    var add=o.posts.filter(function(p){return p&&p.date&&p.url&&!have[p.url]&&/^\d{4}-\d{2}-\d{2}$/.test(p.date)}).map(function(p){return {date:p.date,title:String(p.title||"").slice(0,120),url:safeUrl(p.url),field:String(p.field||""),at:p.at||0}}).filter(function(p){return p.url});
-    S.posts=S.posts.concat(add);if(Array.isArray(o.comments))S.comments=S.comments.concat(o.comments).slice(0,80);
-    if(o.retro&&typeof o.retro==="object")for(var k in o.retro)if(!S.retro[k])S.retro[k]=o.retro[k];
-    if(o.news&&Array.isArray(o.news.sources))o.news.sources.forEach(function(x){nAdd(x)});
-    save();renderAll();msg.textContent="글 "+add.length+"편을 복원했습니다.";$("restore").value="";
-  }catch(e){msg.textContent="백업 문자열 형식이 아닙니다. 백업 문자열 복사로 받은 내용을 그대로 붙여 넣으세요."}
+  try{msg.textContent=restoreFrom(JSON.parse($("restore").value));$("restore").value=""}
+  catch(e){msg.textContent="백업 문자열 형식이 아닙니다. 백업 문자열 복사로 받은 내용을 그대로 붙여 넣으세요."}
 });
 
 /* ---------- 공유 보드 (db) ---------- */
@@ -1614,14 +1704,14 @@ function renderMonthFeed(ps){
     box.appendChild(el("div",{cls:"post"},[avatar(prof),el("div",{style:"min-width:0;display:grid;gap:4px"},kids)]))});
 }
 
-function renderAll(){renderTheme();renderRoutine();renderStats();renderLog();renderHeat();renderCHist();renderPledge();renderMonth();renderKit();renderKwGroups();renderResearch();renderWork();renderFirstMonth();renderMetrics();renderNews()}
+function renderAll(){renderTheme();renderRoutine();renderStats();renderLog();renderHeat();renderCHist();renderPledge();renderMonth();renderKit();renderKwGroups();renderResearch();renderWork();renderFirstMonth();renderMetrics();renderNews();renderExport()}
 renderAll();
 
 /* ---------- 런타임 기능 연결 ---------- */
 var C=window.claude;
 if(C&&typeof C.use==="function"){
   C.use("sample").then(setupStudioAI,function(){setupStudioAI(null)});
-  C.use("downloads").then(function(d){DL=d;if(GEN)drawAll()},function(){});
+  C.use("downloads").then(function(d){DL=d;if(GEN)drawAll();renderExport()},function(){});
   Promise.all([C.use("db"),C.use("user")]).then(function(r){
     DB=r[0];USER=r[1];
     if(!DB||!USER){boardStatus("off");return}
