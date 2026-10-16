@@ -1,0 +1,64 @@
+name: 네이버 뉴스 종합 글쓰기
+
+on:
+  workflow_dispatch:
+    inputs:
+      keywords:
+        description: "키워드 (세미콜론 구분, 분야:키워드 가능) 예: 노인복지:노인맞춤돌봄서비스; 동두천 복지"
+        required: true
+      links:
+        description: "추가 링크 (세미콜론 구분, 'URL | 분야 | 메모')"
+        required: false
+        default: ""
+      notes:
+        description: "현장 경험·별도 텍스트 (세미콜론 구분)"
+        required: false
+        default: ""
+      mode:
+        description: "글 종류"
+        type: choice
+        options: [both, article, blog]
+        default: both
+      min_verified:
+        description: "최소 검증 자료 수"
+        default: "10"
+
+permissions:
+  contents: read
+
+jobs:
+  write:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r tools/requirements.txt
+      - name: 수집 · 검증 · 글쓰기
+        env:
+          NAVER_CLIENT_ID: ${{ secrets.NAVER_CLIENT_ID }}
+          NAVER_CLIENT_SECRET: ${{ secrets.NAVER_CLIENT_SECRET }}
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          IN_KEYWORDS: ${{ inputs.keywords }}
+          IN_LINKS: ${{ inputs.links }}
+          IN_NOTES: ${{ inputs.notes }}
+          IN_MODE: ${{ inputs.mode }}
+          IN_MIN: ${{ inputs.min_verified }}
+        run: |
+          trim() { local v="$1"; v="${v#"${v%%[![:space:]]*}"}"; printf '%s' "${v%"${v##*[![:space:]]}"}"; }
+          args=()
+          IFS=';' read -ra KW <<< "$IN_KEYWORDS"
+          for k in "${KW[@]}"; do k="$(trim "$k")"; [ -n "$k" ] && args+=(-k "$k"); done
+          IFS=';' read -ra NT <<< "$IN_NOTES"
+          for n in "${NT[@]}"; do n="$(trim "$n")"; [ -n "$n" ] && args+=(--note "$n"); done
+          echo "$IN_LINKS" | tr ';' '\n' > links.txt
+          python tools/naver_news_writer.py "${args[@]}" --links links.txt \
+            --mode "$IN_MODE" --min-verified "$IN_MIN" --out news-output
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: news-output
+          path: news-output/
+          if-no-files-found: ignore
