@@ -165,6 +165,21 @@ pre.share{white-space:pre-wrap;background:var(--sunk);border-radius:8px;padding:
 .toast.show{opacity:1}
 .note-box{background:var(--maple-soft);color:var(--ink);border-radius:8px;padding:12px 14px;font-size:14px}
 .note-box b{color:var(--maple)}
+.kwlist{display:flex;flex-wrap:wrap;gap:8px}
+.kwchip{font:inherit;font-size:14px;font-weight:600;border:1px solid var(--line);background:var(--bg);color:var(--ink);border-radius:999px;padding:7px 14px;cursor:pointer}
+.kwchip:hover{border-color:var(--maple);color:var(--maple)}
+details summary{cursor:pointer;font-weight:600;color:var(--pine)}
+.out{display:grid;gap:16px}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.gallery figure{margin:0;display:grid;gap:6px;min-width:0}
+.gallery img{width:100%;border-radius:8px;border:1px solid var(--line);display:block}
+.gallery figcaption{display:flex;justify-content:space-between;align-items:center;gap:6px;font-size:12px;color:var(--muted)}
+.score{font-size:24px;color:var(--pine);font-weight:500}
+.bar{height:8px;background:var(--sunk);border-radius:999px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--ok);transition:width .3s}
+.bar i.warn{background:var(--warn)} .bar i.bad{background:var(--bad)}
+video{width:100%;max-width:300px;border-radius:8px;background:#000}
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}
 footer{border-top:1px solid var(--line);padding-block:18px;color:var(--muted);font-size:13px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
@@ -182,17 +197,18 @@ footer{border-top:1px solid var(--line);padding-block:18px;color:var(--muted);fo
       <div><span class="n mono maple" id="st-today">미발행</span><span class="l" id="st-date">오늘</span></div>
     </div>
   </div>
-  <p class="mast-sub">하루 한 편, 각자의 전문분야로 <b>동두천 복지정보</b>를 씁니다. 서로의 글을 <b>실제로 읽고</b> 구체적인 의견을 나눕니다. 순위를 만드는 품앗이가 아니라 전문성을 키우는 동료 학습입니다.</p>
+  <p class="mast-sub">하루 한 편, 각자의 전문분야로 <b>동두천 복지정보</b>를 씁니다. 키워드를 누르면 AI가 제목·부제목·본문·해시태그·카드뉴스·숏폼 영상까지 만들고, 사람이 확인해 발행합니다. 서로의 글을 <b>실제로 읽고</b> 구체적인 의견을 나눕니다. 순위를 만드는 품앗이가 아니라 전문성을 키우는 동료 학습입니다.</p>
 </header>
 
 <nav class="tabs" role="tablist" aria-label="캠페인 메뉴">
   <button role="tab" data-tab="today" id="tab-today" aria-selected="true">오늘</button>
-  <button role="tab" data-tab="write" id="tab-write" aria-selected="false">글쓰기 도우미</button>
+  <button role="tab" data-tab="write" id="tab-write" aria-selected="false">AI 자동 글쓰기</button>
   <button role="tab" data-tab="board" id="tab-board" aria-selected="false">링크 보드</button>
   <button role="tab" data-tab="comment" id="tab-comment" aria-selected="false">댓글 점검</button>
   <button role="tab" data-tab="me" id="tab-me" aria-selected="false">나의 기록</button>
   <button role="tab" data-tab="month" id="tab-month" aria-selected="false">월간 공유</button>
   <button role="tab" data-tab="rules" id="tab-rules" aria-selected="false">운영규칙</button>
+  <button role="tab" data-tab="guide" id="tab-guide" aria-selected="false">강의 핵심</button>
   <button role="tab" data-tab="kit" id="tab-kit" aria-selected="false">단톡방 키트</button>
 </nav>
 
@@ -238,52 +254,120 @@ footer{border-top:1px solid var(--line);padding-block:18px;color:var(--muted);fo
       <p class="small muted">체크 상태는 날짜별로 이 브라우저에 저장됩니다.</p>
     </div>
   </div>
-</section>
-
-<!-- 글쓰기 도우미 -->
-<section class="panel" data-panel="write" hidden>
   <div class="grid2">
     <div class="card">
-      <h3>초안 자동 생성기</h3>
-      <p class="small muted">주제와 키워드를 넣으면 AI 검색에도 잘 인용되는 구조(요약 → 핵심정보 → 현장 팁 → 체크리스트 → FAQ → 출처)로 초안 틀을 만듭니다.</p>
-      <label for="w-topic">주제<input id="w-topic" placeholder="예: 긴급복지지원 제도 활용 체크리스트"></label>
-      <div class="row">
-        <label for="w-field">분야<select id="w-field"></select></label>
-        <label for="w-reader">주요 독자<select id="w-reader">
-          <option>동두천 주민</option><option>어르신과 가족</option><option>보호자·돌봄가족</option>
-          <option>사회복지사·실무자</option><option>청소년·청년</option><option>중장년 구직자</option></select></label>
-      </div>
-      <div class="row">
-        <label for="w-kw">핵심 키워드 (쉼표로 구분)<input id="w-kw" placeholder="예: 긴급복지, 위기가구, 신청방법"></label>
-        <label for="w-type" style="flex:0 1 160px">글 유형<select id="w-type">
-          <option value="info">정보 해설형</option><option value="check">체크리스트형</option>
-          <option value="case">현장 사례형</option><option value="qa">Q&amp;A형</option></select></label>
-      </div>
-      <div class="btns">
-        <button class="btn" id="btn-gen">초안 틀 만들기</button>
-        <button class="btn maple" id="btn-ai" hidden>AI로 본문 초안 쓰기</button>
-        <button class="btn ghost" id="btn-ai-stop" hidden>중지</button>
-      </div>
-      <p class="small muted" id="ai-status">AI 초안은 사실 확인이 필요한 부분을 [확인 필요]로 표시합니다. 발행 전에 반드시 공식 출처로 검증하세요.</p>
-      <div>
-        <h3 style="margin-bottom:6px">제목 후보</h3>
-        <ul class="checks" id="w-titles"><li><span class="mk ok">·</span><span class="muted">초안 틀을 만들면 제목 후보 4개가 나옵니다.</span></li></ul>
-      </div>
+      <div class="head"><h3>직장 병행 30분 운영 (18장)</h3><span class="pill info" id="work-today"></span></div>
+      <ul class="checks" id="work-week"></ul>
     </div>
-
     <div class="card">
-      <div class="head"><h3>초안</h3><span class="small muted mono" id="w-count">0자 · 약 0분</span></div>
-      <textarea id="w-draft" aria-label="초안" class="draft" placeholder="초안 틀 만들기를 누르면 여기에 채워집니다. 직접 고쳐 쓰셔도 됩니다."></textarea>
-      <div class="btns">
-        <button class="btn" id="btn-copy-draft">초안 복사</button>
-        <button class="btn ghost" id="btn-clear-draft">비우기</button>
+      <div class="head"><h3>첫 달 목표</h3><span class="small muted">이번 달 기록 기준</span></div>
+      <ul class="checks" id="first-month"></ul>
+    </div>
+  </div>
+</section>
+
+<!-- AI 자동 글쓰기 -->
+<section class="panel" data-panel="write" hidden>
+  <div class="card">
+    <div class="head"><h3>1. 키워드 고르기</h3><span class="small muted">키워드를 누르면 바로 글이 만들어집니다</span></div>
+    <div class="chips" id="kw-groups" role="group" aria-label="분야"></div>
+    <div class="kwlist" id="kw-list"></div>
+    <details class="builder">
+      <summary>키워드 공식으로 직접 만들기 (대상자 + 문제 + 지역 + 시점 + 행동)</summary>
+      <div class="row" style="margin-top:10px">
+        <label for="b-region" style="flex:0 1 120px">지역<input id="b-region" value="동두천"></label>
+        <label for="b-target" style="flex:0 1 150px">대상자<select id="b-target"><option>노인</option><option>어르신</option><option>영유아 부모</option><option>청소년</option><option>청년</option><option>중장년</option><option>장애인</option><option>보호자</option><option>주민</option></select></label>
+        <label for="b-problem">문제<input id="b-problem" placeholder="예: 가족돌봄, 우울, 재취업"></label>
+        <label for="b-time" style="flex:0 1 130px">시점<select id="b-time"><option value="">(없음)</option><option>2026년</option><option>이번 달</option><option>올겨울</option><option>신학기</option><option>연말</option></select></label>
+        <label for="b-action" style="flex:0 1 140px">행동<select id="b-action"><option>신청방법</option><option>준비서류</option><option>이용방법</option><option>지원대상</option><option>체크리스트</option><option>후기</option></select></label>
+        <button class="btn" id="btn-build">조합해서 글쓰기</button>
       </div>
+    </details>
+    <div class="row">
+      <label for="kw">핵심 키워드<input id="kw" placeholder="예: 동두천 노인 복지관 프로그램"></label>
     </div>
   </div>
 
-  <div class="card">
-    <h3>발행 전 점검</h3>
-    <ul class="checks" id="pre-check"></ul>
+  <div class="grid2">
+    <div class="card">
+      <h3>2. 자료 확인 (선택)</h3>
+      <p class="small muted">네이버 뉴스·검색 상단 글은 이 페이지가 직접 가져올 수 없습니다. 아래 링크로 열어 상단 기사 3~5개의 제목과 첫 문장을 복사해 붙여 넣으면, AI가 쟁점과 현장 시사점을 종합합니다.</p>
+      <div class="btns" id="research-links"></div>
+      <label for="news">상단 뉴스·자료 붙여넣기<textarea id="news" rows="5" placeholder="예:&#10;[○○일보] 기사 제목 / 첫 문장 / 링크&#10;[보건복지부 보도자료] 제목 / 핵심 내용"></textarea></label>
+    </div>
+    <div class="card">
+      <h3>3. 나의 실제 경험과 설정</h3>
+      <label for="exp">현장 경험 메모 (비워 두면 AI가 경험을 지어내지 않고 자리만 남깁니다)<textarea id="exp" rows="4" placeholder="예: 복지관에서 어르신 30명 대상 디지털 교육을 해 보니, 키오스크 주문을 가장 어려워하셨다."></textarea></label>
+      <div class="row">
+        <label for="len" style="flex:0 1 140px">작성 분량<select id="len"><option value="1500">1,500자</option><option value="2000" selected>2,000자</option><option value="3000">3,000자</option></select></label>
+        <label for="ptype" style="flex:0 1 160px">글 유형<select id="ptype"><option value="info">정보 해설형</option><option value="check">체크리스트형</option><option value="review">실제 경험 후기형</option><option value="qa">Q&amp;A형</option></select></label>
+        <label for="reader" style="flex:0 1 160px">주요 독자<select id="reader"><option>동두천 주민</option><option>어르신과 가족</option><option>보호자·돌봄가족</option><option>사회복지사·실무자</option><option>청소년·청년</option><option>중장년</option></select></label>
+        <label for="sponsor" style="flex:0 1 140px">협찬·제휴<select id="sponsor"><option value="">없음</option><option value="협찬">협찬</option><option value="제휴">제휴</option><option value="원고료">원고료</option></select></label>
+      </div>
+      <div class="btns">
+        <button class="btn maple" id="btn-run">자동 생성</button>
+        <button class="btn ghost" id="btn-stop" hidden>중지</button>
+      </div>
+      <p class="small muted" id="run-status">AI 연결을 확인하는 중입니다. 연결되지 않으면 템플릿으로 생성합니다.</p>
+    </div>
+  </div>
+
+  <div id="out" class="out" hidden>
+    <div class="card">
+      <div class="head"><h3>제목과 부제목</h3><span class="pill info" id="gen-mode">템플릿</span></div>
+      <ul class="checks" id="o-titles"></ul>
+      <label for="o-sub">부제목<input id="o-sub"></label>
+      <p class="small muted" id="o-meta"></p>
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        <div class="head"><h3>본문</h3><span class="small muted mono" id="w-count">0자</span></div>
+        <textarea id="w-draft" class="draft" aria-label="본문"></textarea>
+        <div class="btns">
+          <button class="btn" id="btn-copy-naver">네이버 블로그용 전체 복사</button>
+          <button class="btn ghost" id="btn-copy-draft">본문만 복사</button>
+        </div>
+        <div id="o-news-box" hidden>
+          <h3 style="margin-bottom:6px">뉴스 종합 정리</h3>
+          <p class="small" id="o-news"></p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="head"><h3>품질 점검</h3><span class="score mono" id="q-score">0</span></div>
+        <div class="bar"><i id="q-bar"></i></div>
+        <p class="small muted">네이버가 공개한 C-Rank(주제 전문성·신뢰)와 D.I.A.+(경험·정보성·독창성) 원칙, AI 검색이 인용하기 쉬운 구조(요약·질문과 답·출처)를 기준으로 봅니다. 상위노출을 보장하지는 않습니다.</p>
+        <ul class="checks" id="pre-check"></ul>
+        <div>
+          <div class="head"><h3>해시태그</h3><button class="btn sm ghost" id="btn-copy-tags">복사</button></div>
+          <div class="chips" id="o-tags" style="margin-top:6px"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="head"><h3>이미지: 대표 썸네일과 카드뉴스 5장</h3><span class="small muted" id="img-note"></span></div>
+      <div class="gallery" id="gallery"></div>
+      <details>
+        <summary class="small">외부 이미지 AI용 프롬프트 (사진형 이미지가 필요할 때)</summary>
+        <ul class="checks" id="o-prompts" style="margin-top:8px"></ul>
+      </details>
+    </div>
+
+    <div class="grid2">
+      <div class="card">
+        <div class="head"><h3>영상: 세로형 숏폼 (약 20초)</h3></div>
+        <p class="small muted">썸네일과 카드뉴스로 9:16 영상을 이 브라우저에서 직접 만듭니다. 만드는 데 영상 길이만큼 시간이 걸립니다.</p>
+        <div class="btns"><button class="btn" id="btn-video">영상 만들기</button><button class="btn ghost" id="btn-video-save" hidden>영상 저장</button></div>
+        <video id="o-video" controls playsinline hidden></video>
+        <p class="small muted" id="video-status"></p>
+      </div>
+      <div class="card">
+        <div class="head"><h3>릴스 대본과 인스타그램 캡션</h3><button class="btn sm ghost" id="btn-copy-insta">캡션 복사</button></div>
+        <div class="tbl"><table class="log"><thead><tr><th>구간</th><th>화면</th><th>자막</th></tr></thead><tbody id="o-reels"></tbody></table></div>
+        <pre class="share" id="o-insta"></pre>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -383,6 +467,9 @@ footer{border-top:1px solid var(--line);padding-block:18px;color:var(--muted);fo
       <label for="m-best">가장 반응이 좋았던 글과 이유<textarea id="m-best" rows="3"></textarea></label>
       <label for="m-know">이번 달 얻은 노하우 (제목, 키워드, 사진, 시간관리 등)<textarea id="m-know" rows="3"></textarea></label>
       <label for="m-next">다음 달 목표<textarea id="m-next" rows="2"></textarea></label>
+      <h3 style="margin-top:4px">성과 측정 (19장) · 조회수 말고 이것을 봅니다</h3>
+      <div class="metrics" id="metrics"></div>
+      <p class="small mono" id="m-roi"></p>
       <div class="btns">
         <button class="btn" id="btn-month-save">회고 저장</button>
         <button class="btn ghost" id="btn-month-copy">단톡방 공유문 복사</button>
@@ -445,6 +532,23 @@ footer{border-top:1px solid var(--line);padding-block:18px;color:var(--muted);fo
       </ol>
     </div>
   </div>
+  <div class="grid2">
+    <div class="card">
+      <h3>네이버 블로그 운영 원칙 (6장)</h3>
+      <ul class="checks">
+        <li><span class="mk warn">!</span><span>상위 노출은 보장되지 않는다.</span></li>
+        <li><span class="mk bad">×</span><span>키워드를 과도하게 반복하지 않는다.</span></li>
+        <li><span class="mk bad">×</span><span>뉴스와 다른 글을 그대로 복사하지 않는다.</span></li>
+        <li><span class="mk bad">×</span><span>기계적으로 대량 생산한 글을 피한다.</span></li>
+        <li><span class="mk ok">✓</span><span>실제 경험과 유용한 정보를 중심으로 작성한다.</span></li>
+        <li><span class="mk ok">✓</span><span>검색순위보다 독자의 검색 의도와 글의 품질을 우선한다.</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>협찬·제휴 표시 (5장)</h3>
+      <p class="small">협찬, 제휴, 원고료가 있으면 글 앞부분에 반드시 표시합니다. 경제적 대가를 숨긴 추천·보증은 표시광고법 위반이 될 수 있습니다. AI 자동 글쓰기에서 협찬·제휴를 고르면 표시 문구가 본문 첫 줄에 들어가고, 품질 점검에서 확인합니다.</p>
+    </div>
+  </div>
   <div class="card">
     <h3>이 도구의 자동화 범위</h3>
     <p class="small">자동화는 <b>글을 잘 쓰는 데에만</b> 씁니다. 주제 추천, 초안 틀, 제목 후보, 발행 기록, 공유문 생성, 댓글 품질 점검이 여기에 해당합니다. 공감·댓글·방문·클릭을 자동으로 만들어 내는 기능은 넣지 않았습니다. 이런 행위는 블로그 플랫폼 운영정책 위반으로 저품질 처리나 이용 제한을 받을 수 있고, 캠페인 금지 규칙에도 해당합니다.</p>
@@ -455,6 +559,63 @@ footer{border-top:1px solid var(--line);padding-block:18px;color:var(--muted);fo
       <input type="checkbox" id="pledge" style="width:20px;height:20px;margin-top:3px;flex:0 0 auto">
       <span>위 권장 사항을 지키고 금지 사항 7가지를 하지 않겠습니다. 읽지 않은 글에 공감·댓글을 남기지 않겠습니다.</span>
     </label>
+  </div>
+</section>
+
+<!-- 강의 핵심 -->
+<section class="panel" data-panel="guide" hidden>
+  <div class="theme">
+    <span class="eyebrow">강의 · AI를 활용한 사회복지사 네이버 블로그 홍보와 수익화</span>
+    <h2>AI는 초안을 만들고, 사회복지사는 신뢰를 만듭니다</h2>
+    <p class="topic">현장 경험 → 유용한 정보 → 신뢰 → 관계 → 수익</p>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <h3>도구 역할 분담 (9장)</h3>
+      <div class="tbl"><table class="log"><thead><tr><th>도구</th><th>활용</th></tr></thead><tbody>
+        <tr><td><b>ChatGPT</b></td><td>아이디어, 질문, 목차, 자료 요약</td></tr>
+        <tr><td><b>Claude</b></td><td>긴 글 초안, 자연스러운 문체, 현장형 글쓰기 (이 도구의 AI 자동 글쓰기)</td></tr>
+        <tr><td><b>DAF</b></td><td>키워드, 블로그 초안, 사진 글, 체험단 원고, 티스토리 글</td></tr>
+        <tr><td><b>사람</b></td><td>사실 확인, 경험 보완, 최종 발행</td></tr>
+      </tbody></table></div>
+      <p class="small muted">DAF의 "이웃과 소통하기" 같은 자동 댓글·이웃 기능은 17장 금지 규칙(자동화된 대량 댓글)과 겹칩니다. 캠페인에서는 쓰지 않습니다.</p>
+    </div>
+    <div class="card">
+      <h3>콘텐츠 제작 과정 (11장)</h3>
+      <ol class="steps">
+        <li><span><b>주제 선정</b> 키워드 공식: 대상자 + 문제 + 지역 + 시점 + 행동</span></li>
+        <li><span><b>자료 확인</b> KOSIS, 보도자료, 지자체, 데이터랩, 네이버 뉴스</span></li>
+        <li><span><b>AI 초안</b> 구조는 ChatGPT, 본문은 Claude</span></li>
+        <li><span><b>플랫폼별 제작</b> 썸네일, 카드뉴스, 숏폼, 인스타 캡션</span></li>
+        <li><span><b>사람 검수</b> 출처·숫자, 과장, 제목과 본문 일치, 협찬 표시</span></li>
+        <li><span><b>발행</b> 단톡방 링크 공유와 동료 피드백</span></li>
+      </ol>
+    </div>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <h3>블로그 수익화 단계 (13장)</h3>
+      <ol style="margin:0;padding-left:20px;display:grid;gap:4px">
+        <li>네이버 애드포스트</li><li>체험단·협찬 후기 (반드시 표시)</li><li>제휴마케팅</li><li>사회복지 강의와 교육자료</li>
+        <li>블로그 글·이미지·영상 제작대행</li><li>티스토리·워드프레스 애드센스</li><li>인스타그램·유튜브 체험단과 제휴</li>
+      </ol>
+      <p class="small muted">수익은 보장되는 결과가 아니라 콘텐츠와 신뢰가 쌓인 뒤 시도하는 확장 단계입니다.</p>
+    </div>
+    <div class="card">
+      <h3>사회복지사 공동 서비스 (14장)</h3>
+      <div class="chips">
+        <span class="chip">포스팅 기획·작성대행</span><span class="chip">키워드·자료 조사</span><span class="chip">카드뉴스·이미지</span>
+        <span class="chip">짧은 동영상</span><span class="chip">기관 홍보 콘텐츠</span><span class="chip">월간 블로그 분석</span>
+        <span class="chip">교육자료 제작</span><span class="chip">강의·컨설팅</span>
+      </div>
+      <p class="small muted">공감·댓글·광고 클릭을 인위적으로 늘리는 대행은 운영하지 않습니다.</p>
+      <h3>확장 경로 (15장)</h3>
+      <p class="small">네이버 전문글 → 인스타그램 요약·릴스 → 링크 페이지 → DM 문의 → 체험단·제휴·교육. Turnflow는 네이버가 아니라 인스타그램 확장 도구로 씁니다.</p>
+    </div>
+  </div>
+  <div class="card">
+    <h3>최종 메시지 (20장)</h3>
+    <p style="font-family:var(--f-display);font-size:19px">사회복지사의 경험이 콘텐츠가 되고, 콘텐츠가 신뢰가 되며, 신뢰가 지속 가능한 전문성과 수익으로 연결됩니다.</p>
   </div>
 </section>
 
@@ -569,7 +730,7 @@ function copy(text,label){
 
 /* ---------- 로컬 저장 (이 브라우저 전용) ---------- */
 var KEY="ddc1d1p.v1";
-var S={posts:[],routine:{},comments:[],pledge:false,name:"",field:"",retro:{},topicShift:0};
+var S={posts:[],routine:{},comments:[],pledge:false,name:"",field:"",retro:{},topicShift:0,goals:{}};
 try{var raw=localStorage.getItem(KEY);if(raw){var o=JSON.parse(raw);for(var k in o)S[k]=o[k]}}catch(e){}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
 
@@ -589,9 +750,9 @@ tabs.forEach(function(b){b.addEventListener("click",function(){showTab(b.dataset
   var pick=tabs.some(function(b){return b.dataset.tab===h})?h:(t&&tabs.some(function(b){return b.dataset.tab===t})?t:"today");showTab(pick)})();
 
 /* ---------- 분야 선택 상자 ---------- */
-["log-field","w-field","p-field"].forEach(function(id){var s=$(id);FIELDS.forEach(function(f){s.appendChild(el("option",{text:f,value:f}))})});
+["log-field","p-field"].forEach(function(id){var s=$(id);FIELDS.forEach(function(f){s.appendChild(el("option",{text:f,value:f}))})});
 function defaultField(){return S.field||THEMES[TODAY.getDay()].fields[0]}
-$("log-field").value=defaultField();$("w-field").value=defaultField();$("p-field").value=S.field||"사회복지";
+$("log-field").value=defaultField();$("p-field").value=S.field||"사회복지";
 
 /* ---------- 오늘의 테마 ---------- */
 function dayIndex(d){return Math.floor(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())/864e5)}
@@ -608,7 +769,7 @@ function renderTheme(){
 }
 $("btn-next-topic").addEventListener("click",function(){S.topicShift=(S.topicShift||0)+1;save();renderTheme()});
 $("btn-use-topic").addEventListener("click",function(){
-  $("w-topic").value=topicFor(TODAY,S.topicShift||0);$("w-field").value=THEMES[TODAY.getDay()].fields[0];showTab("write");$("w-kw").focus()});
+  $("kw").value=topicFor(TODAY,S.topicShift||0);showTab("write");runStudio()});
 
 /* ---------- 루틴 ---------- */
 function renderRoutine(){
@@ -675,130 +836,309 @@ function renderHeat(){
   $("heat-sum").textContent="최근 16주 "+days+"일 발행 · "+total+"편";
 }
 
-/* ---------- 글쓰기 도우미 ---------- */
-function kws(){return $("w-kw").value.split(/[,，、]/).map(function(s){return s.trim()}).filter(Boolean).slice(0,6)}
-function genTitles(topic,kw,reader,type){
-  var k=kw[0]||topic.split(" ")[0];
-  var a=["[동두천] "+topic,
-    reader+"이 꼭 알아야 할 "+k+" 핵심 "+(type==="check"?"체크리스트":"정리"),
-    topic+" | 현장 사회복지사가 알려 드립니다",
-    k+(kw[1]?" · "+kw[1]:"")+", 이것만 알면 됩니다 ("+(TODAY.getFullYear())+"년 기준)"];
-  if(type==="qa")a[1]=k+"에 대해 가장 많이 묻는 질문 5가지";
-  if(type==="case")a[1]="동두천 현장에서 본 "+k+" 이야기";
-  return a;
+/* ---------- AI 자동 글쓰기 스튜디오 ---------- */
+var KW_GROUPS=[
+ ["오늘의 테마",null],
+ ["영유아",["동두천 영유아 발달검사 지원","부모교육 프로그램 신청방법","아이돌봄서비스 이용방법","영유아 발달지연 조기 개입","육아종합지원센터 프로그램","어린이집 입소대기 신청방법"]],
+ ["청소년",["청소년 상담 신청방법","학교 밖 청소년 지원정보","청소년 진로체험 프로그램","청소년 우울 신호 대처법","청소년 방과후아카데미 신청"]],
+ ["중장년",["중장년 가족돌봄 지원정보","중장년 재취업 교육 신청","중장년 정신건강 상담","가족돌봄휴가 제도 활용","신중년 일자리 지원사업"]],
+ ["노인",["동두천 노인 복지관 프로그램","노인맞춤돌봄서비스 신청방법","어르신 고독사 예방","장기요양등급 신청 준비서류","노인일자리 신청 시기"]],
+ ["장애인",["장애인 활동지원 준비서류","장애인 자립생활 지원","장애인 이동지원 이용방법","보조기기 지원 신청방법","발달장애인 주간활동서비스"]],
+ ["지역복지",["동두천 복지사업 안내","동두천 행정복지센터 복지상담","동두천 긴급복지 지원","동두천 자원봉사 참여방법","동두천 지역사회 프로그램"]]
+];
+var kwGroup=0, SAMPLE=null, DL=null, runCtl=null, GEN=null, videoBlob=null;
+function groupWords(i){return i===0?THEMES[TODAY.getDay()].topics:KW_GROUPS[i][1]}
+function renderKwGroups(){
+  var g=$("kw-groups");clear(g);
+  KW_GROUPS.forEach(function(x,i){var b=el("button",{cls:"btn sm"+(i===kwGroup?"":" ghost"),text:x[0]});
+    b.addEventListener("click",function(){kwGroup=i;renderKwGroups()});g.appendChild(b)});
+  var l=$("kw-list");clear(l);
+  groupWords(kwGroup).forEach(function(w){var b=el("button",{cls:"kwchip",text:w});
+    b.addEventListener("click",function(){$("kw").value=w;runStudio()});l.appendChild(b)});
 }
-function genDraft(topic,field,reader,kw,type){
-  var k=kw.length?kw.join(", "):"(핵심 키워드)";
-  var L=[];
-  L.push("■ 한 줄 요약");
-  L.push("이 글은 "+reader+"에게 '"+topic+"'의 핵심을 알려 드립니다. (결론을 먼저 1~2문장으로 쓰세요)");
-  L.push("");
-  L.push("■ 1. 왜 지금 이 주제인가");
-  L.push("- 배경: ");
-  L.push("- 동두천 지역에서 이 정보가 필요한 이유: ");
-  L.push("");
-  if(type==="case"){
-    L.push("■ 2. 현장 사례 (당사자 동의, 개인 식별정보 삭제)");
-    L.push("- 상황: ");L.push("- 사회복지사의 개입: ");L.push("- 변화와 결과: ");L.push("");
-    L.push("■ 3. 사례에서 배운 점");L.push("1) ");L.push("2) ");L.push("");
-  }else if(type==="qa"){
-    L.push("■ 2. 자주 묻는 질문");
-    for(var i=1;i<=5;i++){L.push("Q"+i+". ");L.push("A. ");}L.push("");
-  }else{
-    L.push("■ 2. 핵심 정보");
-    L.push("- 대상: ");L.push("- 내용·지원 범위: ");L.push("- 신청·이용 방법: ");
-    L.push("- 문의처: (기관명과 전화번호는 공식 홈페이지에서 확인한 뒤 적으세요)");L.push("");
-  }
-  if(type==="check"||type==="info"){
-    L.push("■ 3. 체크리스트");
-    ["","","","",""].forEach(function(){L.push("☐ ")});L.push("");
-  }
-  L.push("■ 4. 현장 사회복지사의 팁 ("+field+")");
-  L.push("- ");L.push("- ");L.push("");
-  if(type!=="qa"){L.push("■ 5. 자주 묻는 질문");L.push("Q. ");L.push("A. ");L.push("");}
-  L.push("■ 출처");
-  L.push("- (공식 기관명, 자료명, 확인한 날짜, 링크)");
-  L.push("");
-  L.push("■ 마무리");
-  L.push("도움이 필요하신 분은 가까운 행정복지센터나 복지기관에 상담을 요청하세요. 궁금한 점은 댓글로 남겨 주시면 다음 글에서 다루겠습니다.");
-  L.push("");
-  var tags=["동두천","동두천복지","사회복지사",field.replace(/[·\s]/g,"")].concat(kw.map(function(x){return x.replace(/\s/g,"")}));
-  var uniq=[];tags.forEach(function(t){if(t&&uniq.indexOf(t)<0)uniq.push(t)});
-  L.push(uniq.slice(0,10).map(function(t){return "#"+t}).join(" "));
-  L.push("");L.push("(키워드: "+k+")");
-  return L.join("\n");
-}
-function updateCount(){var t=$("w-draft").value;var n=t.replace(/\s/g,"").length;$("w-count").textContent=n.toLocaleString()+"자 · 약 "+Math.max(1,Math.round(n/500))+"분";
-  try{localStorage.setItem(KEY+".draft",t)}catch(e){} renderPreCheck()}
-try{var dr=localStorage.getItem(KEY+".draft");if(dr)$("w-draft").value=dr}catch(e){}
-$("w-draft").addEventListener("input",updateCount);
-function renderTitles(list){var ul=$("w-titles");clear(ul);
-  list.forEach(function(t){var b=el("button",{cls:"btn sm ghost",text:"복사"});b.addEventListener("click",function(){copy(t,"제목")});
-    ul.appendChild(el("li",{style:"grid-template-columns:1fr auto;align-items:center"},[el("span",{text:t}),b]))})}
-$("btn-gen").addEventListener("click",function(){
-  var topic=$("w-topic").value.trim()||topicFor(TODAY,S.topicShift||0);$("w-topic").value=topic;
-  var kw=kws(),reader=$("w-reader").value,type=$("w-type").value,field=$("w-field").value;
-  renderTitles(genTitles(topic,kw,reader,type));
-  $("w-draft").value=genDraft(topic,field,reader,kw,type);updateCount();
-  var r=S.routine[TODAY_S]||[];if(r.indexOf(0)<0){r.push(0);S.routine[TODAY_S]=r;save();renderRoutine()}
-  toast("초안 틀을 만들었습니다");
+$("btn-build").addEventListener("click",function(){
+  var parts=[$("b-region").value.trim(),$("b-target").value,$("b-problem").value.trim(),$("b-time").value,$("b-action").value].filter(Boolean);
+  if(!$("b-problem").value.trim()){toast("문제(예: 가족돌봄)를 입력하세요");$("b-problem").focus();return}
+  $("kw").value=parts.join(" ");runStudio();
 });
-$("btn-copy-draft").addEventListener("click",function(){copy($("w-draft").value,"초안")});
-$("btn-clear-draft").addEventListener("click",function(){var b=$("btn-clear-draft");
-  if(b.dataset.armed!=="1"){b.dataset.armed="1";b.textContent="한 번 더 누르면 비웁니다";setTimeout(function(){b.dataset.armed="";b.textContent="비우기"},3000);return}
-  $("w-draft").value="";b.dataset.armed="";b.textContent="비우기";updateCount()});
+function renderResearch(){
+  var k=encodeURIComponent($("kw").value.trim()||topicFor(TODAY,S.topicShift||0));
+  var links=[["네이버 뉴스 (최신순)","https://search.naver.com/search.naver?where=news&sort=1&query="+k],
+    ["네이버 뉴스 (관련도)","https://search.naver.com/search.naver?where=news&sort=0&query="+k],
+    ["네이버 블로그 상단글","https://search.naver.com/search.naver?where=blog&query="+k],
+    ["네이버 데이터랩","https://datalab.naver.com/keyword/trendSearch.naver"],
+    ["KOSIS 국가통계포털","https://kosis.kr/search/search.do?query="+k],
+    ["보건복지부 보도자료","https://www.mohw.go.kr/board.es?mid=a10503000000&bid=0027"]];
+  var box=$("research-links");clear(box);
+  links.forEach(function(x){box.appendChild(el("a",{cls:"btn sm ghost",href:x[1],target:"_blank",rel:"noopener noreferrer",text:x[0]}))});
+}
+$("kw").addEventListener("input",renderResearch);
 
+function kwTokens(k){return (k||"").split(/\s+/).filter(function(w){return w.length>=2})}
+function hashtagsFrom(k,extra){var t=["동두천","동두천복지","사회복지","사회복지사"].concat(kwTokens(k)).concat([k.replace(/\s/g,"")]).concat(extra||[]);
+  var u=[];t.forEach(function(x){x=String(x).replace(/^#/,"").replace(/[\s·,]/g,"");if(x&&x.length<=20&&u.indexOf(x)<0)u.push(x)});return u.slice(0,12)}
+function templateGen(o){
+  var k=o.kw, t1=kwTokens(k)[0]||k;
+  var titles=["["+(k.indexOf("동두천")>=0?"정보":"동두천")+"] "+k+" 한눈에 정리",
+    k+", "+o.reader+"이 꼭 확인할 "+(o.type==="check"?"체크리스트":"5가지"),
+    k+" | 현장 사회복지사가 알려 드립니다"];
+  var sub="대상, 방법, 준비할 것, 자주 묻는 질문까지 "+TODAY.getFullYear()+"년 기준으로 정리했습니다";
+  var L=[];
+  if(o.sponsor)L.push("※ 이 글은 "+o.sponsor+"을(를) 받아 작성했습니다.","");
+  L.push("■ 한눈에 보는 요약","이 글은 "+o.reader+"에게 '"+k+"'의 대상, 이용 방법, 준비할 것을 알려 드립니다. [핵심 결론 1~2문장으로 고쳐 쓰기]","");
+  L.push("■ 왜 지금 "+t1+"을(를) 알아야 할까요","- 배경: [통계·정책 근거, 출처와 발표일 함께]","- 동두천 지역에서 필요한 이유: ","");
+  if(o.news){L.push("■ 최근 뉴스로 본 흐름");o.news.split(/\n+/).map(function(s){return s.trim()}).filter(Boolean).slice(0,6).forEach(function(s){L.push("- "+s)});
+    L.push("- 현장에서 본 의미: ","");}
+  L.push("■ 공식 정보 정리","- 지원 대상: ","- 지원 내용: ","- 신청 방법: ","- 문의처: [공식 홈페이지에서 확인 후 기재]","");
+  L.push("■ 현장에서 겪은 어려움");
+  L.push(o.exp?o.exp:"[현장 사례: 동의 받은 실제 경험으로 작성]");L.push("");
+  L.push("■ 이렇게 해결할 수 있습니다","1) ","2) ","3) ","");
+  L.push("■ 신청 전 체크리스트","☐ 대상 조건 확인","☐ 준비서류 확인","☐ 신청 기간 확인","☐ 문의처 연락","☐ 대체 서비스 확인","");
+  L.push("■ 자주 묻는 질문","Q. "+k+"은(는) 누가 받을 수 있나요?","A. ","Q. 신청은 어디에서 하나요?","A. ","Q. 비용이 드나요?","A. ","");
+  L.push("■ 출처","- [기관명, 자료명, 발표일, 링크]","");
+  L.push("■ 마무리","도움이 필요하시면 가까운 행정복지센터나 복지기관에 상담을 요청하세요. 궁금한 점을 댓글로 남겨 주시면 다음 글에서 다루겠습니다.");
+  return {titles:titles,subtitle:sub,body:L.join("\n"),newsDigest:"",hashtags:hashtagsFrom(k),
+    cards:[{head:k,text:"꼭 필요한 내용만 정리했습니다"},{head:"누가 받을 수 있나요",text:"지원 대상과 조건을 먼저 확인하세요"},{head:"어떻게 신청하나요",text:"신청 방법과 준비서류를 정리했습니다"},{head:"신청 전 체크",text:"기간, 서류, 문의처를 빠짐없이 확인하세요"},{head:"더 궁금하다면",text:"행정복지센터나 복지기관에 상담을 요청하세요"}],
+    reels:[{sec:"0-3초",visual:"썸네일 제목",caption:k+", 3분이면 정리됩니다"},{sec:"3-7초",visual:"카드 2",caption:"누가 받을 수 있을까요?"},{sec:"7-11초",visual:"카드 3",caption:"신청 방법은 이렇습니다"},{sec:"11-15초",visual:"카드 4",caption:"신청 전 꼭 체크하세요"},{sec:"15-20초",visual:"카드 5",caption:"자세한 내용은 블로그에서"}],
+    imagePrompts:["동두천 지역 복지관에서 상담하는 사회복지사와 어르신, 따뜻한 자연광, 실사 사진 느낌, 얼굴은 식별되지 않게","'"+k+"' 주제의 깔끔한 인포그래픽 배경, 초록과 흰색, 텍스트 없음","행정복지센터 안내 창구, 밝은 실내, 사람 뒷모습, 텍스트 없음"],
+    instagram:k+" 정리했습니다.\n\n대상, 신청 방법, 준비서류, 체크리스트까지 블로그에 자세히 담았습니다. 프로필 링크에서 확인하세요.\n\n"+hashtagsFrom(k).slice(0,8).map(function(x){return "#"+x}).join(" "),
+    metaDescription:k+"의 대상, 신청 방법, 준비서류와 체크리스트를 현장 사회복지사가 정리했습니다."};
+}
+function studioOpts(){return {kw:$("kw").value.trim(),news:$("news").value.trim().slice(0,6000),exp:$("exp").value.trim().slice(0,2000),
+  len:+$("len").value,type:$("ptype").value,typeName:$("ptype").options[$("ptype").selectedIndex].text,reader:$("reader").value,sponsor:$("sponsor").value}}
+function aiPrompt(o){
+  return ["너는 동두천 지역 사회복지 분야 네이버 블로그 전문 편집자다. 아래 조건으로 블로그 글 한 편과 홍보 자료를 만들어라.",
+  "핵심 키워드: "+o.kw,"주요 독자: "+o.reader,"글 유형: "+o.typeName,"본문 분량: 공백 제외 약 "+o.len+"자",
+  o.sponsor?("협찬·제휴: "+o.sponsor+" 있음. 본문 맨 앞 줄에 '※ 이 글은 "+o.sponsor+"을(를) 받아 작성했습니다.'를 넣는다."):"협찬·제휴: 없음",
+  "작성자의 실제 경험 메모: "+(o.exp||"(없음)"),
+  "작성자가 붙여 넣은 상단 뉴스·자료: "+(o.news||"(없음)"),
+  "",
+  "본문 구조: ■ 한눈에 보는 요약(키워드 포함 결론 2문장) → ■ 배경과 공식 정보 → ■ 최근 뉴스로 본 흐름(뉴스 자료가 있을 때만) → ■ 현장에서 겪은 어려움 → ■ 해결 방법과 이용 절차 → ■ 체크리스트(☐ 5개) → ■ 자주 묻는 질문(Q./A. 3쌍, 사람들이 실제로 검색할 질문형) → ■ 출처 → ■ 마무리.",
+  "반드시 지킬 것:",
+  "1) 수치, 금액, 날짜, 전화번호, 법령 조항, 기관 세부정보는 지어내지 말고 그 자리에 [확인 필요]라고 쓴다. 뉴스 자료에 있는 사실은 쓸 수 있다.",
+  "2) 경험은 경험 메모에 있는 내용만 쓴다. 메모가 없으면 그 자리에 [현장 사례: 동의 받은 실제 경험으로 작성]이라고 쓴다. 가상의 인물, 가상의 후기는 쓰지 않는다. 후기형인데 메모가 없으면 정보형으로 쓴다.",
+  "3) 뉴스는 복사하지 말고 공통 쟁점과 현장 시사점으로 재구성한다. 붙여 넣은 자료가 없으면 뉴스를 언급하지 않는다.",
+  "4) 핵심 키워드는 제목에 1회, 본문에 3~6회만 자연스럽게 쓴다. 같은 단어를 억지로 반복하지 않는다.",
+  "5) '무조건', '100%', '최고', '보장' 같은 과장 표현을 쓰지 않는다. 존댓말, 짧은 문장. 마크다운 기호(#, **)는 쓰지 않는다.",
+  "",
+  "답은 아래 JSON 하나로만 한다:",
+  '{"titles":["제목 3개, 각 32자 이내, 핵심 키워드를 앞쪽에"],"subtitle":"부제목 40자 이내","body":"본문 전체, 줄바꿈은 \\n","newsDigest":"뉴스 자료가 있을 때만 상단 기사들의 공통 쟁점, 차이, 현장 시사점을 전문가 관점에서 3~5문장. 없으면 빈 문자열","hashtags":["해시태그 10개, # 없이"],"cards":[{"head":"16자 이내","text":"50자 이내"}],"reels":[{"sec":"0-3초","visual":"화면","caption":"자막 20자 이내"}],"imagePrompts":["외부 이미지 AI용 프롬프트 3개, 텍스트 없는 이미지, 얼굴 식별 불가"],"instagram":"인스타그램 캡션 300자 이내, 해시태그 포함","metaDescription":"검색 설명문 80자 이내"}',
+  "cards는 정확히 5개, reels는 5개 구간(합계 약 20초)."].join("\n");
+}
+function setupStudioAI(sample){
+  SAMPLE=sample;
+  $("run-status").textContent=sample?"AI가 연결되었습니다. 키워드를 누르면 AI가 본문까지 작성합니다. 처음 한 번 사용 허락을 묻습니다.":"AI가 연결되지 않은 화면입니다. 키워드를 누르면 템플릿으로 생성합니다. 이미지와 영상은 그대로 만들어집니다.";
+}
+function runStudio(){
+  var o=studioOpts();
+  if(!o.kw){toast("키워드를 고르거나 입력하세요");$("kw").focus();return}
+  renderResearch();
+  GEN=templateGen(o);GEN.mode="템플릿";renderGen(o);
+  var r=S.routine[TODAY_S]||[];if(r.indexOf(0)<0){r.push(0);S.routine[TODAY_S]=r;save();renderRoutine()}
+  $("out").hidden=false;$("out").scrollIntoView({behavior:"smooth",block:"start"});
+  if(!SAMPLE){toast("템플릿으로 생성했습니다");return}
+  if(runCtl)runCtl.abort();
+  runCtl=new AbortController();var ctl=runCtl;
+  $("btn-run").disabled=true;$("btn-stop").hidden=false;$("gen-mode").className="pill warn";$("gen-mode").textContent="AI 작성 중";
+  $("run-status").textContent="AI가 '"+o.kw+"' 글을 쓰는 중입니다. 30초~1분 걸립니다. 템플릿 결과를 먼저 보여 드립니다.";
+  var got=0;
+  SAMPLE.json(aiPrompt(o),{signal:ctl.signal,cache:false,onText:function(u){got=u.text.length;$("run-status").textContent="AI가 작성 중입니다… "+got.toLocaleString()+"자 받음"}}).then(function(v){
+    if(ctl!==runCtl)return;
+    if(!v||typeof v.body!=="string"||!Array.isArray(v.titles))throw {code:"invalid_json"};
+    var T=templateGen(o);
+    GEN={titles:v.titles.map(String).slice(0,3),subtitle:String(v.subtitle||T.subtitle),body:v.body,newsDigest:String(v.newsDigest||""),
+      hashtags:(Array.isArray(v.hashtags)&&v.hashtags.length?v.hashtags:T.hashtags).map(function(x){return String(x).replace(/^#/,"").replace(/\s/g,"")}).filter(Boolean).slice(0,12),
+      cards:(Array.isArray(v.cards)&&v.cards.length>=3?v.cards:T.cards).slice(0,5).map(function(c){return {head:String(c.head||"").slice(0,24),text:String(c.text||"").slice(0,80)}}),
+      reels:Array.isArray(v.reels)&&v.reels.length?v.reels.slice(0,6):T.reels,
+      imagePrompts:Array.isArray(v.imagePrompts)&&v.imagePrompts.length?v.imagePrompts.map(String).slice(0,4):T.imagePrompts,
+      instagram:String(v.instagram||T.instagram),metaDescription:String(v.metaDescription||T.metaDescription),mode:"AI 작성"};
+    renderGen(o);$("run-status").textContent="AI 작성을 마쳤습니다. [확인 필요] 표시를 공식 출처로 채우고, 사람이 최종 확인한 뒤 발행하세요.";toast("AI가 글을 완성했습니다");
+  }).catch(function(e){
+    if(ctl!==runCtl)return;
+    var c=e&&e.code;
+    $("gen-mode").className="pill info";$("gen-mode").textContent="템플릿";
+    if(c==="not_granted"){SAMPLE=null;$("run-status").textContent="AI 사용이 허용되지 않아 템플릿으로 만들었습니다."}
+    else if(c==="rate_limited")$("run-status").textContent="AI 요청이 많습니다. 잠시 뒤 자동 생성을 다시 누르세요. 지금은 템플릿 결과입니다.";
+    else if(c==="aborted"||(e&&e.name==="AbortError"))$("run-status").textContent="AI 작성을 중지했습니다. 템플릿 결과를 쓰고 있습니다.";
+    else $("run-status").textContent="AI 답을 받지 못해 템플릿으로 만들었습니다. 자동 생성을 다시 누르면 다시 요청합니다.";
+  }).then(function(){if(ctl===runCtl){$("btn-run").disabled=false;$("btn-stop").hidden=true;runCtl=null}});
+}
+$("btn-run").addEventListener("click",runStudio);
+$("btn-stop").addEventListener("click",function(){if(runCtl)runCtl.abort()});
+
+function renderGen(o){
+  var g=GEN;
+  $("gen-mode").className="pill "+(g.mode==="AI 작성"?"ok":"info");$("gen-mode").textContent=g.mode;
+  var ul=$("o-titles");clear(ul);
+  g.titles.forEach(function(t,i){var b=el("button",{cls:"btn sm ghost",text:"복사"});b.addEventListener("click",function(){copy(t,"제목")});
+    var pick=el("input",{type:"radio",name:"tpick",id:"tp"+i,"aria-label":"이 제목 사용"});pick.checked=i===0;pick.style.width="18px";pick.addEventListener("change",function(){renderPreCheck();drawAll()});
+    ul.appendChild(el("li",{style:"grid-template-columns:22px 1fr auto;align-items:center"},[pick,el("label",{"for":"tp"+i,text:t+"  ("+t.length+"자)",style:"color:var(--ink);font-weight:500;font-size:15px;display:block"}),b]))});
+  $("o-sub").value=g.subtitle;
+  $("o-meta").textContent="검색 설명문: "+g.metaDescription;
+  $("w-draft").value=g.body;
+  var nb=$("o-news-box");nb.hidden=!g.newsDigest;$("o-news").textContent=g.newsDigest;
+  var tg=$("o-tags");clear(tg);g.hashtags.forEach(function(h){tg.appendChild(el("span",{cls:"chip",text:"#"+h}))});
+  var pr=$("o-prompts");clear(pr);g.imagePrompts.forEach(function(p){var b=el("button",{cls:"btn sm ghost",text:"복사"});b.addEventListener("click",function(){copy(p,"프롬프트")});
+    pr.appendChild(el("li",{style:"grid-template-columns:1fr auto;align-items:center"},[el("span",{text:p}),b]))});
+  var rb=$("o-reels");clear(rb);g.reels.forEach(function(r){rb.appendChild(el("tr",null,[el("td",{cls:"d",text:String(r.sec||"")}),el("td",{text:String(r.visual||"")}),el("td",{text:String(r.caption||"")})]))});
+  $("o-insta").textContent=g.instagram;
+  updateCount();drawAll();
+  videoBlob=null;$("o-video").hidden=true;$("btn-video-save").hidden=true;$("video-status").textContent="";
+}
+function pickedTitle(){var i=0;[0,1,2].forEach(function(n){var r=$("tp"+n);if(r&&r.checked)i=n});return GEN?GEN.titles[i]||GEN.titles[0]:""}
+$("o-sub").addEventListener("input",function(){if(GEN){GEN.subtitle=$("o-sub").value;drawAll()}});
+$("btn-copy-naver").addEventListener("click",function(){if(!GEN)return;
+  copy(pickedTitle()+"\n\n"+$("o-sub").value+"\n\n"+$("w-draft").value+"\n\n"+GEN.hashtags.map(function(h){return "#"+h}).join(" "),"블로그 전체")});
+$("btn-copy-draft").addEventListener("click",function(){copy($("w-draft").value,"본문")});
+$("btn-copy-tags").addEventListener("click",function(){if(GEN)copy(GEN.hashtags.map(function(h){return "#"+h}).join(" "),"해시태그")});
+$("btn-copy-insta").addEventListener("click",function(){copy($("o-insta").textContent,"인스타그램 캡션")});
+
+function updateCount(){var t=$("w-draft").value;var n=t.replace(/\s/g,"").length;$("w-count").textContent="공백 제외 "+n.toLocaleString()+"자 · 읽는 데 약 "+Math.max(1,Math.round(n/500))+"분";renderPreCheck()}
+$("w-draft").addEventListener("input",updateCount);
+
+function countOf(hay,needle){if(!needle)return 0;var n=0,i=0;while((i=hay.indexOf(needle,i))>=0){n++;i+=needle.length}return n}
 function renderPreCheck(){
-  var t=$("w-draft").value, ul=$("pre-check");clear(ul);
-  var kw=kws(); var n=t.replace(/\s/g,"").length;
+  var ul=$("pre-check");clear(ul);if(!GEN)return;
+  var t=$("w-draft").value,title=pickedTitle(),kw=$("kw").value.trim(),target=+$("len").value,sp=$("sponsor").value;
+  var n=t.replace(/\s/g,"").length, kc=countOf(t,kw), per1k=n?kc/(n/1000):0;
+  var heads=(t.match(/^■/gm)||[]).length, qs=(t.match(/^Q[0-9]*\./gm)||[]).length, boxes=(t.match(/☐/g)||[]).length;
   var items=[
-    [n>=1500?"ok":n>=800?"warn":"bad","본문 분량 "+n.toLocaleString()+"자 (권장 1,500자 이상)"],
-    [/출처[\s\S]*https?:\/\//.test(t)?"ok":"warn","출처 링크 표기 (공식 기관 자료 우선)"],
-    [kw.length&&kw.every(function(k){return t.indexOf(k)>=0})?"ok":"warn","핵심 키워드가 본문에 들어갔는지"],
-    [/\[확인 필요\]/.test(t)?"bad":"ok","[확인 필요] 표시가 남아 있지 않은지"],
-    [/(\d{2,3}-\d{3,4}-\d{4})/.test(t)?"warn":"ok","전화번호는 공식 홈페이지와 대조했는지"],
-    ["warn","사례 글이면 당사자 동의와 개인정보 삭제를 확인했는지 (직접 확인)"],
-    ["warn","협찬·대가가 있으면 광고 표기, 이미지는 저작권 확인 (직접 확인)"]
+    [10,title.indexOf(kwTokens(kw)[0]||kw)>=0&&title.length<=35?"ok":"warn","제목: 핵심 키워드 포함, 35자 이내 (지금 "+title.length+"자)"],
+    [10,t.slice(0,250).indexOf(kwTokens(kw)[0]||kw)>=0?"ok":"warn","첫 문단 요약에 키워드가 있는지 (AI 검색은 앞부분 요약을 많이 인용합니다)"],
+    [10,n>=target*0.9?"ok":n>=target*0.6?"warn":"bad","분량: 공백 제외 "+n.toLocaleString()+"자 / 목표 "+target.toLocaleString()+"자"],
+    [10,kc===0?"warn":per1k>5?"bad":"ok","키워드 반복: '"+kw+"' "+kc+"회"+(per1k>5?" (과도한 반복은 저품질 신호입니다)":"")],
+    [10,heads>=5?"ok":heads>=3?"warn":"bad","소제목 "+heads+"개 (주제 구조가 분명해야 C-Rank 주제 집중도에 유리)"],
+    [10,/저는|제가|저희|현장에서|직접/.test(t)&&!/\[현장 사례/.test(t)?"ok":"warn","실제 경험 문장 (D.I.A.+ 경험 정보). 지어낸 경험은 쓰지 마세요"],
+    [10,qs>=3?"ok":qs>=1?"warn":"bad","질문과 답 "+qs+"쌍 (사람과 AI가 궁금해하는 질문형 구조)"],
+    [10,/출처/.test(t)&&/(https?:\/\/|통계청|KOSIS|보건복지부|보도자료|시청|공단)/.test(t)?"ok":"warn","출처 표기 (공식 기관, 발표일 포함)"],
+    [5,boxes>=3?"ok":"warn","체크리스트 "+boxes+"개"],
+    [10,/\[확인 필요\]|\[.*?(고쳐 쓰기|확인 후 기재|기관명, 자료명)/.test(t)?"bad":"ok","[확인 필요] 등 채울 자리가 남아 있지 않은지"],
+    [5,/무조건|100%|최고의|완벽|보장/.test(t)?"warn":"ok","과장 표현 없음 ('무조건', '100%', '보장' 등)"]
   ];
-  items.forEach(function(it){var m={ok:"✓",warn:"!",bad:"×"}[it[0]];ul.appendChild(el("li",null,[el("span",{cls:"mk "+it[0],text:m}),el("span",{text:it[1]})]))});
+  if(sp)items.push([0,/협찬|제휴|원고료|제공받/.test(t.slice(0,300))?"ok":"bad",sp+" 표시가 글 앞부분에 있는지 (법적 의무)"]);
+  var score=0,max=0;
+  items.forEach(function(it){max+=it[0];if(it[1]==="ok")score+=it[0];else if(it[1]==="warn")score+=it[0]*0.4;
+    ul.appendChild(el("li",null,[el("span",{cls:"mk "+it[1],text:{ok:"✓",warn:"!",bad:"×"}[it[1]]}),el("span",{text:it[2]})]))});
+  var s=Math.round(score/max*100);$("q-score").textContent=s+"점";var bar=$("q-bar");bar.style.width=s+"%";bar.className=s>=80?"ok":s>=55?"warn":"bad";
 }
 
-/* ---------- AI 초안 (sample) ---------- */
-var aiCtl=null;
-function setupAI(sample){
-  if(!sample)return;
-  var b=$("btn-ai");b.hidden=false;
-  b.addEventListener("click",function(){
-    var topic=$("w-topic").value.trim()||topicFor(TODAY,S.topicShift||0);$("w-topic").value=topic;
-    var kw=kws(),reader=$("w-reader").value,type=$("w-type").options[$("w-type").selectedIndex].text,field=$("w-field").value;
-    var outline=$("w-draft").value.trim();
-    var prompt=[
-      "너는 동두천 지역 사회복지 블로그 글을 돕는 편집자다. 아래 조건으로 네이버 블로그용 한국어 본문 초안을 써라.",
-      "- 주제: "+topic,"- 분야: "+field,"- 주요 독자: "+reader,"- 글 유형: "+type,"- 핵심 키워드: "+(kw.join(", ")||"주제에서 2~3개 뽑아 쓸 것"),
-      "규칙:",
-      "1) 첫 문단에 결론을 2문장으로 요약한다.",
-      "2) 소제목은 ■ 기호로 시작하고, 체크리스트는 ☐ 기호를 쓴다.",
-      "3) 수치, 금액, 날짜, 기관 전화번호, 법령 조항처럼 사실 확인이 필요한 내용은 지어내지 말고 그 자리에 [확인 필요]라고 쓴다.",
-      "4) 실제 경험처럼 꾸민 후기나 가상의 인물 사례를 쓰지 않는다. 사례 자리는 [현장 사례: 동의 받은 사례로 작성]으로 비워 둔다.",
-      "5) 존댓말, 짧은 문장, 1,500~2,000자. 마지막에 상담 연결 안내 한 문장과 해시태그 8개 이내.",
-      "6) 마크다운 기호(#, **)는 쓰지 않는다.",
-      outline?("참고할 개요(있으면 구조를 따른다):\n"+outline.slice(0,3000)):""
-    ].join("\n");
-    aiCtl=new AbortController();b.disabled=true;$("btn-ai-stop").hidden=false;$("ai-status").textContent="AI가 초안을 쓰는 중입니다…";
-    var before=$("w-draft").value;
-    sample(prompt,{signal:aiCtl.signal,cache:false,onText:function(u){$("w-draft").value=u.text;updateCount()}}).then(function(r){
-      $("w-draft").value=r.text;updateCount();$("ai-status").textContent="초안을 받았습니다. [확인 필요] 부분을 공식 출처로 채운 뒤 발행하세요.";
-    },function(e){
-      var code=e&&e.code;
-      if(code==="not_granted"){b.hidden=true;$("ai-status").textContent="AI 초안 기능이 허용되지 않았습니다. 초안 틀 만들기는 계속 쓸 수 있습니다."}
-      else if(code==="rate_limited"){$("ai-status").textContent="요청이 많습니다. 잠시 후 다시 시도하세요."}
-      else if(e&&e.name==="AbortError"||code==="aborted"){$("ai-status").textContent="중지했습니다."}
-      else{$("ai-status").textContent="초안을 받지 못했습니다. 잠시 후 다시 시도하세요."}
-      if(!$("w-draft").value.trim())$("w-draft").value=before;updateCount();
-    }).then(function(){b.disabled=false;$("btn-ai-stop").hidden=true;aiCtl=null});
-  });
-  $("btn-ai-stop").addEventListener("click",function(){if(aiCtl)aiCtl.abort()});
+/* 이미지 생성 (canvas) */
+var PAL={pine:"#1E5A47",paper:"#F3F6F4",maple:"#B8452A",ink:"#14211D",mist:"#DCEBE4"};
+function wrapText(ctx,text,maxW){
+  var out=[],line="";String(text).split(/(\s+)/).forEach(function(tok){
+    if(!tok)return;var test=line+tok;
+    if(ctx.measureText(test).width<=maxW){line=test;return}
+    if(line.trim())out.push(line.trim());line="";
+    if(ctx.measureText(tok).width>maxW){var cur="";tok.split("").forEach(function(ch){if(ctx.measureText(cur+ch).width>maxW){out.push(cur);cur=ch}else cur+=ch});line=cur}else line=tok.trim()?tok:"";
+  });if(line.trim())out.push(line.trim());return out}
+function drawLines(ctx,lines,x,y,lh,max){lines.slice(0,max).forEach(function(l,i){ctx.fillText(i===max-1&&lines.length>max?l.replace(/.$/,"…"):l,x,y+i*lh)});return Math.min(lines.length,max)}
+function drawThumb(c,w,h){
+  var x=c.getContext("2d");c.width=w;c.height=h;var u=w/1080;
+  x.fillStyle=PAL.pine;x.fillRect(0,0,w,h);
+  x.strokeStyle="rgba(255,255,255,.12)";x.lineWidth=2*u;for(var i=0;i<6;i++){x.beginPath();x.moveTo(0,h*0.72+i*28*u);x.bezierCurveTo(w*0.3,h*0.62+i*28*u,w*0.6,h*0.8+i*28*u,w,h*0.66+i*28*u);x.stroke()}
+  x.fillStyle=PAL.maple;x.fillRect(80*u,110*u,150*u,10*u);
+  x.fillStyle="rgba(255,255,255,.85)";x.font="600 "+38*u+"px 'IBM Plex Sans KR',sans-serif";x.textBaseline="top";
+  x.fillText(($("kw").value.trim()||"").slice(0,26),80*u,150*u);
+  x.fillStyle="#FFFFFF";x.font="700 "+86*u+"px 'Gowun Batang',serif";
+  var n=drawLines(x,wrapText(x,pickedTitle(),w-160*u),80*u,230*u,112*u,h>w?6:4);
+  x.fillStyle="rgba(255,255,255,.8)";x.font="400 "+38*u+"px 'IBM Plex Sans KR',sans-serif";
+  drawLines(x,wrapText(x,$("o-sub").value,w-160*u),80*u,250*u+n*112*u+30*u,54*u,3);
+  x.fillStyle="rgba(255,255,255,.75)";x.font="600 "+30*u+"px 'IBM Plex Sans KR',sans-serif";x.textBaseline="bottom";
+  x.fillText("동두천 1일 1포스팅"+(S.name?" · "+S.name:""),80*u,h-80*u);
 }
+function drawCard(c,card,i,total,w,h){
+  var x=c.getContext("2d");c.width=w;c.height=h;var u=w/1080;
+  x.fillStyle=i%2?PAL.paper:"#FFFFFF";x.fillRect(0,0,w,h);
+  x.fillStyle=PAL.pine;x.fillRect(0,0,w,18*u);
+  x.textBaseline="top";x.fillStyle=PAL.maple;x.font="500 "+40*u+"px 'IBM Plex Mono',monospace";x.fillText(pad(i+1)+" / "+pad(total),80*u,110*u);
+  x.fillStyle=PAL.ink;x.font="700 "+92*u+"px 'Gowun Batang',serif";
+  var n=drawLines(x,wrapText(x,card.head,w-160*u),80*u,h*0.30,118*u,3);
+  x.fillStyle=PAL.pine;x.fillRect(80*u,h*0.30+n*118*u+30*u,120*u,8*u);
+  x.fillStyle="#3B4A45";x.font="400 "+50*u+"px 'IBM Plex Sans KR',sans-serif";
+  drawLines(x,wrapText(x,card.text,w-160*u),80*u,h*0.30+n*118*u+80*u,74*u,5);
+  x.fillStyle="#56665F";x.font="600 "+30*u+"px 'IBM Plex Sans KR',sans-serif";x.textBaseline="bottom";
+  x.fillText(($("kw").value.trim()||"").slice(0,30),80*u,h-80*u);
+  x.textAlign="right";x.fillText("동두천 1일 1포스팅",w-80*u,h-80*u);x.textAlign="left";
+}
+var fontsReady=null;
+function ensureFonts(){if(!fontsReady){try{fontsReady=Promise.all(["700 40px 'Gowun Batang'","400 40px 'IBM Plex Sans KR'","600 40px 'IBM Plex Sans KR'","500 40px 'IBM Plex Mono'"].map(function(f){return document.fonts.load(f,"가나다abc")})).catch(function(){})}catch(e){fontsReady=Promise.resolve()}}return fontsReady}
+var drawT;
+function drawAll(){clearTimeout(drawT);drawT=setTimeout(function(){ensureFonts().then(function(){
+  if(!GEN)return;var g=$("gallery");clear(g);
+  var items=[["대표 썸네일 (1:1)",function(c){drawThumb(c,1080,1080)},"thumbnail.png"]];
+  GEN.cards.forEach(function(cd,i){items.push(["카드뉴스 "+(i+1)+" (4:5)",function(c){drawCard(c,cd,i,GEN.cards.length,1080,1350)},"card-"+(i+1)+".png"])});
+  items.forEach(function(it){var c=document.createElement("canvas");it[1](c);var img=el("img",{alt:it[0]});img.src=c.toDataURL("image/png");
+    var b=el("button",{cls:"btn sm ghost",text:"저장"});b.addEventListener("click",function(){saveCanvas(c,it[2])});
+    g.appendChild(el("figure",null,[img,el("figcaption",null,[el("span",{text:it[0]}),b])]))});
+  $("img-note").textContent=DL?"저장을 누르면 파일로 받습니다":"이미지를 길게 누르거나 오른쪽 클릭해 저장하세요";
+})},60)}
+function saveFile(name,blob){
+  if(!DL){toast("이 화면에서는 파일 저장이 막혀 있습니다. 이미지를 길게 누르거나 오른쪽 클릭해 저장하세요");return}
+  DL.save({filename:name,data:blob}).then(function(){},function(e){if(!(e&&e.code==="cancelled"))toast("저장하지 못했습니다")});
+}
+function saveCanvas(c,name){c.toBlob(function(b){if(b)saveFile(slug()+"-"+name,b)},"image/png")}
+function slug(){return ($("kw").value.trim()||"post").replace(/[^가-힣A-Za-z0-9]+/g,"-").slice(0,30)}
+
+/* 영상 생성 (canvas + MediaRecorder) */
+$("btn-video").addEventListener("click",function(){
+  if(!GEN){toast("먼저 글을 생성하세요");return}
+  if(typeof MediaRecorder==="undefined"){$("video-status").textContent="이 브라우저는 영상 녹화를 지원하지 않습니다. 최신 크롬이나 사파리에서 열어 주세요.";return}
+  var W=720,H=1280,c=document.createElement("canvas");c.width=W;c.height=H;var x=c.getContext("2d");
+  ensureFonts().then(function(){
+    var slides=[];var t=document.createElement("canvas");drawThumb(t,W,H);slides.push(t);
+    GEN.cards.forEach(function(cd,i){var k=document.createElement("canvas");drawCard(k,cd,i,GEN.cards.length,W,H);slides.push(k)});
+    var caps=GEN.reels.map(function(r){return String(r.caption||"")});
+    var types=["video/mp4;codecs=avc1","video/mp4","video/webm;codecs=vp9","video/webm;codecs=vp8","video/webm"];
+    var mime=types.filter(function(m){try{return MediaRecorder.isTypeSupported(m)}catch(e){return false}})[0]||"";
+    var rec;try{rec=new MediaRecorder(c.captureStream(30),mime?{mimeType:mime,videoBitsPerSecond:4000000}:{})}catch(e){$("video-status").textContent="영상 녹화를 시작하지 못했습니다.";return}
+    var chunks=[];rec.ondataavailable=function(e){if(e.data&&e.data.size)chunks.push(e.data)};
+    var per=3300,fade=450,total=slides.length*per,t0=null;
+    rec.onstop=function(){var type=(mime||"video/webm").split(";")[0];videoBlob=new Blob(chunks,{type:type});var v=$("o-video");v.src=URL.createObjectURL(videoBlob);v.hidden=false;
+      $("btn-video-save").hidden=false;$("btn-video").disabled=false;$("video-status").textContent="영상이 준비되었습니다 ("+(type.indexOf("mp4")>=0?"MP4":"WebM")+", "+Math.round(total/1000)+"초, "+Math.round(videoBlob.size/1024)+"KB). 인스타그램 릴스나 네이버 클립에 올리세요."};
+    $("btn-video").disabled=true;rec.start(250);
+    function frame(ts){if(t0===null)t0=ts;var e=ts-t0;var idx=Math.min(slides.length-1,Math.floor(e/per)),loc=e-idx*per;
+      x.globalAlpha=1;x.fillStyle="#000";x.fillRect(0,0,W,H);
+      var sc=1+0.04*(loc/per);x.save();x.translate(W/2,H/2);x.scale(sc,sc);x.drawImage(slides[idx],-W/2,-H/2);x.restore();
+      if(loc>per-fade&&idx<slides.length-1){x.globalAlpha=(loc-(per-fade))/fade;x.drawImage(slides[idx+1],0,0);x.globalAlpha=1}
+      var cap=caps[idx]||"";if(cap){x.font="700 34px 'IBM Plex Sans KR',sans-serif";var lines=wrapText(x,cap,W-120);var bh=lines.length*46+30;
+        x.fillStyle="rgba(20,33,29,.82)";x.fillRect(40,H-260-bh,W-80,bh);x.fillStyle="#FFFFFF";x.textBaseline="top";lines.forEach(function(l,i){x.fillText(l,60,H-260-bh+15+i*46)})}
+      x.fillStyle=PAL.maple;x.fillRect(0,H-8,W*(e/total),8);
+      $("video-status").textContent="영상을 만드는 중입니다… "+Math.min(100,Math.round(e/total*100))+"%";
+      if(e<total)requestAnimationFrame(frame);else setTimeout(function(){rec.stop()},200)}
+    requestAnimationFrame(frame);
+  });
+});
+$("btn-video-save").addEventListener("click",function(){if(videoBlob)saveFile(slug()+"-shorts."+(videoBlob.type.indexOf("mp4")>=0?"mp4":"webm"),videoBlob)});
+
+/* ---------- 18장 직장 병행 · 첫 달 목표 · 19장 성과 측정 ---------- */
+var WORK=[[1,"월","통계·뉴스·보도자료 찾기"],[2,"화","키워드와 제목 정하기"],[3,"수","ChatGPT·Claude로 초안 작성"],[4,"목","DAF·이 도구로 사진·이미지 제작"],[5,"금","검수 후 발행과 링크 공유"]];
+function renderWork(){
+  var ul=$("work-week");clear(ul);var d=TODAY.getDay();
+  WORK.forEach(function(w){var on=w[0]===d;ul.appendChild(el("li",null,[el("span",{cls:"mk "+(on?"bad":"ok"),text:w[1]}),el("span",{text:w[2],style:on?"font-weight:700":""})]))});
+  var cur=WORK.filter(function(w){return w[0]===d})[0];$("work-today").textContent=cur?"오늘: "+cur[2]:"주말: 동료 글 읽기와 회고";
+}
+function renderFirstMonth(){
+  var ul=$("first-month");clear(ul);S.goals=S.goals||{};var g=S.goals[MON]||{};
+  var cmon=S.comments.filter(function(c){return (c.date||"").indexOf(MON)===0}).length;
+  var items=[["auto",!!S.field,"전문분야 1개 선정"+(S.field?" ("+S.field+")":" · 링크 보드에서 대표 분야 저장")],
+    ["auto",monthCount()>=10,"글 10편 작성 ("+monthCount()+"/10)"],
+    ["stat",!!g.stat,"통계·정책 글 3편 작성"],["review",!!g.review,"실제 후기글 3편 작성"],
+    ["auto",cmon>0,"동료 피드백 참여 (이번 달 댓글 기록 "+cmon+"개)"]];
+  items.forEach(function(it,i){
+    if(it[0]==="auto"){ul.appendChild(el("li",null,[el("span",{cls:"mk "+(it[1]?"ok":"warn"),text:it[1]?"✓":"·"}),el("span",{text:it[2]})]));return}
+    var id="fm-"+it[0];var cb=el("input",{type:"checkbox",id:id});cb.checked=it[1];cb.style.width="18px";cb.style.height="18px";cb.style.marginTop="4px";
+    cb.addEventListener("change",function(){S.goals[MON]=S.goals[MON]||{};S.goals[MON][it[0]]=cb.checked;var keep={};keep[MON]=S.goals[MON];S.goals=keep;save()});
+    ul.appendChild(el("li",null,[cb,el("label",{"for":id,text:it[2],style:"font-size:14px;color:var(--ink);font-weight:500;display:block"})]))});
+}
+var METRICS=[["saves","저장·공유"],["qcomments","질문 댓글"],["inquiries","문의 건수"],["collab","기관 협업 제안"],["lecture","강의·교육 신청"],["orders","콘텐츠 제작 의뢰"],["revenue","월간 수익(원)"],["hours","투입 시간(시간)"]];
+function renderMetrics(){
+  var box=$("metrics");if(box.childNodes.length)return;var r=(S.retro[MON]||{}).metrics||{};
+  METRICS.forEach(function(m){var i=el("input",{id:"mt-"+m[0],type:"number",min:"0",inputmode:"numeric"});i.value=r[m[0]]!=null?r[m[0]]:"";
+    i.addEventListener("input",renderRoi);box.appendChild(el("label",{"for":"mt-"+m[0]},[m[1],i]))});
+  renderRoi();
+}
+function readMetrics(){var o={};METRICS.forEach(function(m){var v=parseFloat($("mt-"+m[0]).value);if(!isNaN(v)&&v>=0)o[m[0]]=v});return o}
+function renderRoi(){var m=readMetrics();$("m-roi").textContent=m.hours>0&&m.revenue!=null?"투입시간 대비 수익: 시간당 "+Math.round(m.revenue/m.hours).toLocaleString()+"원":"월간 수익과 투입 시간을 넣으면 시간당 수익을 계산합니다.";}
 
 /* ---------- 댓글 점검 ---------- */
 function bigrams(s){s=s.replace(/\s+/g,"");var a={};for(var i=0;i<s.length-1;i++)a[s.substr(i,2)]=1;return a}
@@ -864,7 +1204,7 @@ function renderMonth(){
   var r=S.retro[MON]||{};["best","know","next"].forEach(function(k){var e=$("m-"+k);if(document.activeElement!==e)e.value=r[k]||""});
 }
 $("btn-month-save").addEventListener("click",function(){
-  var r={best:$("m-best").value.trim().slice(0,600),know:$("m-know").value.trim().slice(0,800),next:$("m-next").value.trim().slice(0,400),count:monthCount(),at:Date.now()};
+  var r={best:$("m-best").value.trim().slice(0,600),know:$("m-know").value.trim().slice(0,800),next:$("m-next").value.trim().slice(0,400),count:monthCount(),metrics:readMetrics(),at:Date.now()};
   S.retro[MON]=r;save();
   if(CANWRITE){writeMine(function(d){d.retro=d.retro||{};d.retro[MON]=r;var keys=Object.keys(d.retro).sort();while(keys.length>6)delete d.retro[keys.shift()]});toast("회고를 저장하고 공유했습니다")}
   else toast("회고를 이 브라우저에 저장했습니다");
@@ -875,7 +1215,8 @@ $("btn-month-copy").addEventListener("click",function(){
     "· 이번 달 발행: "+monthCount()+"편 (연속 "+streak()+"일)\n"+
     "· 반응 좋았던 글: "+($("m-best").value.trim()||"-")+"\n"+
     "· 노하우: "+($("m-know").value.trim()||"-")+"\n"+
-    "· 다음 달 목표: "+($("m-next").value.trim()||"-");
+    "· 다음 달 목표: "+($("m-next").value.trim()||"-")+
+    (function(){var m=readMetrics(),a=[];METRICS.forEach(function(x){if(m[x[0]]!=null)a.push(x[1]+" "+m[x[0]].toLocaleString())});return a.length?"\n· 성과 지표: "+a.join(", "):""})();
   copy(txt,"월간 공유문");
 });
 
@@ -953,7 +1294,7 @@ function boardStatus(kind){
 $("btn-profile").addEventListener("click",function(){
   var f=$("p-field").value,blog=safeUrl($("p-blog").value);
   if($("p-blog").value.trim()&&!blog){toast("블로그 주소는 https:// 로 시작해야 합니다");return}
-  S.field=f;save();$("log-field").value=f;$("w-field").value=f;
+  S.field=f;save();$("log-field").value=f;renderFirstMonth();
   writeMine(function(d){d.field=f;d.blog=blog;d.pledged=!!S.pledge}).then(function(){toast("참여 정보를 저장했습니다")});
 });
 
@@ -1026,17 +1367,19 @@ function renderMonthFeed(ps){
   if(!list.length){box.appendChild(el("div",{cls:"empty",text:CANWRITE||DB?"아직 이번 달 회고가 없습니다. 월말에 회고를 저장해 주세요.":"링크 보드에 연결되면 동료들의 회고가 모입니다."}));return}
   list.forEach(function(x){var prof=ps[x.uid]||{};
     var kids=[el("div",{cls:"t",text:(prof.name||"참여자")+" · "+(x.r.count||0)+"편"})];
-    [["반응 좋았던 글",x.r.best],["노하우",x.r.know],["다음 달",x.r.next]].forEach(function(p){if(p[1])kids.push(el("p",{cls:"small"},[el("b",{text:p[0]+" "}),String(p[1])]))});
+    var mm=x.r.metrics&&typeof x.r.metrics==="object"?METRICS.filter(function(k){return typeof x.r.metrics[k[0]]==="number"&&k[0]!=="revenue"}).map(function(k){return k[1]+" "+x.r.metrics[k[0]]}).join(", "):"";
+    [["반응 좋았던 글",x.r.best],["노하우",x.r.know],["다음 달",x.r.next],["성과",mm]].forEach(function(p){if(p[1])kids.push(el("p",{cls:"small"},[el("b",{text:p[0]+" "}),String(p[1])]))});
     box.appendChild(el("div",{cls:"post"},[avatar(prof),el("div",{style:"min-width:0;display:grid;gap:4px"},kids)]))});
 }
 
-function renderAll(){renderTheme();renderRoutine();renderStats();renderLog();renderHeat();updateCount();renderCHist();renderPledge();renderMonth();renderKit()}
+function renderAll(){renderTheme();renderRoutine();renderStats();renderLog();renderHeat();renderCHist();renderPledge();renderMonth();renderKit();renderKwGroups();renderResearch();renderWork();renderFirstMonth();renderMetrics()}
 renderAll();
 
 /* ---------- 런타임 기능 연결 ---------- */
 var C=window.claude;
 if(C&&typeof C.use==="function"){
-  C.use("sample").then(setupAI,function(){});
+  C.use("sample").then(setupStudioAI,function(){setupStudioAI(null)});
+  C.use("downloads").then(function(d){DL=d;if(GEN)drawAll()},function(){});
   Promise.all([C.use("db"),C.use("user")]).then(function(r){
     DB=r[0];USER=r[1];
     if(!DB||!USER){boardStatus("off");return}
@@ -1053,7 +1396,7 @@ if(C&&typeof C.use==="function"){
       },function(){boardStatus("off")});
     });
   },function(){boardStatus("off")});
-}else{boardStatus("off")}
+}else{boardStatus("off");setupStudioAI(null)}
 
 })();
 </script>
