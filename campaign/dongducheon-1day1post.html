@@ -203,6 +203,7 @@ footer{border-top:1px solid var(--line);padding-block:18px;color:var(--muted);fo
 <nav class="tabs" role="tablist" aria-label="캠페인 메뉴">
   <button role="tab" data-tab="today" id="tab-today" aria-selected="true">오늘</button>
   <button role="tab" data-tab="write" id="tab-write" aria-selected="false">AI 자동 글쓰기</button>
+  <button role="tab" data-tab="news" id="tab-news" aria-selected="false">뉴스 종합</button>
   <button role="tab" data-tab="board" id="tab-board" aria-selected="false">링크 보드</button>
   <button role="tab" data-tab="comment" id="tab-comment" aria-selected="false">댓글 점검</button>
   <button role="tab" data-tab="me" id="tab-me" aria-selected="false">나의 기록</button>
@@ -368,6 +369,85 @@ footer{border-top:1px solid var(--line);padding-block:18px;color:var(--muted);fo
         <pre class="share" id="o-insta"></pre>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- 뉴스 종합 -->
+<section class="panel" data-panel="news" hidden>
+  <div class="note-box"><b>자료 10개 이상을 검증해 종합 기사·블로그 글을 씁니다.</b> 이 페이지는 보안 정책상 네이버를 직접 읽지 못합니다. 자동 수집은 저장소의 <span class="mono">tools/naver_news_writer.py</span>(네이버 검색 API로 수집하고 링크를 열어 검증)를 실행해 나온 sources.json을 불러오고, 그 밖의 링크와 텍스트는 아래에서 직접 더하세요.</div>
+
+  <div class="grid2">
+    <div class="card">
+      <h3>1. 키워드와 분야</h3>
+      <div class="row">
+        <label for="nk-field" style="flex:0 1 150px">분야<select id="nk-field"></select></label>
+        <label for="nk-word">키워드<input id="nk-word" placeholder="예: 노인맞춤돌봄서비스"></label>
+        <button class="btn" id="btn-nk-add">추가</button>
+      </div>
+      <div class="chips" id="nk-list"></div>
+      <div class="btns" id="nk-links"></div>
+      <p class="small muted">네이버 뉴스 홈의 언론사 픽·랭킹·섹션 상단 기사도 같은 방법으로 열어 링크를 더하세요.</p>
+    </div>
+    <div class="card">
+      <h3>2. 자료 불러오기</h3>
+      <label for="nj-file">프로그램 결과 파일 (sources.json)<input id="nj-file" type="file" accept=".json,application/json"></label>
+      <label for="nj-bulk">링크 여러 개 붙여넣기 (한 줄에 하나: URL 또는 '제목 | URL | 언론사 | 날짜')<textarea id="nj-bulk" rows="4" placeholder="https://n.news.naver.com/article/...&#10;복지 예산 확대 | https://... | ○○일보 | 2026-10-15"></textarea></label>
+      <div class="btns"><button class="btn" id="btn-nj-bulk">붙여넣은 자료 추가</button><span class="small muted" id="nj-msg"></span></div>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h3>링크 하나 추가</h3>
+      <div class="row">
+        <label for="ns-url">링크<input id="ns-url" inputmode="url" placeholder="https://"></label>
+      </div>
+      <div class="row">
+        <label for="ns-title">제목<input id="ns-title"></label>
+        <label for="ns-press" style="flex:0 1 150px">언론사·기관<input id="ns-press"></label>
+        <label for="ns-date" style="flex:0 1 150px">날짜<input id="ns-date" type="date"></label>
+      </div>
+      <div class="row">
+        <label for="ns-field" style="flex:0 1 150px">분야<select id="ns-field"></select></label>
+        <label for="ns-sum">핵심 내용 (원문을 읽고 내 말로 1~2문장)<input id="ns-sum"></label>
+      </div>
+      <div class="btns"><button class="btn" id="btn-ns-add">자료 추가</button></div>
+    </div>
+    <div class="card">
+      <h3>3. 별도 텍스트 (현장 경험·내부 자료·인터뷰)</h3>
+      <div class="row">
+        <label for="nt-field" style="flex:0 1 150px">분야<select id="nt-field"></select></label>
+        <label for="nt-kind" style="flex:0 1 150px">종류<select id="nt-kind"><option>현장 경험</option><option>내부 자료</option><option>인터뷰</option><option>통계 메모</option><option>기타</option></select></label>
+      </div>
+      <label for="nt-text">내용<textarea id="nt-text" rows="3" placeholder="예: 10월 들어 복지관 돌봄 신청 상담이 주 5건에서 12건으로 늘었다 (복지관 상담일지)"></textarea></label>
+      <div class="btns"><button class="btn" id="btn-nt-add">텍스트 추가</button></div>
+      <div class="feed" id="nt-list"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="head"><h3>4. 자료 검증</h3><span class="score mono" id="nv-count">0 / 10</span></div>
+    <div class="bar"><i id="nv-bar"></i></div>
+    <div class="chips" id="nv-dist"></div>
+    <p class="small muted">자료마다 원문을 열어 세 가지를 확인하면 검증 완료가 됩니다. 프로그램이 링크를 열어 확인한 자료는 "프로그램 검증"으로 표시됩니다.</p>
+    <div class="feed" id="nv-list"><div class="empty">아직 자료가 없습니다. 프로그램 결과를 불러오거나 링크를 추가하세요.</div></div>
+  </div>
+
+  <div class="card">
+    <h3>5. 종합 글 쓰기</h3>
+    <div class="row">
+      <label for="nw-mode" style="flex:0 1 200px">글 종류<select id="nw-mode"><option value="both">기획기사 + 블로그 글</option><option value="article">기획기사</option><option value="blog">블로그 글</option></select></label>
+      <label for="nw-len" style="flex:0 1 150px">분량<select id="nw-len"><option value="2000">2,000자</option><option value="3000" selected>3,000자</option><option value="4000">4,000자</option></select></label>
+      <label style="flex:0 1 auto;display:flex;gap:8px;align-items:center;color:var(--ink)"><input type="checkbox" id="nw-force" style="width:18px;height:18px">10개 미만이어도 쓰기</label>
+    </div>
+    <div class="btns">
+      <button class="btn maple" id="btn-nw-run">종합 글 쓰기</button>
+      <button class="btn ghost" id="btn-nw-table">자료 정리표 복사</button>
+      <button class="btn ghost" id="btn-nw-studio">블로그 스튜디오로 보내기 (이미지·영상)</button>
+    </div>
+    <p class="small muted" id="nw-status"></p>
+    <textarea id="nw-out" class="draft" aria-label="종합 글" placeholder="검증된 자료로 쓴 기사·블로그 글이 여기에 나옵니다. 문장 끝 [번호]는 자료 번호입니다."></textarea>
+    <div class="btns"><button class="btn" id="btn-nw-copy">글 복사</button></div>
   </div>
 </section>
 
@@ -1140,6 +1220,167 @@ function renderMetrics(){
 function readMetrics(){var o={};METRICS.forEach(function(m){var v=parseFloat($("mt-"+m[0]).value);if(!isNaN(v)&&v>=0)o[m[0]]=v});return o}
 function renderRoi(){var m=readMetrics();$("m-roi").textContent=m.hours>0&&m.revenue!=null?"투입시간 대비 수익: 시간당 "+Math.round(m.revenue/m.hours).toLocaleString()+"원":"월간 수익과 투입 시간을 넣으면 시간당 수익을 계산합니다.";}
 
+/* ---------- 뉴스 종합 (자료 10개 이상 검증 → 종합 글) ---------- */
+var NEWS_FIELDS=["영유아","청소년","중장년","노인","장애인","지역복지"].concat(FIELDS.filter(function(f){return f!=="기타"})).concat(["기타"]);
+S.news=S.news&&typeof S.news==="object"?S.news:{};S.news.kws=S.news.kws||[];S.news.sources=S.news.sources||[];S.news.notes=S.news.notes||[];
+var N=S.news,MIN_VERIFIED=10,newsCtl=null;
+["nk-field","ns-field","nt-field"].forEach(function(id){var s=$(id);NEWS_FIELDS.forEach(function(f){s.appendChild(el("option",{text:f,value:f}))});s.value="노인"});
+function nUrlKey(u){return String(u||"").trim().replace(/^https?:\/\/(www\.|m\.)?/i,"").replace(/[#?].*$/,"").replace(/\/$/,"").toLowerCase()}
+function nDomain(u){var m=/^https?:\/\/([^\/?#]+)/i.exec(u||"");return m?m[1].replace(/^(www|m)\./,""):""}
+function nType(u){var d=nDomain(u);return /(\.go\.kr|\.or\.kr|\.re\.kr|\.ac\.kr|korea\.kr)$/.test(d)?"공공·기관":/blog|tistory|brunch/.test(d)?"블로그":"언론"}
+function nVerified(s){return s.progVerified||(s.chk&&s.chk.open&&s.chk.match&&s.chk.date)}
+function nAdd(src){
+  var u=safeUrl(src.url);if(!u)return "invalid";
+  if(N.sources.some(function(x){return nUrlKey(x.url)===nUrlKey(u)}))return "dup";
+  N.sources.push({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),url:u.slice(0,600),title:String(src.title||"").slice(0,200),press:String(src.press||nDomain(u)).slice(0,60),
+    date:String(src.date||"").slice(0,10),field:String(src.field||"기타").slice(0,30),summary:String(src.summary||"").slice(0,400),flags:Array.isArray(src.flags)?src.flags.slice(0,4).map(String):[],
+    score:+src.score||0,issue:+src.issue||0,issueSize:+src.issueSize||0,progVerified:!!src.progVerified,checks:Array.isArray(src.checks)?src.checks.slice(-3).map(String):[],chk:{open:false,match:false,date:false},origin:src.origin||"직접 추가"});
+  return "ok";
+}
+function nSave(){save();renderNews()}
+
+/* 키워드 */
+$("btn-nk-add").addEventListener("click",function(){var w=$("nk-word").value.trim();if(!w){toast("키워드를 입력하세요");return}
+  if(!N.kws.some(function(k){return k.w===w}))N.kws.push({f:$("nk-field").value,w:w.slice(0,40)});$("nk-word").value="";nSave()});
+function renderNkw(){
+  var l=$("nk-list");clear(l);
+  N.kws.forEach(function(k,i){var b=el("button",{cls:"kwchip",text:k.f+" · "+k.w+"  ×","aria-label":k.w+" 삭제"});b.addEventListener("click",function(){N.kws.splice(i,1);nSave()});l.appendChild(b)});
+  var box=$("nk-links");clear(box);
+  var base=[["네이버 뉴스 홈","https://news.naver.com/"],["많이 본 뉴스(랭킹)","https://news.naver.com/main/ranking/popularDay.naver"],["사회 섹션","https://news.naver.com/section/102"],["생활·문화 섹션","https://news.naver.com/section/103"]];
+  N.kws.forEach(function(k){var q=encodeURIComponent(k.w);base.push([k.w+" · 정확도순","https://search.naver.com/search.naver?where=news&sort=0&query="+q]);base.push([k.w+" · 최신순","https://search.naver.com/search.naver?where=news&sort=1&query="+q])});
+  base.forEach(function(x){box.appendChild(el("a",{cls:"btn sm ghost",href:x[1],target:"_blank",rel:"noopener noreferrer",text:x[0]}))});
+}
+
+/* 불러오기 */
+$("nj-file").addEventListener("change",function(){
+  var f=$("nj-file").files[0];if(!f)return;var rd=new FileReader();
+  rd.onload=function(){try{importJson(JSON.parse(rd.result))}catch(e){$("nj-msg").textContent="sources.json 형식이 아닙니다. 프로그램이 만든 파일을 고르세요."}$("nj-file").value=""};rd.readAsText(f);
+});
+function importJson(o){
+  if(!o||!Array.isArray(o.sources))throw 0;var add=0,dup=0;
+  (o.keywords||[]).forEach(function(k){if(k&&k.keyword&&!N.kws.some(function(x){return x.w===k.keyword}))N.kws.push({f:String(k.field||"기타"),w:String(k.keyword).slice(0,40)})});
+  o.sources.forEach(function(s){var r=nAdd({url:s.url,title:s.title,press:s.press,date:String(s.date||"").slice(0,10),field:(s.fields&&s.fields[0])||(s.keywords&&s.keywords[0])||"기타",
+    summary:s.summary,flags:s.flags,score:s.score,issue:s.issue_id,issueSize:s.issue_size,progVerified:true,checks:s.checks,origin:s.origin||"네이버 뉴스 검색"});if(r==="ok")add++;else if(r==="dup")dup++});
+  (o.notes||[]).forEach(function(t){if(t&&!N.notes.some(function(n){return n.text===t}))N.notes.push({f:"현장",kind:"현장 경험",text:String(t).slice(0,1500)})});
+  $("nj-msg").textContent="프로그램 검증 자료 "+add+"건을 불러왔습니다"+(dup?" (중복 "+dup+"건 제외)":"")+".";nSave();
+}
+$("btn-nj-bulk").addEventListener("click",function(){
+  var lines=$("nj-bulk").value.split(/\n+/),add=0,bad=0,dup=0,f=$("nk-field").value;
+  lines.forEach(function(line){line=line.trim();if(!line)return;var p=line.split("|").map(function(x){return x.trim()});
+    var ui=p.findIndex(function(x){return /^https?:\/\//i.test(x)});if(ui<0){bad++;return}
+    var r=nAdd({url:p[ui],title:ui>0?p[0]:"",press:p[ui+1]||"",date:/^\d{4}-\d{2}-\d{2}$/.test(p[ui+2]||"")?p[ui+2]:"",field:f});
+    if(r==="ok")add++;else if(r==="dup")dup++;else bad++});
+  $("nj-msg").textContent=add+"건 추가"+(dup?", 중복 "+dup+"건":"")+(bad?", 링크가 아닌 줄 "+bad+"개":"")+". 제목이 빈 자료는 원문을 열어 채워 주세요.";$("nj-bulk").value="";nSave();
+});
+$("btn-ns-add").addEventListener("click",function(){
+  var r=nAdd({url:$("ns-url").value,title:$("ns-title").value.trim(),press:$("ns-press").value.trim(),date:$("ns-date").value,field:$("ns-field").value,summary:$("ns-sum").value.trim()});
+  if(r==="invalid"){toast("링크는 https:// 로 시작해야 합니다");return}if(r==="dup"){toast("이미 추가한 링크입니다");return}
+  ["ns-url","ns-title","ns-press","ns-date","ns-sum"].forEach(function(id){$(id).value=""});toast("자료를 추가했습니다");nSave();
+});
+$("btn-nt-add").addEventListener("click",function(){var t=$("nt-text").value.trim();if(!t){toast("내용을 입력하세요");return}
+  N.notes.push({f:$("nt-field").value,kind:$("nt-kind").value,text:t.slice(0,1500)});$("nt-text").value="";nSave()});
+
+/* 자료 목록과 검증 */
+function renderNotes(){var l=$("nt-list");clear(l);
+  N.notes.forEach(function(n,i){var d=el("button",{cls:"btn sm ghost",text:"삭제"});d.addEventListener("click",function(){N.notes.splice(i,1);nSave()});
+    l.appendChild(el("div",{cls:"post",style:"grid-template-columns:1fr auto"},[el("div",{style:"min-width:0"},[el("div",{cls:"meta"},[el("span",{cls:"chip",text:n.f}),el("span",{text:n.kind})]),el("p",{cls:"small",text:n.text})]),d]))})}
+function renderSources(){
+  var list=$("nv-list");clear(list);
+  var srcs=N.sources.slice().sort(function(a,b){return (nVerified(b)?1:0)-(nVerified(a)?1:0)||b.score-a.score||(b.date>a.date?1:-1)});
+  var v=N.sources.filter(nVerified).length;
+  $("nv-count").textContent=v+" / "+MIN_VERIFIED;var bar=$("nv-bar");bar.style.width=Math.min(100,v/MIN_VERIFIED*100)+"%";bar.className=v>=MIN_VERIFIED?"ok":v>=5?"warn":"bad";
+  var dist={};N.sources.filter(nVerified).forEach(function(s){dist[s.field]=(dist[s.field]||0)+1;var t="유형:"+nType(s.url);dist[t]=(dist[t]||0)+1});
+  var dd=$("nv-dist");clear(dd);Object.keys(dist).forEach(function(k){dd.appendChild(el("span",{cls:"chip",text:k+" "+dist[k]}))});
+  if(!srcs.length){list.appendChild(el("div",{cls:"empty",text:"아직 자료가 없습니다. 프로그램 결과를 불러오거나 링크를 추가하세요."}));return}
+  var now=Date.now();
+  srcs.forEach(function(s){
+    var ok=nVerified(s);
+    var auto=[];
+    if(!s.title)auto.push(["warn","제목 없음"]);
+    if(s.date){var age=(now-new Date(s.date+"T00:00:00").getTime())/864e5;if(age>90)auto.push(["warn","90일 넘은 자료"])}
+    auto.push(["ok",nType(s.url)]);
+    var head=el("div",{cls:"meta"},[el("span",{cls:"pill "+(ok?"ok":"warn"),text:ok?(s.progVerified?"프로그램 검증":"검증 완료"):"검증 전"}),el("span",{cls:"chip",text:s.field}),el("span",{text:s.press}),el("span",{text:s.date||"날짜 미상"})]
+      .concat(s.flags.map(function(f){return el("span",{cls:"pill "+(f==="픽"?"bad":f==="이슈"?"warn":"info"),text:f})})).concat(auto.filter(function(a){return a[0]==="warn"}).map(function(a){return el("span",{cls:"small muted",text:"· "+a[1]})})));
+    var ti=el("input",{value:s.title,placeholder:"제목 (원문에서 확인)","aria-label":"제목"});ti.addEventListener("change",function(){s.title=ti.value.trim().slice(0,200);save()});
+    var su=el("input",{value:s.summary,placeholder:"핵심 내용 (내 말로 1~2문장)","aria-label":"핵심 내용"});su.addEventListener("change",function(){s.summary=su.value.trim().slice(0,400);save()});
+    var link=el("a",{href:s.url,target:"_blank",rel:"noopener noreferrer",cls:"btn sm",text:"원문 열기"});
+    var kids=[head,el("div",{cls:"row",style:"margin-top:6px"},[el("label",{style:"flex:1 1 260px"},["제목",ti]),el("label",{style:"flex:1 1 260px"},["핵심 내용",su])])];
+    var acts=[link];
+    if(!s.progVerified){[["open","원문을 열어 읽음"],["match","제목·내용 일치"],["date","날짜 확인"]].forEach(function(c){
+      var id="nc-"+s.id+"-"+c[0];var cb=el("input",{type:"checkbox",id:id});cb.checked=!!s.chk[c[0]];cb.style.width="17px";cb.style.height="17px";
+      cb.addEventListener("change",function(){s.chk[c[0]]=cb.checked;nSave()});
+      acts.push(el("label",{"for":id,style:"display:flex;gap:6px;align-items:center;font-weight:500;color:var(--ink)"},[cb,c[1]]))})}
+    else if(s.checks.length)acts.push(el("span",{cls:"small muted",text:s.checks.join(" · ")}));
+    var del=el("button",{cls:"btn sm ghost",text:"삭제"});del.addEventListener("click",function(){N.sources=N.sources.filter(function(x){return x.id!==s.id});nSave()});acts.push(del);
+    kids.push(el("div",{cls:"acts"},acts));
+    list.appendChild(el("div",{cls:"post",style:"grid-template-columns:1fr"},[el("div",{style:"min-width:0"},kids)]));
+  });
+}
+function verifiedNumbered(){var v=N.sources.filter(nVerified).slice().sort(function(a,b){return b.score-a.score||(b.date>a.date?1:-1)});v.forEach(function(s,i){s.n=i+1});return v}
+function sourceTable(v){return "자료 정리표 ("+v.length+"건, "+TODAY_S+" 기준)\n번호 | 제목 | 언론사·기관 | 날짜 | 분야 | 표시 | 링크\n"+
+  v.map(function(s){return "["+s.n+"] | "+(s.title||"(제목 확인 필요)")+" | "+s.press+" | "+(s.date||"-")+" | "+s.field+" | "+(s.flags.join(" ")||"-")+" | "+s.url}).join("\n")}
+$("btn-nw-table").addEventListener("click",function(){var v=verifiedNumbered();if(!v.length){toast("검증된 자료가 없습니다");return}copy(sourceTable(v),"자료 정리표")});
+
+function templateSynthesis(v,mode){
+  var kws=N.kws.map(function(k){return k.w}).join(", ")||"(키워드)";
+  var byField={};v.forEach(function(s){(byField[s.field]=byField[s.field]||[]).push(s)});
+  var issues={};v.forEach(function(s){if(s.issue&&s.issueSize>=2)(issues[s.issue]=issues[s.issue]||[]).push(s)});
+  var L=["제목: "+kws+", 검증 자료 "+v.length+"건으로 본 지금의 쟁점","부제: 분야별 흐름과 현장의 의미를 정리했습니다","",
+    "■ 리드","[무엇이 왜 지금 쟁점인지 3문장으로 고쳐 쓰기. 근거는 아래 자료 번호로 표시]",""];
+  var ik=Object.keys(issues);
+  if(ik.length){L.push("■ 여러 언론이 함께 다룬 이슈");ik.slice(0,5).forEach(function(k){var g=issues[k];L.push("- "+g[0].title+" (언론사 "+g[0].issueSize+"곳) "+g.map(function(s){return "["+s.n+"]"}).join(""))});L.push("")}
+  L.push("■ 분야별 정리");
+  Object.keys(byField).forEach(function(f){L.push("▶ "+f);byField[f].forEach(function(s){L.push("- "+(s.summary||s.title)+" ["+s.n+"]")})});L.push("");
+  if(N.notes.length){L.push("■ 현장에서 본 의미");N.notes.forEach(function(n){L.push("- ("+n.kind+", "+n.f+") "+n.text)});L.push("")}
+  L.push("■ 전문가 제언","- 정책: ","- 현장: ","- 주민: ","","■ 독자가 할 수 있는 일","☐ ","☐ ","☐ ","","■ 자주 묻는 질문","Q. ","A. ","Q. ","A. ","Q. ","A. ","");
+  L.push("■ 참고자료");v.forEach(function(s){L.push("["+s.n+"] "+(s.title||"(제목 확인 필요)")+", "+s.press+", "+(s.date||"날짜 미상")+", "+s.url)});
+  if(mode!=="article"){L.push("","#"+["동두천","사회복지"].concat(N.kws.map(function(k){return k.w.replace(/\s/g,"")})).slice(0,10).join(" #"))}
+  return L.join("\n");
+}
+function synthPrompt(v,mode,len){
+  var want={both:"기획기사 1편과, 같은 자료로 만든 네이버 블로그 글 1편",article:"기획기사 1편",blog:"네이버 블로그 글 1편"}[mode];
+  return ["너는 박진혁 교수의 논설국장·전문기자 문체로 사회복지·지역사회 분야 기사를 쓰는 편집자다.",
+  "아래 검증된 자료와 작성자 텍스트만 근거로 "+want+"을(를) 써라. 각 글은 공백 제외 약 "+len+"자.",
+  "키워드(분야): "+N.kws.map(function(k){return k.f+":"+k.w}).join(", "),
+  "","검증된 자료 "+v.length+"건:",
+  v.map(function(s){return "["+s.n+"] "+(s.title||"(제목 미상)")+" | "+s.press+" | "+(s.date||"날짜 미상")+" | 분야 "+s.field+(s.issueSize>=2?" | 언론사 "+s.issueSize+"곳이 다룬 이슈":"")+" | 요약: "+(s.summary||"(요약 없음)")+" | "+s.url}).join("\n"),
+  "","작성자 텍스트(현장 경험·내부 자료·인터뷰, 경험은 이 내용만 쓴다):",
+  N.notes.map(function(n){return "- ["+n.kind+"/"+n.f+"] "+n.text}).join("\n")||"(없음)",
+  "","규칙:",
+  "1) 사실을 쓸 때마다 문장 끝에 [번호]로 출처를 단다. 자료에 없는 수치, 날짜, 인용, 기관 정보는 만들지 않고 [확인 필요]로 쓴다.",
+  "2) 기사 문장을 베끼지 말고 여러 자료를 비교해 공통 쟁점, 차이, 현장 시사점으로 재구성한다. 여러 언론이 다룬 이슈를 먼저 다룬다.",
+  "3) 작성자 텍스트가 없으면 현장 경험을 지어내지 않는다.",
+  "4) 마크다운 기호(#, **)를 쓰지 않는다. 소제목은 ■, 목록은 -, 체크리스트는 ☐.",
+  "","기획기사 구조: 제목: / 부제: / ■ 리드(3문장) / ■ 핵심 쟁점 3가지 / ■ 분야별 정리 / ■ 현장에서 본 의미(작성자 텍스트가 있을 때) / ■ 전문가 제언(정책·현장·주민) / ■ 독자가 할 수 있는 일 / ■ 자주 묻는 질문(Q./A. 3쌍) / ■ 참고자료([번호] 제목, 언론사, 날짜, 링크)",
+  "블로그 글 구조(요청 시, 기사 뒤에 '==== 블로그 글 ====' 줄로 구분): 제목 3안 / 부제 / ■ 한눈에 보는 요약 / ■ 왜 지금 / ■ 핵심 정리 / ■ 현장 경험 / ■ 체크리스트 / ■ 자주 묻는 질문 / ■ 참고자료 / 해시태그 10개"].join("\n");
+}
+$("btn-nw-run").addEventListener("click",function(){
+  var v=verifiedNumbered(),mode=$("nw-mode").value,len=+$("nw-len").value;
+  if(!v.length){toast("검증된 자료가 없습니다");return}
+  if(v.length<MIN_VERIFIED&&!$("nw-force").checked){$("nw-status").textContent="검증 자료가 "+v.length+"건입니다. "+MIN_VERIFIED+"건 이상 검증하거나 '10개 미만이어도 쓰기'를 켜세요.";return}
+  $("nw-out").value=templateSynthesis(v,mode);
+  if(!SAMPLE){$("nw-status").textContent="AI가 연결되지 않은 화면이라 자료를 분야·이슈별로 묶은 정리본을 만들었습니다. 빈칸을 채워 완성하세요.";return}
+  if(newsCtl)newsCtl.abort();newsCtl=new AbortController();var ctl=newsCtl;var b=$("btn-nw-run");b.disabled=true;
+  $("nw-status").textContent="AI가 자료 "+v.length+"건을 종합해 쓰는 중입니다. 1~2분 걸립니다.";
+  SAMPLE(synthPrompt(v,mode,len),{signal:ctl.signal,cache:false,onText:function(u){$("nw-out").value=u.text}}).then(function(r){
+    $("nw-out").value=r.text;$("nw-status").textContent="완성했습니다. [확인 필요]와 [번호]를 원문과 대조한 뒤 발행하세요."+(r.truncated?" 분량 한도로 끝부분이 잘렸습니다. 분량을 줄여 다시 쓰세요.":"");
+  },function(e){var c=e&&e.code;
+    if(c==="not_granted"){SAMPLE=null;$("nw-status").textContent="AI 사용이 허용되지 않아 정리본만 만들었습니다."}
+    else if(c==="rate_limited")$("nw-status").textContent="AI 요청이 많습니다. 잠시 뒤 다시 누르세요. 지금은 정리본입니다.";
+    else $("nw-status").textContent="AI 답을 받지 못해 정리본을 보여 드립니다. 다시 누르면 다시 요청합니다.";
+    if(e&&e.text)$("nw-out").value=e.text;
+  }).then(function(){if(ctl===newsCtl){b.disabled=false;newsCtl=null}});
+});
+$("btn-nw-copy").addEventListener("click",function(){copy($("nw-out").value,"종합 글")});
+$("btn-nw-studio").addEventListener("click",function(){
+  var v=verifiedNumbered();if(!v.length){toast("검증된 자료가 없습니다");return}
+  $("kw").value=(N.kws[0]&&N.kws[0].w)||v[0].title.slice(0,30);
+  $("news").value=v.slice(0,15).map(function(s){return "["+s.n+"] "+s.press+" | "+(s.title||"")+" | "+(s.summary||"")+" | "+s.url}).join("\n");
+  $("exp").value=N.notes.filter(function(n){return n.kind==="현장 경험"}).map(function(n){return n.text}).join("\n");
+  showTab("write");runStudio();
+});
+function renderNews(){renderNkw();renderNotes();renderSources()}
+
 /* ---------- 댓글 점검 ---------- */
 function bigrams(s){s=s.replace(/\s+/g,"");var a={};for(var i=0;i<s.length-1;i++)a[s.substr(i,2)]=1;return a}
 function sim(a,b){var A=bigrams(a),B=bigrams(b),i=0,u=0,k;for(k in A){u++;if(B[k])i++}for(k in B)if(!A[k])u++;return u?i/u:0}
@@ -1243,7 +1484,7 @@ $("k-name").value=S.name||"";
 $("k-name").addEventListener("input",function(){S.name=$("k-name").value.trim().slice(0,20);save();renderKit()});
 
 /* ---------- 백업 ---------- */
-$("btn-backup").addEventListener("click",function(){copy(JSON.stringify({v:1,posts:S.posts,comments:S.comments,retro:S.retro,name:S.name,field:S.field,pledge:S.pledge}),"백업 문자열")});
+$("btn-backup").addEventListener("click",function(){copy(JSON.stringify({v:1,posts:S.posts,comments:S.comments,retro:S.retro,name:S.name,field:S.field,pledge:S.pledge,news:S.news}),"백업 문자열")});
 $("btn-restore").addEventListener("click",function(){
   var msg=$("restore-msg");
   try{var o=JSON.parse($("restore").value);if(!o||!Array.isArray(o.posts))throw 0;
@@ -1251,6 +1492,7 @@ $("btn-restore").addEventListener("click",function(){
     var add=o.posts.filter(function(p){return p&&p.date&&p.url&&!have[p.url]&&/^\d{4}-\d{2}-\d{2}$/.test(p.date)}).map(function(p){return {date:p.date,title:String(p.title||"").slice(0,120),url:safeUrl(p.url),field:String(p.field||""),at:p.at||0}}).filter(function(p){return p.url});
     S.posts=S.posts.concat(add);if(Array.isArray(o.comments))S.comments=S.comments.concat(o.comments).slice(0,80);
     if(o.retro&&typeof o.retro==="object")for(var k in o.retro)if(!S.retro[k])S.retro[k]=o.retro[k];
+    if(o.news&&Array.isArray(o.news.sources))o.news.sources.forEach(function(x){nAdd(x)});
     save();renderAll();msg.textContent="글 "+add.length+"편을 복원했습니다.";$("restore").value="";
   }catch(e){msg.textContent="백업 문자열 형식이 아닙니다. 백업 문자열 복사로 받은 내용을 그대로 붙여 넣으세요."}
 });
@@ -1372,7 +1614,7 @@ function renderMonthFeed(ps){
     box.appendChild(el("div",{cls:"post"},[avatar(prof),el("div",{style:"min-width:0;display:grid;gap:4px"},kids)]))});
 }
 
-function renderAll(){renderTheme();renderRoutine();renderStats();renderLog();renderHeat();renderCHist();renderPledge();renderMonth();renderKit();renderKwGroups();renderResearch();renderWork();renderFirstMonth();renderMetrics()}
+function renderAll(){renderTheme();renderRoutine();renderStats();renderLog();renderHeat();renderCHist();renderPledge();renderMonth();renderKit();renderKwGroups();renderResearch();renderWork();renderFirstMonth();renderMetrics();renderNews()}
 renderAll();
 
 /* ---------- 런타임 기능 연결 ---------- */
